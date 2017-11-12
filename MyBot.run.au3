@@ -29,7 +29,7 @@
 Opt("MustDeclareVars", 1)
 
 ; Check Version - Team AiO MOD++ (#-03)
-Global $g_sModversion = "v2" ;<== Just Change This to Version Number
+Global $g_sModversion = "v2.0.1" ;<== Just Change This to Version Number
 Global $g_sAio = "Persian MOD"
 
 Global $g_sBotTitle = "" ;~ Don't assign any title here, use Func UpdateBotTitle()

@@ -119,7 +119,7 @@ EndFunc   ;==>getArmyHeroCount
 Func ArmyHeroStatus($i)
 	Local $DebugThisFunc = 0
 	Local $sImageDir = @ScriptDir & "\imgxml\trainwindow\herostatus", $sResult = ""
-	Local Const $aHeroesRect[3][4] = [[655, 340, 680, 365], [730, 340, 755, 365], [805, 340, 830, 365]]
+	Local Const $aHeroesRect[3][4] = [[606, 338, 682, 390], [681, 338, 756, 390], [755, 338, 833, 390]]
 
 	$sResult = QuickMIS("N1", $sImageDir, $aHeroesRect[$i][0], $aHeroesRect[$i][1], $aHeroesRect[$i][2], $aHeroesRect[$i][3])
 
