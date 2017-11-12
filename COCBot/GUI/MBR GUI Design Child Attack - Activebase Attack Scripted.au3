@@ -38,7 +38,7 @@ Func CreateAttackSearchActiveBaseScripted()
 		   $y +=25
 		   $g_hLblNotesScriptAB =  GUICtrlCreateLabel("", $x, $y + 5, 200, 160)
 
-		   $g_hBtnAttNowAB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "BtnAttNow", -1), $x + 75 , $y + 167, 91, 25)
+		   $g_hBtnAttNowAB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "BtnAttNow", -1), $x , $y + 170, 230, 22)
 			   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "BtnAttNow_Info_01", -1))
 			   GUICtrlSetBkColor(-1, 0xBAD9C8)
 			   GUICtrlSetOnEvent(-1, "AttackNowAB")
@@ -70,9 +70,10 @@ Func CreateAttackSearchActiveBaseScripted()
 			   GUICtrlSetOnEvent(-1, "DuplicateScriptAB")
 
 		   ; CSV Deploy Speed - Team AiO MOD++ (#-09)
+		   Local $Group = GUICtrlCreateGroup("", $x, $y + 189, 230, 38)
 		   Local $x = 55, $y = 318
-		   GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "CSVSpeed", -1), $x - 2, $y, -1, -1)
-			   $cmbCSVSpeed[$LB] = GUICtrlCreateCombo("", $x + 122, $y - 5, 50, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		   GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "CSVSpeed", -1), $x - 5, $y - 4, -1, -1)
+			   $cmbCSVSpeed[$LB] = GUICtrlCreateCombo("", $x + 122, $y - 8, 53, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			   GUICtrlSetData(-1, "0.5x|0.75x|1x|1.25x|1.5x|2x|3x|4x|5x", "1x")
 
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)

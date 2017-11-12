@@ -62,8 +62,8 @@
 #include "functions\Mod's\ExtendedAttackBarCheck.au3"
 
 ; Chatbot - Team AiO MOD++ (#-23)
-;~ #include "functions\Chatbot\Chatbot.au3"
-;~ #include "functions\Chatbot\Multy Lang.au3"
+#include "functions\Chatbot\Chatbot.au3"
+#include "functions\Chatbot\Multy Lang.au3"
 
 ; CheckCC Troops - Team AiO MOD++ (#-24)
 #include "functions\Mod's\CheckCC.au3"

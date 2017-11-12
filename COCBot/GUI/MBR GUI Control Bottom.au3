@@ -162,7 +162,6 @@ Func btnStart()
 		$g_iBotAction = $eBotStart
 	EndIf
 	$g_iActualTrainSkip = 0
-	GUICtrlSetState($g_hBtnSupportMOD, $GUI_SHOW) ; Support MOD Button - Team AiO MOD++ (#-02)
 EndFunc   ;==>btnStart
 
 Func btnStop()
@@ -173,7 +172,6 @@ Func btnStop()
 		$g_iBotAction = $eBotStop
 		ReduceBotMemory()
 	EndIf
-	GUICtrlSetState($g_hBtnSupportMOD, $GUI_SHOW) ; Support MOD Button - Team AiO MOD++ (#-02)
 EndFunc   ;==>btnStop
 
 Func btnSearchMode()
@@ -191,9 +189,9 @@ Func btnPause($bRunNow = True)
 	TogglePause()
 	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
 	GUICtrlSetState($g_hBtnEnableGUI, $GUI_SHOW) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
-	GUICtrlSetState($g_hBtnSupportMOD, $GUI_HIDE) ; Support MOD Button - Team AiO MOD++ (#-02)
 	; Stop on Low battery - Team AiO MOD++ (#-30)
 	GUICtrlSetState($g_hLblBatteryAC, $GUI_HIDE)
+
 	GUICtrlSetState($g_hLblBatteryStatus, $GUI_HIDE)
 EndFunc   ;==>btnPause
 
@@ -201,7 +199,6 @@ Func btnResume()
 	TogglePause()
 	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
 	GUICtrlSetState($g_hBtnEnableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
-	GUICtrlSetState($g_hBtnSupportMOD, $GUI_SHOW) ; Support MOD Button - Team AiO MOD++ (#-02)
 	; Stop on Low battery - Team AiO MOD++ (#-30)
 	GUICtrlSetState($g_hLblBatteryAC, $GUI_SHOW)
 	GUICtrlSetState($g_hLblBatteryStatus, $GUI_SHOW)
@@ -270,12 +267,12 @@ EndFunc   ;==>updateBtnHideState
 Func btnHide()
 	If Not $g_bIsHidden Then
 		GUICtrlSetData($g_hBtnHide, GetTranslatedFileIni("MBR GUI Control Bottom", "Func_btnHide_False", "Show"))
-		HideAndroidWindow(True, Default, Default, "btnHide")
 		$g_bIsHidden = True
+		HideAndroidWindow(True, Default, Default, "btnHide")
 	ElseIf $g_bIsHidden Then
 		GUICtrlSetData($g_hBtnHide, GetTranslatedFileIni("MBR GUI Control Bottom", "Func_btnHide_True", "Hide"))
-		HideAndroidWindow(False, Default, Default, "btnHide")
 		$g_bIsHidden = False
+		HideAndroidWindow(False, Default, Default, "btnHide")
 	EndIf
 EndFunc   ;==>btnHide
 
@@ -399,6 +396,7 @@ Func DisableGuiControls($bOptimizedRedraw = True)
 EndFunc   ;==>DisableGuiControls
 
 Func ToggleGuiControls($bEnabled, $bOptimizedRedraw = True)
+	$g_bGuiControlsEnabled = $bEnabled
 	If $g_iGuiMode <> 1 Then Return
 	If $bOptimizedRedraw Then Local $bWasRedraw = SetRedrawBotWindow(False, Default, Default, Default, "ToggleGuiControls")
 	If Not $bEnabled Then

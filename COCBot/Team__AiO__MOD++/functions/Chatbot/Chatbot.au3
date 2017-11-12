@@ -224,13 +224,12 @@ Func ChatbotChatInput($message)
 		ControlFocus($g_hAndroidWindow, "", "")
 		SendKeepActive($g_hAndroidWindow)
 		Sleep(500)
-	;Opt("SendKeyDelay", 1000)
 	AutoItSetOption("SendKeyDelay", 50)
-	  _SendExEx($message)
-	   SendKeepActive("")
-    Else
-	  Sleep(500)
- 	 SendText($message)
+	_SendExEx($message)
+	SendKeepActive("")
+	Else
+		Sleep(500)
+		SendText($message)
 	EndIf
 	Return True
 EndFunc   ;==>ChatbotChatInput

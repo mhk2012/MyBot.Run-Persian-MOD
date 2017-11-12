@@ -16,6 +16,7 @@
 
 Func btnAtkLogClear()
 	_GUICtrlRichEdit_SetText($g_hTxtAtkLog, "")
+	$g_bChkSwitchAcc = GUICtrlRead($g_hChkSwitchAcc) = $GUI_CHECKED       ; Atk-Log
 	AtkLogHead()
 EndFunc   ;==>btnAtkLogClear
 

@@ -164,6 +164,9 @@ Func SaveConfig_MOD()
 	_Ini_Add("other", "ChkStopOnBatt", $g_bStopOnBatt ? 1 : 0)
 	_Ini_Add("other", "StopOnBatt", $g_iStopOnBatt)
 
+	; MHK2012 Persian MOD
+	_Ini_Add("other", "Decor", $iSldTransLevel)
+
 EndFunc   ;==>SaveConfig_MOD
 
 ; Switch Accounts - Team AiO MOD++ (#-12)

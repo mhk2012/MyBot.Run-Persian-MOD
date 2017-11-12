@@ -77,7 +77,6 @@ Global $hTimeoutAutoClose = 0 ; Timer Handle for $iTimeoutAutoClose
 Global $g_iMainLoopSleep = 50 ;
 ;Global $g_bBotLaunchOption_NoBotSlot = True
 
-Global $g_sModSupportUrl = "https://mybot.run/forums/index.php?/topic/31096-mods-mbr-v722-official-aio-mod-v171-update-1207/" ;<== Our Website Link Support Or Link Download
 Global $g_sBotTitle = "My Bot Mini " & $g_sBotVersion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 Global $g_hFrmBot = 0
 Global $g_hFrmBotBackend = 0
@@ -115,7 +114,7 @@ Global Enum $eBotUpdateStats = $eBotClose + 1
 
 Func SetLog($String, $Color = $COLOR_BLACK, $LogPrefix = "L ")
 	Local $log = $LogPrefix & TimeDebug() & $String
-	ConsoleWrite($log & @CRLF) ; Always write any log to console
+	_ConsoleWrite($log & @CRLF) ; Always write any log to console
 EndFunc   ;==>SetLog
 
 Func SetDebugLog($String, $Color = $COLOR_DEBUG, $LogPrefix = "D ")
@@ -186,6 +185,9 @@ Func ProcessCommandLine()
 					$g_iGuiMode = 2
 				Case "/nogui", "/ng", "-nogui", "-ng"
 					$g_iGuiMode = 0
+				Case "/console", "/c", "-console", "-c"
+					_WinAPI_AllocConsole()
+					_WinAPI_SetConsoleIcon($g_sLibIconPath, $eIcnGUI)
 				Case Else
 					If StringInStr($CmdLine[$i], "/guipid=") Then
 						Local $guidpid = Int(StringMid($CmdLine[$i], 9))
@@ -1217,7 +1219,7 @@ Func LaunchBotBackend($bNoGUI = True)
 			$bCheck = False
 			SetLog("My Bot backend process not found, launching now...")
 			SetDebugLog("My Bot backend process launching: " & $cmd)
-			$pid = Run($cmd, @ScriptDir, @SW_HIDE)
+			$pid = Run($cmd, @ScriptDir)
 			If $pid = 0 Then
 				SetLog("Cannot launch My Bot backend process", $COLOR_RED)
 				Return 0

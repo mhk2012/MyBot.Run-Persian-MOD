@@ -28,9 +28,6 @@ Global $g_hLblVillageReportTemp = 0
 ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
 Global $g_hBtnEnableGUI = 0, $g_hBtnDisableGUI = 0
 
-; Support MOD Button - Team AiO MOD++ (#-02)
-Global $g_hBtnSupportMOD = 0
-
 ; Hero and Lab Status - Team AiO MOD++ (#-14)
 Global $g_ahLblHero[3], $g_hLblLab, $g_hLblLabTime
 
@@ -82,8 +79,8 @@ Func CreateBottomPanel()
 		   If $g_bBtnColor Then GUICtrlSetBkColor(-1, 0x22C4F5)
 		   GUICtrlSetState(-1, $GUI_DISABLE)
 		   GUICtrlSetOnEvent(-1, "btnEmbed")
-	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Bottom", "ChkBackgroundMode", "Background Mode"), $x + 1, $y + 72, 90, 24)
-		   GUICtrlSetFont(-1, 7)
+	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Bottom", "ChkBackgroundMode", "Background"), $x + 1, $y + 72, 75, 24)
+		   GUICtrlSetFont(-1, 8.5)
 		   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "ChkBackgroundMode_Info_01", "Check this to ENABLE the Background Mode of the Bot.") & @CRLF & _
 							  GetTranslatedFileIni("MBR GUI Design Bottom", "ChkBackgroundMode_Info_02", "With this you can also hide the Android Emulator window out of sight."))
 		   If $g_bGuiRemote Then GUICtrlSetState(-1, $GUI_DISABLE)
@@ -105,11 +102,6 @@ Func CreateBottomPanel()
 		   GUICtrlSetFont(-1, 8.5, $FW_BOLD) ;, $GUI_FONTITALIC + $GUI_FONTUNDER)
 		   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "LblDonate_Info_01", "Paypal Donate?"))
 
-	   ; Support MOD Button - Team AiO MOD++ (#-02)
-	   $g_hBtnSupportMOD = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Bottom", "BtnSupportMOD", "Support"), $x + 100, $y + 70, 80, -1)
-		   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "BtnSupportMOD_Info_01", "Support Mod Mybot All Versions."))
-		   GUICtrlSetBkColor(-1, 0x00FF2F)
-
 	   ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
 	   $g_hBtnEnableGUI = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Bottom", "BtnEnableGUI", "Enable GUI"), $x + 100, $y + 72, 80, 22)
 		   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "BtnEnableGUI_Info_01", "Enable GUI control while botting") & @CRLF & _
@@ -119,7 +111,7 @@ Func CreateBottomPanel()
 		   GUICtrlSetOnEvent(-1, "btnEnableGUI")
 		   GUICtrlSetState(-1, $GUI_HIDE)
 	   $g_hBtnDisableGUI = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Bottom", "BtnDisableGUI", "Disable GUI"), $x + 100, $y + 72, 80, 22)
-		   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "BtnDisableGUI_Info_01", "Disable GUI control to continue botting"))
+		   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "BtnDisableGUI_Info_01", "Enable GUI control while botting"))
 		   GUICtrlSetOnEvent(-1, "btnDisableGUI")
 		   GUICtrlSetState(-1, $GUI_HIDE)
 
@@ -127,10 +119,14 @@ Func CreateBottomPanel()
 
    If $g_bAndroidAdbScreencap Then chkBackground() ; update background mode GUI
 
-   $g_hPicTwoArrowShield = _GUICtrlCreateIcon($g_sLibIconPath, $eIcn2Arrow, $x + 190, $y + 10, 48, 48)
+   $g_hPicTwoArrowShield = _GUICtrlCreateIcon($g_sLibIconPath, $eIcn2Arrow, $x + 197, $y + 10, 48, 48)
 
-   $g_hLblVersion = GUICtrlCreateLabel($g_sBotVersion, 200, $y + 60, 60, 17, $SS_CENTER)
-	   GUICtrlSetColor(-1, $COLOR_MEDGRAY)
+   $g_hLblVersion = GUICtrlCreateLabel($g_sBotVersion, 200, $y + 66, 60, 17, $SS_CENTER)
+	   GUICtrlSetColor(-1, 0x008080)
+	   GUICtrlSetFont(-1, 8)
+   GUICtrlCreateLabel($g_sAiO, 195, $y + 82, 70, 17, $SS_CENTER)
+       GUICtrlSetColor(-1, 0x008080)
+       GUICtrlSetFont(-1, 8.5)
 
    $g_hPicArrowLeft = _GUICtrlCreateIcon($g_sLibIconPath, $eIcnArrowLeft, $x + 249, $y + 30, 16, 16)
 	  $sTxtTip = GetTranslatedFileIni("MBR GUI Design Bottom", "GrpVillage_Info_01", "Switch between village info and stats")

@@ -13,10 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-; Check Version - Team AiO MOD++ (#-03)
-Global $g_sLastModversion = "" ;latest version from GIT
-Global $g_sLastModmessage = "" ;message for last version
-Global $g_sOldModversmessage = "" ;warning message for old bot
+
 
 ; Attack Settings [Dec 2016] used on Classic Attack
 Global Const $g_aaiTopLeftDropPoints[5][2] = [[62, 306], [156, 238], [221, 188], [288, 142], [383, 76]]
@@ -162,13 +159,13 @@ Global $g_hChkExtendedAttackBarLB, $g_hChkExtendedAttackBarDB, $g_abChkExtendedA
 Global $g_iTotalAttackSlot = 10, $g_bDraggedAttackBar = False ; flag if AttackBar is dragged or not
 
 ; Chatbot - Team AiO MOD++ (#-23)
-;~ Global $chatIni = ""
-;~ Global $GlobalMessages1 = "", $GlobalMessages2 = "", $GlobalMessages3 = "", $GlobalMessages4 = ""
-;~ Global $ClanMessages = "", $ClanResponses = ""
-;~ Global $g_iGlobalChat = False, $g_iGlobalScramble = False, $g_iSwitchLang = False, $g_iCmbLang = 1
-;~ Global $g_iClanChat = False, $g_iRusLang = 0, $g_iUseResponses = False, $g_iUseGeneric = False, $g_iChatPushbullet = False, $g_iPbSendNewChats = False
-;~ Global $ChatbotStartTime
-;~ Global $ChatbotQueuedChats[0], $ChatbotReadQueued = False, $ChatbotReadInterval = 0, $ChatbotIsOnInterval = False
+Global $chatIni = ""
+Global $GlobalMessages1 = "", $GlobalMessages2 = "", $GlobalMessages3 = "", $GlobalMessages4 = ""
+Global $ClanMessages = "", $ClanResponses = ""
+Global $g_iGlobalChat = False, $g_iGlobalScramble = False, $g_iSwitchLang = False, $g_iCmbLang = 1
+Global $g_iClanChat = False, $g_iRusLang = 0, $g_iUseResponses = False, $g_iUseGeneric = False, $g_iChatPushbullet = False, $g_iPbSendNewChats = False
+Global $ChatbotStartTime
+Global $ChatbotQueuedChats[0], $ChatbotReadQueued = False, $ChatbotReadInterval = 0, $ChatbotIsOnInterval = False
 
 ; CheckCC Troops - Team AiO MOD++ (#-24)
 Global $g_aiCCTroops[$eTroopCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -178,6 +175,14 @@ Global $g_aiCCSpellsExpected[$eSpellCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_bChkCC, $g_bChkCCTroops
 Global $g_aiCmbCCSlot[5], $g_aiTxtCCSlot[5]
 Global $g_iCmbCastleCapacityT, $g_iCmbCastleCapacityS
+
+; Attack Log New Style - Added By Eloy
+Global $eLootPerc = "---"
+Global $starsearned = 0
+Global $eTHLevel = "-"
+
+; Additional Notifactions - Added By Eloy
+Global $eWinlose = "-"
 
 ; Switch Profile - Team AiO MOD++ (#-25)
 Global $g_abChkSwitchMax[4], $g_abChkSwitchMin[4], $g_aiCmbSwitchMax[4], $g_aiCmbSwitchMin[4]
@@ -197,6 +202,9 @@ Global $g_bIsSearchTimeout = False, $g_iSearchTimeout = 10, $g_iTotalSearchTime 
 
 ; Stop on Low battery - Team AiO MOD++ (#-30)
 Global $g_bStopOnBatt = False, $g_iStopOnBatt = 10
+
+; MHK2012 Persian MOD
+Global $SldTransLevel = 0
 
 ; ================= Team AiO MOD++ (2017) ================= ;
 ; Enable/Disable GUI while botting (#-01)

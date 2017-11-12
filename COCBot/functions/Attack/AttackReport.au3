@@ -163,36 +163,99 @@ Func AttackReport()
 	EndIf
 
 	; check stars earned
-	Local $starsearned = 0
+	;xbenk ~ atklog ~ set as global
+	$starsearned = 0
 	If _ColorCheck(_GetPixelColor($aWonOneStarAtkRprt[0], $aWonOneStarAtkRprt[1], True), Hex($aWonOneStarAtkRprt[2], 6), $aWonOneStarAtkRprt[3]) Then $starsearned += 1
 	If _ColorCheck(_GetPixelColor($aWonTwoStarAtkRprt[0], $aWonTwoStarAtkRprt[1], True), Hex($aWonTwoStarAtkRprt[2], 6), $aWonTwoStarAtkRprt[3]) Then $starsearned += 1
 	If _ColorCheck(_GetPixelColor($aWonThreeStarAtkRprt[0], $aWonThreeStarAtkRprt[1], True), Hex($aWonThreeStarAtkRprt[2], 6), $aWonThreeStarAtkRprt[3]) Then $starsearned += 1
 	SetLog("Stars earned: " & $starsearned)
 
+	;xbenk ~ notify
+	If $starsearned >= 1 Then
+		$eWinlose = "VICTORY"
+	Else
+		$eWinlose = "DEFEAT"
+	EndIf
+	SetLog("RESULT: " & $eWinlose)
+
+	;xbenk ~ atklog ~ content
 	Local $AtkLogTxt
 	; Switch Accounts - Team AiO MOD++ (#-12)
 	If $g_bChkSwitchAcc Then
-		$AtkLogTxt = String($g_iCurAccount + 1) & "|" & _NowTime(4) & "|"
+		$AtkLogTxt = "#" & String($g_iCurAccount + 1) & "|" & _NowTime(4) & "|"
 	Else
-		$AtkLogTxt = "" & _NowTime(4) & "|"
+		$AtkLogTxt = "|" & _NowTime(4) & "|"
 	EndIf
-	$AtkLogTxt &= StringFormat("%5d", $g_aiCurrentLoot[$eLootTrophy]) & "|"
-	$AtkLogTxt &= StringFormat("%6d", $g_iSearchCount) & "|"
-	$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootGold]) & "|"
-	$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootElixir]) & "|"
-	$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootDarkElixir]) & "|"
+
+	$AtkLogTxt &= StringFormat("%4d", $g_aiCurrentLoot[$eLootTrophy]) & "|"
+	$AtkLogTxt &= StringFormat("%3d", $g_iSearchCount) & "|"
+	Local $l_iTotalSearchTime = 0
+	If $g_iTotalSearchTime > 60 Then
+		$l_iTotalSearchTime = $g_iTotalSearchTime/60
+		$AtkLogTxt &= StringFormat("%4d", StringFormat("%.1f",$l_iTotalSearchTime)) & "h|"
+	Else
+		$AtkLogTxt &= StringFormat("%4d", StringFormat("%.1f",$g_iTotalSearchTime)) & "m|"
+	EndIf
+
+	$AtkLogTxt &= StringFormat("%2d", $eTHLevel) & "|"
+	$AtkLogTxt &= StringFormat("%2d", $g_iSearchTrophy) & "|"
+	If ($eLootPerc = 100) Then
+		$AtkLogTxt &= StringFormat("%3d", $eLootPerc) & "|"
+	Else
+		$AtkLogTxt &= StringFormat("%2d", $eLootPerc) & "%|"
+	EndIf
 	$AtkLogTxt &= StringFormat("%3d", $g_iStatsLastAttack[$eLootTrophy]) & "|"
 	$AtkLogTxt &= StringFormat("%1d", $starsearned) & "|"
-	$AtkLogTxt &= StringFormat("%6d", $g_iStatsBonusLast[$eLootGold]) & "|"
-	$AtkLogTxt &= StringFormat("%6d", $g_iStatsBonusLast[$eLootElixir]) & "|"
+	$AtkLogTxt &= StringFormat("%3d", ($g_iStatsLastAttack[$eLootGold]/1000)) & "K|"
+	$AtkLogTxt &= StringFormat("%3d", ($g_iStatsLastAttack[$eLootElixir]/1000)) & "K|"
+	$AtkLogTxt &= StringFormat("%4d", $g_iStatsLastAttack[$eLootDarkElixir]) & "|"
+
+	$AtkLogTxt &= StringFormat("%3d", ($g_iStatsBonusLast[$eLootGold]/1000)) & "K|"
+	$AtkLogTxt &= StringFormat("%3d", ($g_iStatsBonusLast[$eLootElixir]/1000)) & "K|"
 	$AtkLogTxt &= StringFormat("%4d", $g_iStatsBonusLast[$eLootDarkElixir]) & "|"
 	$AtkLogTxt &= $g_asLeagueDetailsShort & "|"
+	If $g_bChkSwitchAcc Then
+		$AtkLogTxt &= $g_sProfileCurrentName
+	EndIf
 
 	Local $AtkLogTxtExtend
 	$AtkLogTxtExtend = "|"
 	$AtkLogTxtExtend &= $g_CurrentCampUtilization & "/" & $g_iTotalCampSpace & "|"
+	;xbenk ~ atklog ~ colouring
 	If Int($g_iStatsLastAttack[$eLootTrophy]) >= 0 Then
-		SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_BLACK)
+		If $g_bChkSwitchAcc Then
+			Local $lcolor
+			Switch $g_iCurAccount
+				Case 0
+					$lcolor = $COLOR_INFO ;blue
+				Case 1
+					$lcolor = $COLOR_DEBUG1 ;dark purple
+				Case 2
+					$lcolor = $COLOR_SUCCESS1 ;dark green
+				Case 3
+					$lcolor = $COLOR_ORANGE
+				Case 4
+					$lcolor = $COLOR_DEBUG2 ;lite purple
+				Case 5
+					$lcolor = $COLOR_SUCCESS ;dark green
+				Case 6
+					$lcolor = $COLOR_DEBUGS
+				Case 7
+					$lcolor = $COLOR_DEBUG ;light green
+			EndSwitch
+			SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $lcolor)
+		Else
+			; MHK2012 Persian MOD
+			If ($starsearned = 0) Then
+				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_ERROR)
+			ElseIf ($starsearned = 1) Then
+				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend)
+			ElseIf ($starsearned = 2) Then
+				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend)
+			ElseIf ($starsearned = 3) Then
+				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_SUCCESS1)
+			EndIf
+		EndIf
 	Else
 		SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_ERROR)
 	EndIf

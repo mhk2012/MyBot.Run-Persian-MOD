@@ -192,6 +192,10 @@ Func ReadConfig_MOD()
 	$g_bStopOnBatt = (IniRead($g_sProfileConfigPath, "other", "ChkStopOnBatt", "0") = "1")
 	$g_iStopOnBatt = Int(IniRead($g_sProfileConfigPath, "other", "StopOnBatt", 10))
 
+	; MHK2012 Persian MOD
+	GUICtrlSetData($SldTransLevel, IniRead($g_sProfileConfigPath, "other", "Decor", 0))
+	Slider()
+
 EndFunc   ;==>ReadConfig_MOD
 
 ; Switch Accounts - Team AiO MOD++ (#-12)

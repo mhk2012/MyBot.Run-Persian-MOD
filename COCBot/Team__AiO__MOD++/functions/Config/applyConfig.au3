@@ -227,6 +227,9 @@ Func ApplyConfig_MOD($TypeReadSave)
 			GUICtrlSetData($g_hTxtStopOnBatt, $g_iStopOnBatt)
 			chkStopOnBatt()
 
+			; MHK2012 Persian MOD
+			GUICtrlSetData($SldTransLevel, $iSldTransLevel)
+
 		Case "Save"
 
 			; Unit/Wave Factor - Team AiO MOD++ (#-05)
@@ -238,6 +241,9 @@ Func ApplyConfig_MOD($TypeReadSave)
 
 			$g_iChkWaveFactor = GUICtrlRead($g_hChkWaveFactor) = $GUI_CHECKED ? 1 : 0
 			$g_iTxtWaveFactor = GUICtrlRead($g_hTxtWaveFactor)
+
+			; MHK2012 Persian MOD
+			$iSldTransLevel = GUICtrlRead($SldTransLevel)
 
 			; Drop Order Troops - Team AiO MOD++ (#-06)
 			$g_bCustomTrainDropOrderEnable = GUICtrlRead($g_hChkCustomTrainDropOrderEnable) = $GUI_CHECKED ? True : False

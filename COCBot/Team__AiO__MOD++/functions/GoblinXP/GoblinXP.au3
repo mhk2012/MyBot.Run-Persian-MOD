@@ -177,14 +177,14 @@ Func MainSuperXPHandler()
 			SetLog("Cannot get in Main Screen!! Exiting SuperXP", $COLOR_RED)
 			Return False
 		EndIf
-		If $iGainedXP >= $itxtMaxXPtoGain Then
-			$g_canGainXP = False
-			SetLog("You have Max XP to Gain GoblinXP", $COLOR_DEBUG)
-			If $g_bDebugSX Then SetLog("$iGainedXP = " & $iGainedXP & "|$itxtMaxXPtoGain = " & $itxtMaxXPtoGain, $COLOR_DEBUG)
-			$ichkEnableSuperXP = 0
-			GUICtrlSetState($chkEnableSuperXP, $GUI_UNCHECKED)
-			ExitLoop ; If Gain XP More Than Max XP to Gain Then Exit/Return
-		EndIf
+;~ 		If $iGainedXP >= $itxtMaxXPtoGain Then
+;~ 			$g_canGainXP = False
+;~ 			SetLog("You have Max XP to Gain GoblinXP", $COLOR_DEBUG)
+;~ 			If $g_bDebugSX Then SetLog("$iGainedXP = " & $iGainedXP & "|$itxtMaxXPtoGain = " & $itxtMaxXPtoGain, $COLOR_DEBUG)
+;~ 			$ichkEnableSuperXP = 0
+;~ 			GUICtrlSetState($chkEnableSuperXP, $GUI_UNCHECKED)
+;~ 			ExitLoop ; If Gain XP More Than Max XP to Gain Then Exit/Return
+;~ 		EndIf
 		SetLog("Attacking to Goblin Picnic - GoblinXP", $COLOR_BLUE)
 		If $g_bRunState = False Then Return
 		If OpenGoblinPicnic() = False Then
@@ -217,10 +217,10 @@ Func MainSuperXPHandler()
 		If $irbSXTraining = 1 Then CheckForFullArmy()
 		$g_canGainXP = ($g_iHeroAvailable <> $eHeroNone And (IIf($ichkSXBK = $eHeroNone, False, BitAND($g_iHeroAvailable, $eHeroKing) = $eHeroKing) Or IIf($ichkSXAQ = $eHeroNone, False, BitAND($g_iHeroAvailable, $eHeroQueen) = $eHeroQueen) Or IIf($ichkSXGW = $eHeroNone, False, BitAND($g_iHeroAvailable, $eHeroWarden) = $eHeroWarden) And IIf($irbSXTraining = 1, $g_bIsFullArmywithHeroesAndSpells = False, True) And $ichkEnableSuperXP = 1 And Number($iGainedXP) < Number($itxtMaxXPtoGain)))
 
-		If $g_bChkSwitchAcc And $g_canGainXP And $CurrentXPgain >= 50 Then
-			SetLog("Switch Account is enable let's check it", $COLOR_GREEN)
-			ExitLoop
-		EndIf
+;~ 		If $g_bChkSwitchAcc And $g_canGainXP And $CurrentXPgain >= 50 Then
+;~ 			SetLog("Switch Account is enable let's check it", $COLOR_GREEN)
+;~ 			ExitLoop
+;~ 		EndIf
 
 		If $g_bDebugSX Then SetLog("$g_iHeroAvailable = " & $g_iHeroAvailable)
 		If $g_bDebugSX Then SetLog("BK: " & $ichkSXBK & ", AQ: " & $ichkSXAQ & ", GW: " & $ichkSXGW)
@@ -258,9 +258,9 @@ Func CheckForFullArmy()
 		Return
 	EndIf
 
-	If $g_bDebugSX Then Setlog("$g_bIsFullArmywithHeroesAndSpells: " & $g_bIsFullArmywithHeroesAndSpells)
-	If $g_bDebugSX Then Setlog("1 Pixel : " & _GetPixelColor(391, 126, True))
-	If $g_bDebugSX Then Setlog("2 Pixel : " & _GetPixelColor(587, 126, True))
+;~ 	If $g_bDebugSX Then Setlog("$g_bIsFullArmywithHeroesAndSpells: " & $g_bIsFullArmywithHeroesAndSpells)
+;~ 	If $g_bDebugSX Then Setlog("1 Pixel : " & _GetPixelColor(391, 126, True))
+;~ 	If $g_bDebugSX Then Setlog("2 Pixel : " & _GetPixelColor(587, 126, True))
 
 	If $g_bIsFullArmywithHeroesAndSpells = False And _
 			(($g_bFullArmy = False And _ColorCheck(_GetPixelColor(391, 126, True), Hex(0x605C4C, 6), 15)) Or _
@@ -320,32 +320,32 @@ Func AttackFinishedSX()
 EndFunc   ;==>AttackFinishedSX
 
 Func GetCurXP($returnVal = "Current")
-	If $g_bDebugSX Then SetLog("SX|GetCurXP", $COLOR_PURPLE)
-	Local $ToReturn = "0#0"
+;~ 	If $g_bDebugSX Then SetLog("SX|GetCurXP", $COLOR_PURPLE)
+;~ 	Local $ToReturn = "0#0"
 
-	Click(135, 30, 1)
+;~ 	Click(135, 30, 1)
 
-	If _Sleep(2000) Then Return
+;~ 	If _Sleep(2000) Then Return
 
-	Local $XPOCRResult = getCurrentXP(80, 60)
+;~ 	Local $XPOCRResult = getCurrentXP(80, 60)
 
-	If $g_bDebugSX Then SetLog("SX|GetCurXP $XPOCRResult: " & $XPOCRResult, $COLOR_PURPLE)
+;~ 	If $g_bDebugSX Then SetLog("SX|GetCurXP $XPOCRResult: " & $XPOCRResult, $COLOR_PURPLE)
 
-	ClickP($aAway, 1, 0, "#0346") ; Click Away To Close XP Stats
+;~ 	ClickP($aAway, 1, 0, "#0346") ; Click Away To Close XP Stats
 
-	If $returnVal = "" Then
-		$ToReturn = $XPOCRResult
-	ElseIf StringInStr($returnVal, "Cur") And StringInStr($XPOCRResult, "#") Then
-		$ToReturn = StringSplit($XPOCRResult, "#", 2)[0]
-	ElseIf StringInStr($returnVal, "Tot") And StringInStr($XPOCRResult, "#") Then
-		$ToReturn = StringSplit($XPOCRResult, "#", 2)[1]
-	Else
-		$ToReturn = $XPOCRResult
-	EndIf
+;~ 	If $returnVal = "" Then
+;~ 		$ToReturn = $XPOCRResult
+;~ 	ElseIf StringInStr($returnVal, "Cur") And StringInStr($XPOCRResult, "#") Then
+;~ 		$ToReturn = StringSplit($XPOCRResult, "#", 2)[0]
+;~ 	ElseIf StringInStr($returnVal, "Tot") And StringInStr($XPOCRResult, "#") Then
+;~ 		$ToReturn = StringSplit($XPOCRResult, "#", 2)[1]
+;~ 	Else
+;~ 		$ToReturn = $XPOCRResult
+;~ 	EndIf
 
-	If $g_bDebugSX Then SetLog("SX|GetCurXP Finished", $COLOR_PURPLE)
+;~ 	If $g_bDebugSX Then SetLog("SX|GetCurXP Finished", $COLOR_PURPLE)
 
-	Return $ToReturn
+;~ 	Return $ToReturn
 
 EndFunc   ;==>GetCurXP
 

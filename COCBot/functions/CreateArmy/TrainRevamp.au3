@@ -179,7 +179,7 @@ Func TrainRevampOldStyle()
 	EndIf
 	If _Sleep($DELAYRESPOND) Then Return ; add 5ms delay to catch TrainIt errors, and force return to back to main loop
 
-	If IsQueueEmpty($TrainTroopsTAB) Then
+	If (IsQueueEmpty($TrainTroopsTAB) AND Not $g_bIsFullArmywithHeroesAndSpells) Then
 		If Not $g_bRunState Then Return
 		If Not IsArmyWindow(False, $ArmyTAB) Then OpenTrainTabNumber($ArmyTAB, "TrainRevampOldStyle()")
 
@@ -193,7 +193,7 @@ Func TrainRevampOldStyle()
 
 	$rWhatToTrain = WhatToTrain(False, False)
 	If DoWhatToTrainContainSpell($rWhatToTrain) Then
-		If IsQueueEmpty($BrewSpellsTAB) Then
+		If (IsQueueEmpty($BrewSpellsTAB) AND Not $g_bIsFullArmywithHeroesAndSpells) Then
 			TrainUsingWhatToTrain($rWhatToTrain, True)
 		Else
 			If Not IsArmyWindow(False, $ArmyTAB) Then OpenTrainTabNumber($ArmyTAB, "TrainRevampOldStyle()")
