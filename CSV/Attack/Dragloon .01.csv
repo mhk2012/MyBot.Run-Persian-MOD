@@ -1,0 +1,68 @@
+NOTE  |Author:  - v.0.0.01 [28-07-2017]
+NOTE  |Dragonloon attack inspired by jiaoto
+NOTE  | TY jiaoto for this idea its great!!!
+NOTE  |                 You MUST train: 
+NOTE  |
+NOTE  |      9 dragons, 12 Ballons, 
+NOTE  |      5 Rage, 1 Haste
+NOTE  |
+NOTE  |   In CC: 1 rage (or 2 Haste) and Balloons
+
+
+      |EXTR. GOLD |EXTR.ELIXIR|EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE|       
+SIDE  |           |           |           |           |           |           |10         |           |
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|
+MAKE  |A          |FRONT-RIGHT|10         |1          |INT-EXT    |0          |1          |           |
+MAKE  |B          |FRONT-LEFT |10         |1          |INT-EXT    |0          |1          |           |
+MAKE  |C          |FRONT-LEFT |8          |1          |EXT-INT    |0          |1          |           |
+MAKE  |D          |FRONT-RIGHT|8          |1          |INT-EXT    |0          |1          |           |
+MAKE  |E          |FRONT-LEFT |10         |-10        |EXT-INT    |0          |0          |           |
+MAKE  |F          |FRONT-RIGHT|10         |-10        |EXT-INT    |0          |0          |           |
+MAKE  |G          |FRONT-RIGHT|10         |-17        |EXT-INT    |0          |0          |           |
+MAKE  |H          |FRONT-LEFT |10         |-17        |EXT-INT    |0          |0          |           |   
+MAKE  |I          |FRONT-LEFT |10         |-23        |EXT-INT    |0          |0          |           |
+MAKE  |J          |FRONT-RIGHT|10         |-23        |EXT-INT    |0          |0          |           |
+MAKE  |K          |FRONT-LEFT |10         |-23        |EXT-INT    |0          |0          |           |
+MAKE  |L          |FRONT-RIGHT|10         |-23        |EXT-INT    |0          |0          |           |
+MAKE  |M          |FRONT-LEFT |8          |1          |INT-EXT    |0          |1          |           |
+MAKE  |N          |FRONT-RIGHT|8          |1          |EXT-INT    |0          |1          |           |
+MAKE  |O          |FRONT-RIGHT|10         |-24        |EXT-INT    |0          |0          |           |
+MAKE  |P          |FRONT-RIGHT|1          |0          |IGNORE     |0          |0          |INFERNO    |
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|
+DROP  |A          |1          |1          |castle     |0          |0          |100-200    |           |
+DROP  |C          |2-8        |4          |Ball       |30-90      |10-20      |0          |           |
+DROP  |C          |1-7        |3          |Drag       |30-90      |20-40      |100-200    |           |
+DROP  |D          |1-7        |5          |Ball       |30-90      |20-40      |100-200    |           |
+DROP  |D          |1-7        |3          |Drag       |20-90      |10-20      |100-200    |           |
+DROP  |N          |2-8        |4          |Ball       |30-90      |10-20      |0          |           |
+DROP  |N          |1-7        |3          |Drag       |30-90      |20-40      |100-200    |           |
+DROP  |A          |1          |1          |warden     |0          |0          |1000-1500  |           |
+WAIT  |1500-2000  |           |           |           |           |           |           |           |
+DROP  |E          |6          |1          |RSpell     |0          |0          |100        |           |
+DROP  |E          |10         |1          |RSpell     |0          |0          |100        |           |
+DROP  |F          |7          |1          |RSpell     |0          |0          |500-1000   |           |
+WAIT  |1500-2500  |           |           |           |           |           |           |           |
+DROP  |H          |7          |1          |RSpell     |0          |0          |100        |           |
+DROP  |G          |8          |1          |RSpell     |0          |0          |3000       |           |
+DROP  |G          |1          |1          |RSpell     |0          |0          |100        |           |
+DROP  |A          |1          |1          |warden     |0          |0          |50-100     |           |
+   
+DROPS  |EAGLE     |R:T,B:F,S:A,L:T|1      |FSpell     |0          |0          |0          |           |
+RECALC|           |           |           |           |           |           |           |           |
+DROP  |J          |10         |1          |HaSpell    |0          |0          |100        |           | 
+
+      |DEFENSE____|OPTIONS________|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________|
+DROPS |INFERNO    |R:T,B:F,S:A,L:T|1          |FSpell     |0          |0          |0          |            |
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|
+DROP  |J          |9          |1          |HaSpell    |0          |0          |100        |           |
+RECALC|           |           |           |           |           |           |           |           | 
+DROP  |K          |9          |1          |RSpell     |0          |0          |100        |           | 
+DROP  |J          |6          |1          |HaSpell    |0          |0          |0          |           |
+DROP  |I          |8          |1          |HaSpell    |0          |0          |100        |           | 
+WAIT  |10000-15000|           |           |           |           |           |           |           |
+DROP  |C          |1          |1          |king       |30-50      |0          |50-100     |           |
+DROP  |N          |1          |1          |queen      |30-50      |100        |50-100     |           | 
+DROP  |A-B        |1-10       |1          |REMAIN     |30-50      |100        |50-100     |           | 

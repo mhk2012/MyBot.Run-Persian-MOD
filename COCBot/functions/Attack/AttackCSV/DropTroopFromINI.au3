@@ -125,7 +125,6 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 	EndSwitch
 
 	If $troopPosition = -1 Or $usespell = False Then
-
 		If $usespell = True Then
 			Setlog("No troop found in your attack troops list")
 			debugAttackCSV("No troop found in your attack troops list")
@@ -247,8 +246,6 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 							Else
 								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
 							EndIf
-							; assume spells get always dropped: adjust count so CC spells can be used without recalc
-							If $g_avAttackTroops[$troopPosition][1] > 0 Then $g_avAttackTroops[$troopPosition][1] -= 1
 						Case Else
 							Setlog("Error parsing line")
 					EndSwitch

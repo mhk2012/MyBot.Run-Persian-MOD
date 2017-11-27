@@ -41,6 +41,9 @@ Global $g_hGUI_MOD_PROFILES_TAB = 0, $g_hGUI_MOD_PROFILES_TAB_ITEM1 = 0, $g_hGUI
 ; Farm Schedule
 #include "MOD GUI Design - FarmSchedule.au3"
 
+;Download CSV
+#include "MOD GUI Design - Download CSV.au3"
+
 Func CreateMODTab()
 
 	$g_hGUI_MOD = _GUICreate("", $g_iSizeWGrpTab1, $g_iSizeHGrpTab1, $_GUI_CHILD_LEFT, $_GUI_CHILD_TOP, BitOR($WS_CHILD, $WS_TABSTOP), -1, $g_hFrmBotEx)

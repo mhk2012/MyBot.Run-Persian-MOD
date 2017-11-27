@@ -105,7 +105,7 @@ Func CreateBotProfiles()
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "BtnRenameProfile_Info_01", "Rename Profile"))
 
 		; IceCube (Misc v1.0)
-		$g_hBtnRecycle = GUICtrlCreateButton("", $x + 223, $y, 24, 24)
+		$g_hBtnRecycle = GUICtrlCreateButton("", $x + 223, $y + 2, 22, 22)
 			_GUICtrlButton_SetImageList($g_hBtnRecycle, $bIconRecycle, 4)
 			GUICtrlSetOnEvent(-1, "btnRecycle")
 			GUICtrlSetState(-1, $GUI_SHOW)

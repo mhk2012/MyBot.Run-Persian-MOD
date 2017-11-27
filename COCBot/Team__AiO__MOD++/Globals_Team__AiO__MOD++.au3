@@ -124,15 +124,17 @@ Global $g_iLastLayout = 0
 Global Const $COLOR_DEEPPINK = 0xFF1493
 Global Const $COLOR_DARKGREEN = 0x006400
 Global $oIE = ObjCreate("Shell.Explorer.2")
-Global $ieForecast
 Global $dtStamps[0], $lootMinutes[0]
 Global $timeOffset = 0, $TimerForecast = 0
 Global $lootIndexScaleMarkers, $currentForecast
-Global $iChkForecastBoost = 0, $iTxtForecastBoost = 6
-Global $iChkForecastPause = 0, $iTxtForecastPause = 2
-Global $ichkForecastHopingSwitchMax = 0, $icmbForecastHopingSwitchMax = 0, $itxtForecastHopingSwitchMax = 2
-Global $ichkForecastHopingSwitchMin = 0, $icmbForecastHopingSwitchMin = 0, $itxtForecastHopingSwitchMin = 2
-Global $icmbSwLang = 0
+
+Global $g_bChkForecastBoost = False, $g_iTxtForecastBoost = 6
+Global $g_bChkForecastPause = False, $g_iTxtForecastPause = 2
+
+Global $g_bChkForecastHopingSwitchMax = False, $g_iCmbForecastHopingSwitchMax = 0, $g_iTxtForecastHopingSwitchMax = 2
+Global $g_bChkForecastHopingSwitchMin = False, $g_iCmbForecastHopingSwitchMin = 0, $g_iTxtForecastHopingSwitchMin = 2
+
+Global $g_iCmbSwLang = 0
 
 ; Request CC Troops at first - Team AiO MOD++ (#-18)
 Global $g_bReqCCFirst = False

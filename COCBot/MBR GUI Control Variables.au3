@@ -207,7 +207,7 @@ Func InitializeControlVariables()
    ; Groups of controls
    Dim $aTabControlsVillage = [$g_hGUI_VILLAGE_TAB, $g_hGUI_VILLAGE_TAB_ITEM1, $g_hGUI_VILLAGE_TAB_ITEM2, $g_hGUI_VILLAGE_TAB_ITEM3, $g_hGUI_VILLAGE_TAB_ITEM4, $g_hGUI_VILLAGE_TAB_ITEM5]
    Dim $aTabControlsMisc = [$g_hGUI_MISC_TAB, $g_hGUI_MISC_TAB_ITEM1, $g_hGUI_MISC_TAB_ITEM2]
-   Dim $aTabControlsDonate = [$g_hGUI_DONATE_TAB, $g_hGUI_DONATE_TAB_ITEM1, $g_hGUI_DONATE_TAB_ITEM2, $g_hGUI_DONATE_TAB_ITEM3]
+   Dim $aTabControlsDonate = [$g_hGUI_DONATE_TAB, $g_hGUI_DONATE_TAB_ITEM4, $g_hGUI_DONATE_TAB_ITEM1, $g_hGUI_DONATE_TAB_ITEM2, $g_hGUI_DONATE_TAB_ITEM3]
    Dim $aTabControlsUpgrade = [$g_hGUI_UPGRADE_TAB, $g_hGUI_UPGRADE_TAB_ITEM1, $g_hGUI_UPGRADE_TAB_ITEM2, $g_hGUI_UPGRADE_TAB_ITEM3, $g_hGUI_UPGRADE_TAB_ITEM4, $g_hGUI_UPGRADE_TAB_ITEM5]
    Dim $aTabControlsNotify = [$g_hGUI_NOTIFY_TAB, $g_hGUI_NOTIFY_TAB_ITEM2, $g_hGUI_NOTIFY_TAB_ITEM6]
 
@@ -281,6 +281,20 @@ Func InitializeControlVariables()
 	$oAlwaysEnabledControls($g_hTabBot) = 1
 	$oAlwaysEnabledControls($g_hTabMOD) = 1
 	$oAlwaysEnabledControls($g_hTabAbout) = 1
+
+	$oAlwaysEnabledControls($btnGtfoChatAdd) = 1
+	$oAlwaysEnabledControls($cmbGtfo) = 1
+	$oAlwaysEnabledControls($chkKickMode) = 1
+	$oAlwaysEnabledControls($chkMassDonate) = 1
+	$oAlwaysEnabledControls($chkWaitForTroops) = 1
+	$oAlwaysEnabledControls($chkClanOpen) = 1
+	$oAlwaysEnabledControls($chkGtfoNote) = 1
+	$oAlwaysEnabledControls($txtGtfoChat) = 1
+	$oAlwaysEnabledControls($btnGtfoSendChat) = 1
+	$oAlwaysEnabledControls($lstGtfoChatTemplates) = 1
+	$oAlwaysEnabledControls($btnGtfoChatRemove) = 1
+	$oAlwaysEnabledControls($chkGtfoChatAuto) = 1
+	$oAlwaysEnabledControls($chkGtfoChatRandom) = 1
 
 	For $i in $aTabControlsVillage
 		$oAlwaysEnabledControls($i) = 1

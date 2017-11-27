@@ -179,7 +179,7 @@ Func TrainRevampOldStyle()
 	EndIf
 	If _Sleep($DELAYRESPOND) Then Return ; add 5ms delay to catch TrainIt errors, and force return to back to main loop
 
-	If (IsQueueEmpty($TrainTroopsTAB) AND Not $g_bIsFullArmywithHeroesAndSpells) Then
+	If IsQueueEmpty($TrainTroopsTAB) Then
 		If Not $g_bRunState Then Return
 		If Not IsArmyWindow(False, $ArmyTAB) Then OpenTrainTabNumber($ArmyTAB, "TrainRevampOldStyle()")
 
@@ -193,7 +193,7 @@ Func TrainRevampOldStyle()
 
 	$rWhatToTrain = WhatToTrain(False, False)
 	If DoWhatToTrainContainSpell($rWhatToTrain) Then
-		If (IsQueueEmpty($BrewSpellsTAB) AND Not $g_bIsFullArmywithHeroesAndSpells) Then
+		If IsQueueEmpty($BrewSpellsTAB) Then
 			TrainUsingWhatToTrain($rWhatToTrain, True)
 		Else
 			If Not IsArmyWindow(False, $ArmyTAB) Then OpenTrainTabNumber($ArmyTAB, "TrainRevampOldStyle()")
@@ -351,7 +351,7 @@ Func IsFullClanCastleSpells($bReturnOnly = False)
 	Local $bCCSpellFull = False
 	Local $ToReturn = False
 	If Not $g_bRunState Then Return
-	If Not $g_abSearchCastleSpellsWaitEnable[$DB] And Not $g_abSearchCastleSpellsWaitEnable[$LB] Then
+	If (Not $g_abAttackTypeEnable[$DB] Or Not $g_abSearchCastleSpellsWaitEnable[$DB]) And (Not $g_abAttackTypeEnable[$LB] Or Not $g_abSearchCastleSpellsWaitEnable[$LB]) Then
 		$ToReturn = True
 		If Not $bReturnOnly Then
 			Return $ToReturn
@@ -360,7 +360,7 @@ Func IsFullClanCastleSpells($bReturnOnly = False)
 		EndIf
 	EndIf
 
-	If $g_iCurrentCCSpell = $g_iTotalCCSpell Then $bCCSpellFull = True
+	If $g_iCurrentCCSpell = $g_iTotalCCSpell And $g_iTotalCCSpell > 0 Then $bCCSpellFull = True
 
 	If $bCCSpellFull And (($g_abAttackTypeEnable[$DB] And $g_abSearchCastleSpellsWaitEnable[$DB]) Or ($g_abAttackTypeEnable[$LB] And $g_abSearchCastleSpellsWaitEnable[$LB])) Then
 		If $g_bDebugSetlogTrain Then Setlog("Getting current available spell in Clan Castle.")
@@ -1378,7 +1378,6 @@ Func WhatToTrain($ReturnExtraTroopsOnly = False, $bSetLog = True)
 		; Elixir Troops
 		For $i = 0 To $eTroopCount - 1
 			Local $troopIndex = $g_aiTrainOrder[$i]
-			;SetDebugLog($ii & ": " & $troopIndex & " " & $g_aiCurrentTroops[$troopIndex] & " " & $g_asTroopShortNames[$troopIndex] & " " & $g_aiArmyCompTroops[$troopIndex])
 			If $g_aiArmyCompTroops[$troopIndex] > 0 Then
 				$ToReturn[UBound($ToReturn) - 1][0] = $g_asTroopShortNames[$troopIndex]
 				$ToReturn[UBound($ToReturn) - 1][1] = $g_aiArmyCompTroops[$troopIndex]
@@ -1389,7 +1388,6 @@ Func WhatToTrain($ReturnExtraTroopsOnly = False, $bSetLog = True)
 		; Spells
 		For $i = 0 To $eSpellCount - 1
 			Local $BrewIndex = $g_aiBrewOrder[$i]
-			If $g_bRunState = False Then Return
 			If TotalSpellsToBrewInGUI() = 0 Then ExitLoop
 			If $g_aiArmyCompSpells[$BrewIndex] > 0 Then
 				If HowManyTimesWillBeUsed($g_asSpellShortNames[$BrewIndex]) > 0 Then
@@ -1422,8 +1420,6 @@ Func WhatToTrain($ReturnExtraTroopsOnly = False, $bSetLog = True)
 			; Check Elixir Troops needed quantity to Train
 			For $ii = 0 To $eTroopCount - 1
 				Local $troopIndex = $g_aiTrainOrder[$ii]
-				;SetDebugLog($ii & ": " & $troopIndex & " " & $g_aiCurrentTroops[$troopIndex] & " " & $g_asTroopShortNames[$troopIndex] & " " & $g_aiArmyCompTroops[$troopIndex])
-				If $g_bRunState = False Then Return
 				If $g_aiArmyCompTroops[$troopIndex] > 0 Then
 					$ToReturn[UBound($ToReturn) - 1][0] = $g_asTroopShortNames[$troopIndex]
 					$ToReturn[UBound($ToReturn) - 1][1] = $g_aiArmyCompTroops[$troopIndex] - $g_aiCurrentTroops[$troopIndex]
@@ -1434,7 +1430,6 @@ Func WhatToTrain($ReturnExtraTroopsOnly = False, $bSetLog = True)
 			; Check Spells needed quantity to Brew
 			For $i = 0 To $eSpellCount - 1
 				Local $BrewIndex = $g_aiBrewOrder[$i]
-				If $g_bRunState = False Then Return
 				If TotalSpellsToBrewInGUI() = 0 Then ExitLoop
 				If $g_aiArmyCompSpells[$BrewIndex] > 0 Then
 					$ToReturn[UBound($ToReturn) - 1][0] = $g_asSpellShortNames[$BrewIndex]
@@ -1446,8 +1441,6 @@ Func WhatToTrain($ReturnExtraTroopsOnly = False, $bSetLog = True)
 			; Check Elixir Troops Extra Quantity
 			For $ii = 0 To $eTroopCount - 1
 				Local $troopIndex = $g_aiTrainOrder[$ii]
-				If $g_bRunState = False Then Return
-				;SetDebugLog($ii & ": " & $troopIndex & " " & $g_aiCurrentTroops[$troopIndex] & " " & $g_asTroopShortNames[$troopIndex] & " " & $g_aiArmyCompTroops[$troopIndex])
 				If $g_aiCurrentTroops[$troopIndex] > 0 Then
 					If $g_aiArmyCompTroops[$troopIndex] - $g_aiCurrentTroops[$troopIndex] < 0 Then
 						$ToReturn[UBound($ToReturn) - 1][0] = $g_asTroopShortNames[$troopIndex]
@@ -1460,10 +1453,9 @@ Func WhatToTrain($ReturnExtraTroopsOnly = False, $bSetLog = True)
 			; Check Spells Extra Quantity
 			For $i = 0 To $eSpellCount - 1
 				Local $BrewIndex = $g_aiBrewOrder[$i]
-				If $g_bRunState = False Then Return
 				If TotalSpellsToBrewInGUI() = 0 Then ExitLoop
-				If $g_aiCurrentSpells[$i] > 0 Then
-					If $g_aiArmyCompSpells[$i] - $g_aiCurrentSpells[$BrewIndex] < 0 Then
+				If $g_aiCurrentSpells[$BrewIndex] > 0 Then
+					If $g_aiArmyCompSpells[$BrewIndex] - $g_aiCurrentSpells[$BrewIndex] < 0 Then
 						$ToReturn[UBound($ToReturn) - 1][0] = $g_asSpellShortNames[$BrewIndex]
 						$ToReturn[UBound($ToReturn) - 1][1] = Abs($g_aiArmyCompSpells[$BrewIndex] - $g_aiCurrentSpells[$BrewIndex])
 						ReDim $ToReturn[UBound($ToReturn) + 1][2]

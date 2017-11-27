@@ -13,6 +13,7 @@
 ; AutoIt pragmas
 #NoTrayIcon
 #RequireAdmin
+#AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_UseX64=7n
 ;#AutoIt3Wrapper_Res_HiDpi=Y ; HiDpi will be set during run-time!
 #AutoIt3Wrapper_Run_Au3Stripper=y
@@ -29,7 +30,7 @@
 Opt("MustDeclareVars", 1)
 
 ; Check Version - Team AiO MOD++ (#-03)
-Global $g_sModversion = "v2.0.1" ;<== Just Change This to Version Number
+Global $g_sModversion = "v2.1" ;<== Just Change This to Version Number
 Global $g_sAio = "Persian MOD"
 
 Global $g_sBotTitle = "" ;~ Don't assign any title here, use Func UpdateBotTitle()
@@ -40,6 +41,7 @@ Global $g_hFrmBot = 0 ; The main GUI window
 #include "COCBot\functions\Config\DelayTimes.au3"
 #include "COCBot\GUI\MBR GUI Design Splash.au3"
 #include "COCBot\functions\Config\ScreenCoordinates.au3"
+#include "COCBot\functions\Config\ImageDirectories.au3"
 #include "COCBot\functions\Other\ExtMsgBox.au3"
 #include "COCBot\functions\Other\MBRFunc.au3"
 #include "COCBot\functions\Android\Android.au3"
@@ -70,10 +72,13 @@ MainLoop()
 
 Func UpdateBotTitle()
 	Local $sTitle = "My Bot " & $g_sBotVersion & " - " & $g_sAio & " " & $g_sModversion & " -"
+	Local $sConsoleTitle ; Console title has also Android Emulator Name
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
+		$sConsoleTitle = $sTitle
 	Else
 		$g_sBotTitle = $sTitle & " (" & ($g_sAndroidInstance <> "" ? $g_sAndroidInstance : $g_sAndroidEmulator) & ")" ;Do not change this. If you do, multiple instances will not work.
+		$sConsoleTitle = $sTitle & " " & $g_sAndroidEmulator & " (" & ($g_sAndroidInstance <> "" ? $g_sAndroidInstance : $g_sAndroidEmulator) & ")"
 	EndIf
 	If $g_hFrmBot <> 0 Then
 		; Update Bot Window Title also
@@ -81,7 +86,7 @@ Func UpdateBotTitle()
 		GUICtrlSetData($g_hLblBotTitle, $g_sBotTitle)
 	EndIf
 	; Update Console Window (if it exists)
-	DllCall("kernel32.dll", "bool", "SetConsoleTitle", "str", "Console " & $g_sBotTitle)
+	DllCall("kernel32.dll", "bool", "SetConsoleTitle", "str", "Console " & $sConsoleTitle)
 	; Update try icon title
 	TraySetToolTip($g_sBotTitle)
 
@@ -93,11 +98,6 @@ Func InitializeBot()
 	ProcessCommandLine()
 
 	SetupProfileFolder() ; Setup profile folders
-
-	If $g_iBotLaunchOption_Help Then
-		ShowCommandLineHelp()
-		Exit
-	EndIf
 
 	SetLogCentered(" BOT LOG ") ; Initial text for log
 
@@ -114,6 +114,20 @@ Func InitializeBot()
 	SetDebugLog("@OSServicePack: " & @OSServicePack)
 	SetDebugLog("Primary Display: " & @DesktopWidth & " x " & @DesktopHeight & " - " & @DesktopDepth & "bit")
 
+	DetectLanguage()
+	If $g_iBotLaunchOption_Help Then
+		ShowCommandLineHelp()
+		Exit
+	EndIf
+
+	InitAndroidConfig()
+
+	; early load of config
+	Local $bConfigRead = FileExists($g_sProfileConfigPath)
+	If $bConfigRead Or FileExists($g_sProfileBuildingPath) Then
+		readConfig()
+	EndIf
+
 	Local $sAndroidInfo = ""
 	; Disabled process priority tampering as not best practice
 	;Local $iBotProcessPriority = _ProcessGetPriority(@AutoItPID)
@@ -121,8 +135,6 @@ Func InitializeBot()
 
 	_Crypt_Startup()
 	__GDIPlus_Startup() ; Start GDI+ Engine (incl. a new thread)
-
-	InitAndroidConfig()
 
 	If FileExists(@ScriptDir & "\EnableMBRDebug.txt") Then ; Set developer mode
 		$g_bDevMode = True
@@ -135,13 +147,6 @@ Func InitializeBot()
 				EndIf
 			Next
 		EndIf
-	EndIf
-
-	; early load of config
-	Local $bConfigRead = False
-	If FileExists($g_sProfileConfigPath) Or FileExists($g_sProfileBuildingPath) Then
-		readConfig()
-		$bConfigRead = True
 	EndIf
 
 	CreateMainGUI() ; Just create the main window
@@ -212,12 +217,14 @@ Func ProcessCommandLine()
 					$g_iBotLaunchOption_Dock = 2
 				Case "/nobotslot", "/nbs", "-nobotslot", "-nbs"
 					$g_bBotLaunchOption_NoBotSlot = True
-				Case "/debug", "/debugmode", "/dev", "-debug", "-debugmode", "-dev"
+				Case "/debug", "/debugmode", "/dev", "/dm", "-debug", "-debugmode", "-dev", "-dm"
 					$g_bDevMode = True
 				Case "/minigui", "/mg", "-minigui", "-mg"
 					$g_iGuiMode = 2
 				Case "/nogui", "/ng", "-nogui", "-ng"
 					$g_iGuiMode = 0
+				Case "/hideandroid", "/ha", "-hideandroid", "-ha"
+					$g_bBotLaunchOption_HideAndroid = True
 				Case "/console", "/c", "-console", "-c"
 					$g_iBotLaunchOption_Console = True
 					_WinAPI_AllocConsole()
@@ -382,7 +389,7 @@ Func InitializeMBR(ByRef $sAI, $bConfigRead)
 
 	; multilanguage
 	If Not FileExists(@ScriptDir & "\Languages") Then DirCreate(@ScriptDir & "\Languages")
-	DetectLanguage()
+	;DetectLanguage()
 	_ReadFullIni()
 	; must be called after language is detected
 	TranslateTroopNames()
@@ -587,10 +594,10 @@ Func FinalInitialization(Const $sAI)
 	SetLog("-----------------------------------------------------------------------", $COLOR_MONEYGREEN)
 	SetLog("        » " & "Developer: Mohammad Hasan Kargar (@MHK2012)" & " «", $COLOR_TEAL, "Segoe Print", 8)
 	SetLog("         » " & "Thanks To NguyenAnhHD, Demen And Eloy" & " «", $COLOR_TEAL, "Segoe Print", 9)
-	SetLog("         » " & "Thanks To Parsa, Sobhan And Reza Haghighat" & " «", $COLOR_TEAL, "Segoe Print", 9)
+	SetLog("            » " & "Thanks To Parsa And Reza Haghighat" & " «", $COLOR_TEAL, "Segoe Print", 9)
 	SetLog("-----------------------------------------------------------------------", $COLOR_MONEYGREEN)
 	SetLog("                       » " & "Based On: MyBot " & $g_sBotVersion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
-	SetLog("                   » " & $g_sAio & " " & $g_sModversion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
+	SetLog("                       » " & $g_sAio & " " & $g_sModversion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
 	SetLog("-----------------------------------------------------------------------", $COLOR_MONEYGREEN)
 	SetLog(" ", $COLOR_MEDGRAY)
 
@@ -638,12 +645,14 @@ Func MainLoop()
 		If $g_bRestarted = True Then $iDelay = 0
 		$iStartDelay = $iDelay * 1000
 		$g_iBotAction = $eBotStart
+		; check if android should be hidden
+		If $g_bBotLaunchOption_HideAndroid Then $g_bIsHidden = True
 	EndIf
 
 	While 1
 		_Sleep($DELAYSLEEP, True, False)
 
-		If $g_bRunState = False And ($g_bNotifyPBEnable = True Or $g_bNotifyTGEnable = True) And $g_bNotifyRemoteEnable = True Then
+		If Not $g_bRunState And ($g_bNotifyPBEnable Or $g_bNotifyTGEnable) And $g_bNotifyRemoteEnable Then
 			NotifyRemoteControlProcBtnStart()
 		EndIf
 
@@ -679,6 +688,12 @@ Func runBot() ;Bot that runs everything in order
 	If $g_bChkSwitchAcc And $g_bReMatchAcc Then
 		Setlog("Rematching Account [" & $g_iNextAccount + 1 & "] with Profile [" & GUICtrlRead($g_ahCmbProfile[$g_iNextAccount]) & "]")
 		SwitchCoCAcc($g_iNextAccount)
+	EndIf
+	If $g_iGlobalChat Or $g_iClanChat Then
+		ChatbotMessage()
+	EndIf
+	If $g_ichkUseBotHumanization = 1 Then
+		BotHumanization()
 	EndIf
 
 	Local $iWaitTime
@@ -767,9 +782,9 @@ Func runBot() ;Bot that runs everything in order
 			If $g_bRunState = False Then Return
 			If $g_bRestart = True Then ContinueLoop
 			; Forecast - Team AiO MOD++ (#-17)
-			If $iChkForecastBoost = 1 Then
+			If $g_bChkForecastBoost Then
 				$currentForecast = readCurrentForecast()
-					If $currentForecast >= Number($iTxtForecastBoost, 3) Then
+					If $currentForecast >= Number($g_iTxtForecastBoost, 3) Then
 						If _GUICtrlComboBox_GetCurSel($g_hCmbBoostBarracks) > 0 Then
 							SetLog("Boost Time !", $COLOR_GREEN)
 						Else
@@ -779,7 +794,7 @@ Func runBot() ;Bot that runs everything in order
 					SetLog("Forecast index is below the required value, no boost !", $COLOR_RED)
 					EndIf
  			EndIf
-			If $iChkForecastPause = 1 Then
+			If $g_bChkForecastPause Then
 				$currentForecast = readCurrentForecast()
 			EndIf
 			If IsSearchAttackEnabled() Then ; if attack is disabled skip reporting, requesting, donating, training, and boosting
@@ -804,7 +819,6 @@ Func runBot() ;Bot that runs everything in order
 					If Unbreakable() = True Then ContinueLoop
 				EndIf
 			EndIf
-			AutoUpgrade()
 			MainSuperXPHandler() ; Goblin XP - Team AiO MOD++ (#-19)
 			Local $aRndFuncList = ['Laboratory', 'UpgradeHeroes', 'UpgradeBuilding', 'BuilderBase']
 			While 1
@@ -1077,7 +1091,7 @@ Func AttackMain() ;Main control for attack functions
 				;Setlog("BullyMode: " & $g_abAttackTypeEnable[$TB] & ", Bully Hero: " & BitAND($g_aiAttackUseHeroes[$g_iAtkTBMode], $g_aiSearchHeroWaitEnable[$g_iAtkTBMode], $g_iHeroAvailable) & "|" & $g_aiSearchHeroWaitEnable[$g_iAtkTBMode] & "|" & $g_iHeroAvailable, $COLOR_DEBUG)
 			EndIf
 			; Chatbot - Team AiO MOD++ (#-23)
-			If $g_iGlobalChat = True Or $g_iClanChat = True Then
+			If $g_iGlobalChat Or $g_iClanChat Then
 				ChatbotMessage()
 			EndIf
 			PrepareSearch()
@@ -1273,7 +1287,7 @@ Func _RunFunction($action)
  			AutoUpgrade()
 			_Sleep($DELAYRUNBOT3)
 		Case "BuilderBase"
-			If isOnBuilderIsland() Or (($g_bChkCollectBuilderBase Or $g_bChkStartClockTowerBoost) And SwitchBetweenBases()) Then
+			If isOnBuilderIsland() Or (($g_bChkCollectBuilderBase Or $g_bChkStartClockTowerBoost Or $g_iChkBBSuggestedUpgrades) And SwitchBetweenBases()) Then
 				CollectBuilderBase()
 				BuilderBaseReport()
 				StartClockTowerBoost()

@@ -216,7 +216,7 @@ Global Const $DELAYDONATECC3 = 50 ; click
 Global Const $DELAYDONATECC4 = 1250
 
 ;DonateWindow
-Global Const $DELAYDONATEWINDOW1 = 500
+Global Const $DELAYDONATEWINDOW1 = 1000
 Global Const $DELAYDONATEWINDOW2 = 100
 
 ;DropTrophy
@@ -387,3 +387,13 @@ Global Const $DELAYDROPSuperXP1= 500
 Global Const $DELAYDROPSuperXP2 = 1000
 Global Const $DELAYDROPSuperXP3 = 250
 Global Const $DELAYPREPARESearchSuperXP = 500
+
+;Train
+Global Const $iDelayTrain1 = 100
+Global Const $iDelayTrain2 = 500
+Global Const $iDelayTrain3 = 1000
+Global Const $iDelayTrain4 = 200
+Global Const $iDelayTrain5 = 250 ; click
+Global Const $iDelayTrain6 = 20 ; click
+Global Const $iDelayTrain7 = 5 ; Spells Creation
+Global Const $iDelayTrain8 = 5000 ; wait for a while to desapear the 'received castle troops' msg

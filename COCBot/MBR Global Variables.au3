@@ -32,6 +32,7 @@
 #include <GUIComboBox.au3>
 #include <GuiComboBoxEx.au3>
 #include <GuiSlider.au3>
+#include <GUIListBox.au3>
 #include <GuiToolBar.au3>
 #include <ProgressConstants.au3> ; Added for Splash
 #include <StaticConstants.au3>
@@ -57,7 +58,6 @@
 #include <Timers.au3>
 
 Global Const $g_sLogoPath = @ScriptDir & "\Images\Logo.png"
-Global Const $g_sLogoPath2 = @ScriptDir & "\Images\Logo2.png"
 Global Const $g_sLogoUrlPath = @ScriptDir & "\Images\LogoURL.png"
 Global Const $g_sLogoUrlSmallPath = @ScriptDir & "\Images\LogoURLsmall.png"
 Global Const $g_iGAME_WIDTH = 860
@@ -272,14 +272,14 @@ Global $__Nox_Config[1][2] = _ ; Alternative Nox Control ID (array must be order
 ;                 |          |                        |                                  |                |                      |                       |                      |                       |              |                    |64 = Make DPI Aware (if avaliable)                  |                                    |                                     |
 ;                 |          |                        |                                  |                |                      |                       |                      |                       |              |                    |128 = ADB use input swipe and not script            |                                    |                                     |
 Global $g_avAndroidAppConfig[8][16] = [ _ ;           |                                  |                |                      |                       |                      |                       |              |                    |256 = Update $g_sAppClassInstance with Window Handle|                                    |                                     |
+	["Nox",        "nox",     "No",                   "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH + 4, $g_iDEFAULT_HEIGHT - 10,0,             "127.0.0.1:62001",   1 + 2 + 4 + 8 + 16 + 32 + 256,'# ',                  '(nox Virtual Input|Android Input|Android_Input)', 0,                      2], _ ; Nox
     ["MEmu",       "MEmu",    "MEmu ",                "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH + 51,$g_iDEFAULT_HEIGHT - 12,0,             "127.0.0.1:21503",       2 + 4 + 8 + 16 + 32,      '# ',                  'Microvirt Virtual Input',           0,                                    2], _ ; MEmu
 	["BlueStacks2","Android", "BlueStacks ",          "[CLASS:BlueStacksApp; INSTANCE:1]","_ctl.Window",   $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,0,             "127.0.0.1:5555",    1 + 2     + 8 + 16 + 32 + 128,'$ ',                  'BlueStacks Virtual Touch',          0,                                    1], _ ; BlueStacks2
 	["BlueStacks", "Android", "BlueStacks App Player","[CLASS:BlueStacksApp; INSTANCE:1]","_ctl.Window",   $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,0,             "127.0.0.1:5555",    1         + 8 + 16 + 32 + 128,'$ ',                  'BlueStacks Virtual Touch',          0,                                    1], _ ; BlueStacks
-	["KOPLAYER",   "KOPLAYER","KOPLAYER",             "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH + 64,$g_iDEFAULT_HEIGHT - 8, 0,             "127.0.0.1:6555",    1 + 2 + 4 + 8 + 16 + 32,      '# ',                  'ttVM Virtual Input',                0,                                    2], _ ; KOPLAYER
-	["LeapDroid",  "vm1",     "Leapd",                "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,0,             "emulator-5554",     1         + 8 + 16 + 32,      '# ',                  'qwerty2',                           1,                                    1], _ ; LeapDroid
 	["iTools",     "iToolsVM","iTools ",              "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH + 2, $g_iDEFAULT_HEIGHT - 13,0,             "127.0.0.1:54001",   1 + 2     + 8 + 16 + 32 + 64, '# ',                  'iTools Virtual PassThrough Input',  0,                                    1], _ ; iTools
+	["KOPLAYER",   "KOPLAYER","KOPLAYER",             "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH + 64,$g_iDEFAULT_HEIGHT - 8, 0,             "127.0.0.1:6555",    1 + 2 + 4 + 8 + 16 + 32,      '# ',                  'ttVM Virtual Input',                0,                                    2], _ ; KOPLAYER
 	["Droid4X",    "droid4x", "Droid4X ",             "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH + 10,$g_iDEFAULT_HEIGHT + 50,0,             "127.0.0.1:26944",       2 + 4 + 8 + 16 + 32,      '# ',                  'droid4x Virtual Input',             0,                                    2], _ ; Droid4X
-	["Nox",        "nox",     "No",                   "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH + 4, $g_iDEFAULT_HEIGHT - 10,0,             "127.0.0.1:62001",   1 + 2 + 4 + 8 + 16 + 32 + 256,'# ',                  '(nox Virtual Input|Android Input)', 0,                                    2] _  ; Nox
+	["LeapDroid",  "vm1",     "Leapd",                "[CLASS:subWin; INSTANCE:1]",       "",              $g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,$g_iDEFAULT_WIDTH,     $g_iDEFAULT_HEIGHT - 48,0,             "emulator-5554",     1         + 8 + 16 + 32,      '# ',                  'qwerty2',                           1,                                    1]  _ ; LeapDroid
 ]
 
 ; Startup detection
@@ -294,7 +294,7 @@ Global Const $g_iAndroidBackgroundModeOpenGL = 2
 Global $g_iAndroidBackgroundMode = 0 ; 0 = Default (using $g_iAndroidBackgroundModeDefault), 1 = WinAPI mode (faster, but requires Android DirectX), 2 = ADB screencap mode (slower, but alwasy works even if Monitor is off -> "True Brackground Mode")
 Global $g_iAndroidBackgroundModeDefault = 1 ; Uses 1 or 2 of $g_iAndroidBackgroundMode
 Global $g_iAndroidConfig = 0 ; Default selected Android Config of $g_avAndroidAppConfig array
-Global $g_sAndroidVersion ; Identified version of Android Emulator
+Global $g_sAndroidVersion ; Identified version of Android Emulator (not Android Version, this is the version of the vendor!)
 Global $g_sAndroidEmulator ; Emulator used (BS, BS2, Droid4X, MEmu or Nox)
 Global $g_sAndroidInstance ; Clone or instance of emulator or "" if not supported
 Global $g_sAndroidTitle ; Emulator Window Title
@@ -325,6 +325,12 @@ Global $g_iAndroidControlClickDelay = 10 ; 10 is Default (Milliseconds)
 Global $g_iAndroidControlClickDownDelay = 0 ; 10 is Default (Milliseconds)
 Global $g_iAndroidControlClickWindow = 0 ; 0 = Click the Android Control, 1 = Click the Android Window
 Global $g_iAndroidControlClickMode = 0 ; 0 = Use AutoIt ControlClick, 1 = Use _SendMessage
+Global $g_bAndroidCloseWithBot = False ; Close Android when bot closes
+
+; Android details
+Global Const $g_iAndroidJellyBean = 17
+Global Const $g_iAndroidLollipop = 21
+Global $g_iAndroidVersionAPI = $g_iAndroidJellyBean ; getprop ro.build.version.sdk
 
 ; Updated in UpdateAndroidConfig() and $g_sAndroidEmulator&Init() as well
 Global $g_bInitAndroidActive = False
@@ -430,6 +436,7 @@ Global $g_bSilentSetLog = False ; No logs to Log Control when enabled
 Global $g_sLogFileName = ""
 Global $g_hLogFile = 0
 Global $g_hAttackLogFile = 0
+Global $g_bFlushGuiLogActive = False ; when RichEdit Log control get updated, focus change occur and this flag is required to avoid focus change due to GUIControl_WM_ACTIVATEAPP events
 
 ; Used in _Sleep.au3 to control various administrative tasks when idle
 Global $g_hStruct_SleepMicro = DllStructCreate("int64 time;") ; holds the _SleepMilli sleep time in 100-nanoseconds
@@ -440,6 +447,7 @@ Global Const $g_bMoveMouseOutBS = False ; If enabled moves mouse out of Android 
 Global $g_bDevMode = False ; set to true in mybot.run.au3 if EnableMBRDebug.txt is present in MBR root directory
 
 ; Startup
+Global $g_bBotLaunchOption_HideAndroid = False ; Start bot and hide Android immediately
 Global $g_bBotLaunchOption_Restart = False ; If true previous instance is closed when found by window title, see bot launch options below
 Global $g_bBotLaunchOption_Autostart = False ; If true bot will automatically start
 Global $g_bBotLaunchOption_NoWatchdog = False ; If true bot will not launch the watchdog process (that automatically restarts crashed bots)
@@ -511,7 +519,7 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, $eWall12, $ePortuguese, $eIcnDonPoisonSpell, $eIcnDonEarthQuakeSpell, $eIcnDonHasteSpell, $eIcnDonSkeletonSpell, $eVietnamese, $eKorean, $eAzerbaijani, _
 		$eArabic, $eIcnBuilderHall, $eIcnClockTower, $eIcnElixirCollectorL5, $eIcnGemMine, $eIcnGoldMineL5, _
 		$eIcnUpgrade, $eIcnDebug, $eIcnMods, $eIcnSwitchOptions, $eIcnHumanization, $eIcnGoblinXP, $eIcnChatbot, $eIcnStats, $eIcnForecast, $eIcnSwitchAcc, $eIcnSwitchProfiles, $eIcnFarmSchedule, _ ; Icn For Mods Tab
-		$eIcnClanHop, $eIcnChat, $eIcnRepeat, $eIcnClan, $eIcnTarget, $eIcnSettings ; Icn for Bot Humanization
+		$eIcnClanHop, $eIcnChat, $eIcnRepeat, $eIcnClan, $eIcnTarget, $eIcnDownloadCSV, $eIcnSettings ; Icn for Bot Humanization
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
@@ -599,25 +607,25 @@ Global Const $g_aiTroopTrainTime[$eTroopCount] = [ _
 		36, 90, 180, 600, 360, 600, 120]
 ; Zero element contains number of levels, elements 1 thru n contain cost of that level troop
 Global Const $g_aiTroopCostPerLevel[$eTroopCount][9] = [ _
-		[7, 25, 40, 60, 100, 150, 200, 250], _ 				 	; Barbarian
-		[7, 50, 80, 120, 200, 300, 400, 500], _ 			 	; Archer
-		[8, 250, 750, 1250, 1750, 2250, 3000, 3500, 4000], _	; Giant
+		[7, 25, 40, 60, 100, 150, 200, 250], _ 					; Barbarian
+		[7, 50, 80, 120, 200, 300, 400, 500], _ 				; Archer
+		[8, 250, 750, 1250, 1750, 2250, 3000, 3500, 4000], _ 	; Giant
 		[7, 25, 40, 60, 80, 100, 150, 200], _ 				 	; Goblin
-		[7, 1000, 1500, 2000, 2500, 3000, 3500, 4000], _ 	 	; WallBreaker
+		[7, 1000, 1500, 2000, 2500, 3000, 3500, 4000], _ 		; WallBreaker
 		[7, 2000, 2500, 3000, 3500, 4000, 4500, 5000], _ 	 	; Balloon
-		[8, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000], _ 	; Wizard
+		[8, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000], _  ; Wizard
 		[5, 5000, 6000, 8000, 10000, 15000], _					; Healer
 		[6, 25000, 29000, 33000, 37000, 42000, 46000], _ 		; Dragon
 		[6, 28000, 32000, 36000, 40000, 45000, 50000], _ 		; Pekka
 		[5, 15000, 16000, 17000, 18000, 19000], _ 			 	; BabyDragon
 		[5, 4200, 4800, 5200, 5600, 6000], _  					; Miner
-		[7, 6, 7, 8, 9, 10, 11, 12], _ 						 	; Minion
+		[7, 6, 7, 8, 9, 10, 11, 12], _ 							; Minion
 		[7, 40, 45, 52, 58, 65, 90, 115], _					 	; HogRider
-		[6, 70, 100, 130, 160, 190, 220], _						; Valkyrie
+		[6, 70, 100, 130, 160, 190, 220], _ 				 	; Valkyrie
 		[7, 450, 525, 600, 675, 750, 825, 900], _ 				; Golem
 		[3, 250, 350, 450], _ 								 	; Witch
-		[4, 390, 450, 510, 570], _  						 	; Lavahound
-		[3, 130, 150, 170]]										; Bowler
+		[4, 390, 450, 510, 570], _  							; Lavahound
+		[3, 130, 150, 170]] 									; Bowler
 Global Const $g_aiTroopDonateXP[$eTroopCount] = [1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 5, 2, 5, 8, 30, 12, 30, 6]
 
 ; Spells
@@ -629,16 +637,16 @@ Global Const $g_aiSpellSpace[$eSpellCount] = [2, 2, 2, 2, 2, 4, 1, 1, 1, 1]
 Global Const $g_aiSpellTrainTime[$eSpellCount] = [360, 360, 360, 360, 360, 720, 180, 180, 180, 180]
 ; Zero element contains number of levels, elements 1 thru n contain cost of that level spell
 Global Const $g_aiSpellCostPerLevel[$eSpellCount][8] = [ _
-		[7, 15000, 16500, 18000, 20000, 22000, 24000, 26000], _	 ; LightningSpell
-		[7, 15000, 16500, 18000, 19000, 21000, 23000, 25000], _  ; HealSpell
-		[5, 23000, 25000, 27000, 30000, 33000], _     		 	 ; RageSpell
-		[3, 23000, 27000, 31000], _        					 	 ; JumpSpell
-		[6, 23000, 26000, 29000, 31000, 33000, 35000], _ 		 ; FreezeSpell
-		[5, 38000, 39000, 41000, 43000, 45000], _				 ; CloneSpell
-		[5, 95, 110, 125, 140, 155], _         				 	 ; PoisonSpell
-		[4, 125, 140, 160, 180], _    						 	 ; EarthquakeSpell
-		[4, 80, 85, 90, 95], _								 	 ; HasteSpell
-		[4, 110, 120, 130, 140]] 								 ; SkeletonSpell
+		[7, 15000, 16500, 18000, 20000, 22000, 24000, 26000], _  ;LightningSpell
+		[7, 15000, 16500, 18000, 19000, 21000, 23000, 25000], _  ;HealSpell
+		[5, 23000, 25000, 27000, 30000, 33000], _     			 ;RageSpell
+		[3, 23000, 27000, 31000], _        						 ;JumpSpell
+		[6, 23000, 26000, 29000, 31000, 33000, 35000], _ 		 ;FreezeSpell
+		[5, 38000, 39000, 41000, 43000, 45000], _				 ;CloneSpell
+		[5, 95, 110, 125, 140, 155], _         					 ;PoisonSpell
+		[4, 125, 140, 160, 180], _    							 ;EarthquakeSpell
+		[4, 80, 85, 90, 95], _									 ;HasteSpell
+		[4, 110, 120, 130, 140]] 								 ;SkeletonSpell
 Global Const $g_aiSpellDonateXP[$eSpellCount] = [10, 10, 10, 10, 10, 0, 5, 5, 5, 5]
 
 ; Hero Bitmaped Values
@@ -648,6 +656,7 @@ Global Enum $eHeroNone = 0, $eHeroKing = 1, $eHeroQueen = 2, $eHeroWarden = 4
 Global Enum $eHeroBarbarianKing, $eHeroArcherQueen, $eHeroGrandWarden, $eHeroCount
 Global Const $g_asHeroNames[$eHeroCount] = ["Barbarian King", "Archer Queen", "Grand Warden"]
 Global Const $g_asHeroShortNames[$eHeroCount] = ["King", "Queen", "Warden"]
+Global $g_aiHeroBoost[$eHeroCount] = ["1970/01/01 00:00:00", "1970/01/01 00:00:00", "1970/01/01 00:00:00"] ; Use Epoch as standard values :)
 
 ; Leagues
 Global Enum $eLeagueUnranked, $eLeagueBronze, $eLeagueSilver, $eLeagueGold, $eLeagueCrystal, $eLeagueMaster, $eLeagueChampion, $eLeagueTitan, $eLeagueLegend, $eLeagueCount
@@ -663,6 +672,9 @@ Global Const $g_asLeagueDetails[22][5] = [ _
 
 ; Loot types
 Global Enum $eLootGold, $eLootElixir, $eLootDarkElixir, $eLootTrophy, $eLootCount
+
+;Loot types builder base
+Global Enum $eLootGoldBB, $eLootElixirBB, $eLootTrophyBB, $eLootCountBB
 
 ;--------------------------------------------------------------------------
 ; END: Attacks, Troops, Spells, Leagues, Loot Types
@@ -824,13 +836,13 @@ Global $g_iCmbUpgradeWallsLevel = 6
 Global $g_aiWallsCurrentCount[13] = [-1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0] ; elements 0 to 3 are not referenced
 
 ; Auto Upgrade
-Global $g_ichkAutoUpgrade = 0
-Global $g_ichkIgnoreTH = 0, $g_ichkIgnoreKing = 0, $g_ichkIgnoreQueen = 0, $g_ichkIgnoreWarden = 0, $g_ichkIgnoreCC = 0, $g_ichkIgnoreLab = 0
-Global $g_ichkIgnoreBarrack = 0, $g_ichkIgnoreDBarrack = 0, $g_ichkIgnoreFactory = 0, $g_ichkIgnoreDFactory = 0
-Global $g_ichkIgnoreGColl = 0, $g_ichkIgnoreEColl = 0, $g_ichkIgnoreDColl = 0
-Global $g_iSmartMinGold = 150000, $g_iSmartMinElixir = 150000, $g_iSmartMinDark = 1500
-Global $g_ichkUpgradesToIgnore[13] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-Global $g_ichkResourcesToIgnore[3] = [0, 0, 0]
+Global $g_iChkAutoUpgrade = 0
+Global $g_iChkIgnoreTH = 0, $g_iChkIgnoreKing = 0, $g_iChkIgnoreQueen = 0, $g_iChkIgnoreWarden = 0, $g_iChkIgnoreCC = 0, $g_iChkIgnoreLab = 0
+Global $g_iChkIgnoreBarrack = 0, $g_iChkIgnoreDBarrack = 0, $g_iChkIgnoreFactory = 0, $g_iChkIgnoreDFactory = 0
+Global $g_iChkIgnoreGColl = 0, $g_iChkIgnoreEColl = 0, $g_iChkIgnoreDColl = 0
+Global $g_iTxtSmartMinGold = 150000, $g_iTxtSmartMinElixir = 150000, $g_iTxtSmartMinDark = 1500
+Global $g_iChkUpgradesToIgnore[13] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Global $g_iChkResourcesToIgnore[3] = [0, 0, 0]
 Global $g_iCurrentLineOffset = 0, $g_iNextLineOffset = 0
 Global $g_aUpgradeNameLevel ; [Nb of elements in Array, Name, Level]
 Global $g_aUpgradeResourceCostDuration[3] = ["", "", ""] ; Resource, Cost, Duration
@@ -842,8 +854,8 @@ Global $g_sUpgradeResource = 0
 Global $g_sUpgradeDuration
 
 ; Builder Base
-Global $g_ichkBBSuggestedUpgrades = 0, $g_ichkBBSuggestedUpgradesIgnoreGold = 0, $g_ichkBBSuggestedUpgradesIgnoreElixir = 0, $g_ichkBBSuggestedUpgradesIgnoreHall = 0
-Global $g_ichkPlacingNewBuildings = 0
+Global $g_iChkBBSuggestedUpgrades = 0, $g_iChkBBSuggestedUpgradesIgnoreGold = 0, $g_iChkBBSuggestedUpgradesIgnoreElixir = 0, $g_iChkBBSuggestedUpgradesIgnoreHall = 0
+Global $g_iChkPlacingNewBuildings = 0
 
 Global $g_iQuickMISX = 0, $g_iQuickMISY = 0
 
@@ -913,7 +925,7 @@ Global $g_aiTrainOrder[$eTroopCount] = [ _
 		$eTroopMinion, $eTroopHogRider, $eTroopValkyrie, $eTroopGolem, $eTroopWitch, $eTroopLavaHound, _
 		$eTroopBowler]
 
-;	 Spells Brew Order
+; Spells Brew Order
 Global Const $g_aiSpellsOrderIcon[12] = [ _
 		$eIcnOptions, $eIcnLightSpell, $eIcnHealSpell,$eIcnRageSpell, $eIcnJumpSpell, $eIcnFreezeSpell, $eIcnCloneSpell,  _
 		$eIcnPoisonSpell, $eIcnEarthQuakeSpell, $eIcnHasteSpell, $eIcnSkeletonSpell]
@@ -1089,7 +1101,7 @@ Global $g_bCheckGameLanguage = True
 Global $g_bAutoUpdateGame = False
 Global $g_bAutoAlignEnable = False, $g_iAutoAlignPosition = "EMBED", $g_iAutoAlignOffsetX = "", $g_iAutoAlignOffsetY = ""
 Global $g_bUpdatingWhenMinimized = True ; Alternative Minimize Window routine for bot that enables window updates when minimized
-Global $g_bHideWhenMinimized = False ; Hide bot window in taskbar when minimized
+Global $g_bHideWhenMinimized = True ; Hide bot window in taskbar when minimized
 Global $g_bUseRandomClick = False
 Global $g_bScreenshotPNGFormat = False, $g_bScreenshotHideName = True
 Global $g_iAnotherDeviceWaitTime = 120
@@ -1118,12 +1130,12 @@ Global $g_bForceClanCastleDetection = 0
 
 ; Android & MBR window
 Global Const $g_WIN_POS_DEFAULT = 0xFFFFFFF
-Global $g_iFrmBotPosX = -1 ; Position X of the GUI
-Global $g_iFrmBotPosY = -1 ; Position Y of the GUI
-Global $g_iAndroidPosX = -1 ; Position X of the Android Window (undocked)
-Global $g_iAndroidPosY = -1 ; Position Y of the Android Window (undocked)
-Global $g_iFrmBotDockedPosX = -1 ; Position X of the docked GUI
-Global $g_iFrmBotDockedPosY = -1 ; Position Y of the docked GUI
+Global $g_iFrmBotPosX = $g_WIN_POS_DEFAULT ; Position X of the GUI
+Global $g_iFrmBotPosY = $g_WIN_POS_DEFAULT ; Position Y of the GUI
+Global $g_iAndroidPosX = $g_WIN_POS_DEFAULT ; Position X of the Android Window (undocked)
+Global $g_iAndroidPosY = $g_WIN_POS_DEFAULT ; Position Y of the Android Window (undocked)
+Global $g_iFrmBotDockedPosX = $g_WIN_POS_DEFAULT ; Position X of the docked GUI
+Global $g_iFrmBotDockedPosY = $g_WIN_POS_DEFAULT ; Position Y of the docked GUI
 Global $g_iFrmBotAddH = 0 ; Additional Height of GUI (e.g. when Android docked)
 Global $g_bIsHidden = False ; If hidden or not
 Global $g_aiBSpos[2] ; Inside Android window positions relative to the screen, [x,y]
@@ -1180,6 +1192,9 @@ Global $g_aiLaboratoryPos[2] = [-1, -1] ; Position of laboratory
 Global $g_aiClanCastlePos[2] = [-1, -1] ; Position of clan castle
 Global $g_iDetectedImageType = 0 ; Image theme; 0 = normal, 1 = snow
 Global $g_abNotNeedAllTime[2] = [True, True] ; ReArm, CheckTombs
+
+;Builder Base
+Global $g_aiCurrentLootBB[$eLootCountBB] = [0, 0, 0] ; current stats on builders base
 
 ; Army camps
 Global $g_iArmyCapacity = 0 ; Calculated percentage of troops currently in camp / total camp space, expressed as an integer from 0 to 100
@@ -1417,12 +1432,6 @@ Global $g_bDisableDropTrophy = False ; this will be True if you tried to use Dro
 Global $g_avDTtroopsToBeUsed[7][2] = [["Barb", 0], ["Arch", 0], ["Giant", 0], ["Wall", 0], ["Gobl", 0], ["Mini", 0], ["Ball", 0]] ; DT available troops [type, qty]
 
 ; Obstacles
-Global Const $g_sPersonalBreak = @ScriptDir & "\imgxml\other\break*"
-Global Const $g_sAnotherDevice = @ScriptDir & "\imgxml\other\device*"
-Global Const $g_sCocStopped = @ScriptDir & "\imgxml\other\CocStopped*"
-Global Const $g_sCocReconnecting = @ScriptDir & "\imgxml\other\CocReconnecting*"
-Global Const $g_sAppRateNever = @ScriptDir & "\imgxml\other\RateNever*"
-Global Const $g_sGfxError = @ScriptDir & "\imgxml\other\GfxError*"
 Global $g_bMinorObstacle = False
 Global $g_bGfxError = False ; True when Android Gfx Errors detected that will initiate Android reboot
 
@@ -1581,9 +1590,6 @@ $g_oBldgImages.add($eBldgWizTower & "_" & "1", @ScriptDir & "\imgxml\Buildings\W
 $g_oBldgImages.add($eBldgMortar & "_" & "0", @ScriptDir & "\imgxml\Buildings\Mortars")
 $g_oBldgImages.add($eBldgAirDefense & "_" & "0", @ScriptDir & "\imgxml\Buildings\ADefense")
 
-; ================================================== BB FEATURES PART ================================================== ;
-Global $g_iGoldBB = 0, $g_iElixirBB = 0, $g_iTrophiesBB = 0, $g_aBuilder[2] = [0,0]
-
 ; Team AiO MOD++ (2017)
 #include "Team__AiO__MOD++\Globals_Team__AiO__MOD++.au3"
 
@@ -1591,3 +1597,4 @@ Global $g_iGoldBB = 0, $g_iElixirBB = 0, $g_iTrophiesBB = 0, $g_aBuilder[2] = [0
 
 ;xbenk ~ legend league
 Global $g_iTotalSearchTime = 0
+; EOF

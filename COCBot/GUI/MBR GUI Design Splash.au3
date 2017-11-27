@@ -25,7 +25,6 @@ Global $g_hSplashMutex = 0
 #include "MBR GUI Control Splash.au3"
 
 #Region Splash
-
 Func CreateSplashScreen($iSteps = Default)
 
 	Local $iGuiState = @SW_SHOWNOACTIVATE
@@ -41,7 +40,7 @@ Func CreateSplashScreen($iSteps = Default)
 		$g_hSplashTimer = 0
 	EndIf
 
-	Local $sSplashImg = $g_sLogoPath2
+	Local $sSplashImg = $g_sLogoPath
 	Local $hImage, $iX, $iY
 	Local $iT = 4 ; Top of logo (additional space)
 	Local $iB = 0 ; Bottom of logo (additional space)
@@ -96,5 +95,4 @@ Func CreateSplashScreen($iSteps = Default)
 	EndIf
 
 EndFunc   ;==>CreateSplashScreen
-
 #EndRegion Splash

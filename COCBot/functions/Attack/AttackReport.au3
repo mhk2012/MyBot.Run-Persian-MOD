@@ -249,9 +249,9 @@ Func AttackReport()
 			If ($starsearned = 0) Then
 				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_ERROR)
 			ElseIf ($starsearned = 1) Then
-				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend)
+				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_ORANGE)
 			ElseIf ($starsearned = 2) Then
-				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend)
+				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_INFO)
 			ElseIf ($starsearned = 3) Then
 				SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_SUCCESS1)
 			EndIf

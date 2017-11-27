@@ -849,6 +849,7 @@ Func NotifyRemoteControlProc()
 								NotifyPushToPushBullet($g_sNotifyOrigin & " | " & GetTranslatedFileIni("MBR Func_Notify", "Command-Not-Recognized", "Command not recognized") & "\n" & GetTranslatedFileIni("MBR Func_Notify", "Request-For-Help_Info_01", "Please push BOT HELP to obtain a complete command list."))
 								NotifyDeleteMessageFromPushBullet($iden[$x])
 							EndIf
+
 							; Chatbot - Team AiO MOD++ (#-23)
 							If StringInStr($body[$x], StringUpper($g_sNotifyOrigin) & " SENDCHAT ") Then
 							Local $chatMessage = StringRight($body[$x], StringLen($body[$x]) - StringLen("BOT " & StringUpper($g_sNotifyOrigin) & " SENDCHAT "))
@@ -883,6 +884,7 @@ Func NotifyRemoteControlProc()
 									NotifyDeleteMessageFromPushBullet($iden[$x])
 								EndIf
 							EndIf
+
 					EndSwitch
 					$body[$x] = ""
 					$iden[$x] = ""
@@ -944,6 +946,11 @@ Func NotifyRemoteControlProc()
 						NotifyPushToTelegram($g_sNotifyOrigin & " | " & GetTranslatedFileIni("MBR Func_Notify", "Request-Stop_Info_16", "Request to Restart") & "...\n" & GetTranslatedFileIni("MBR Func_Notify", "Request-Stop_Info_09", "Your bot and Emulator are now restarting..."))
 						SaveConfig()
 						RestartBot()
+					Case GetTranslatedFileIni("MBR Func_Notify", "START", "START"), '\u25b6 ' & GetTranslatedFileIni("MBR Func_Notify", "START", "START")
+						If $g_bRunState = True Then
+							SetLog("Notify Telegram" & ": " & "Your bot is currently started, no action was taken", $COLOR_SUCCESS)
+							NotifyPushToTelegram($g_sNotifyOrigin & " | " & GetTranslatedFileIni("MBR Func_Notify", "Request-Start_Info_01", "Request to Start...") & "\n" & GetTranslatedFileIni("MBR Func_Notify", "Request-Start_Info_03", "Your bot is currently started, no action was taken"))
+						EndIf
 					Case GetTranslatedFileIni("MBR Func_Notify", "STOP", "STOP"), '\U25AA ' & GetTranslatedFileIni("MBR Func_Notify", "STOP", "STOP")
 						SetLog("Notify Telegram: Your request has been received. Bot is now stopped", $COLOR_SUCCESS)
 						If $g_bRunState = True Then
@@ -1093,6 +1100,7 @@ Func NotifyRemoteControlProc()
 						SetLog("Notify Telegram: Your request has been received from " & $g_sNotifyOrigin & ". Standby PC", $COLOR_SUCCESS)
 						NotifyPushToTelegram(GetTranslatedFileIni("MBR Func_Notify", "STANDBY_Info_02", "PC Standby sequence initiated"))
 						Shutdown(32)
+
 					; Chatbot - Team AiO MOD++ (#-23)
 					Case Else
 						If StringInStr($TGActionMSG, "SENDCHAT") Then

@@ -1163,7 +1163,7 @@ Func DetectSlotTroop(Const $iTroopIndex)
 		Local $x1 = $x + 75
 		Local $y1 = $y + 43
 
-		$FullTemp = SearchImgloc(@ScriptDir & "\imgxml\DonateCC\Troops\", $x, $y, $x1, $y1)
+		$FullTemp = SearchImgloc($g_sImgDonateTroops, $x, $y, $x1, $y1)
 		If $g_bDebugSetlog Then Setlog("Troop Slot: " & $Slot & " SearchImgloc returned:" & $FullTemp[0] & ".", $COLOR_DEBUG)
 
 		If StringInStr($FullTemp[0] & " ", "empty") > 0 Then ExitLoop
@@ -1189,7 +1189,7 @@ Func DetectSlotTroop(Const $iTroopIndex)
 		Local $x1 = $x + 75
 		Local $y1 = $y + 43
 
-		$FullTemp = SearchImgloc(@ScriptDir & "\imgxml\DonateCC\Troops\", $x, $y, $x1, $y1)
+		$FullTemp = SearchImgloc($g_sImgDonateTroops, $x, $y, $x1, $y1)
 		If $g_bDebugSetlog Then Setlog("Troop Slot: " & $Slot & " SearchImgloc returned:" & $FullTemp[0] & ".", $COLOR_DEBUG)
 
 		If StringInStr($FullTemp[0] & " ", "empty") > 0 Then ExitLoop
@@ -1222,7 +1222,7 @@ Func DetectSlotSpell(Const $iSpellIndex)
 		Local $x1 = $x + 75
 		Local $y1 = $y + 43
 
-		$FullTemp = SearchImgloc(@ScriptDir & "\imgxml\DonateCC\Spells\", $x, $y, $x1, $y1)
+		$FullTemp = SearchImgloc($g_sImgDonateSpells, $x, $y, $x1, $y1)
 		If $g_bDebugSetlog Then Setlog("Spell Slot: " & $Slot & " SearchImgloc returned:" & $FullTemp[0] & ".", $COLOR_DEBUG)
 
 		If StringInStr($FullTemp[0] & " ", "empty") > 0 Then ExitLoop

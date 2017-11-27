@@ -14,6 +14,8 @@
 ; ===============================================================================================================================
 #include-once
 
+#include "MOD GUI Control - Download CSV.au3"
+
 ; Classic Four Finger - Team AiO MOD++ (#-04)
 Func cmbStandardDropSidesAB() ; avoid conflict between FourFinger and SmartAttack
 	If _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesAB) = 4 Then
@@ -240,6 +242,41 @@ Func chkFillArcher()
 		_GUI_Value_STATE("DISABLE", $g_htxtFillArcher)
 	EndIf
 EndFunc   ;==>chkFillArcher
+
+; Forecast - Team AiO MOD++ (#-17)
+Func chkForecastBoost()
+	_GUICtrlEdit_SetReadOnly($g_hTxtForecastBoost, GUICtrlRead($g_hChkForecastBoost) = $GUI_CHECKED ? False : True)
+EndFunc   ;==>chkForecastBoost
+
+Func chkForecastPause()
+	_GUICtrlEdit_SetReadOnly($g_hTxtForecastPause, GUICtrlRead($g_hChkForecastPause) = $GUI_CHECKED ? False : True)
+EndFunc   ;==>chkForecastPause
+
+Func chkForecastHopingSwitch()
+	_GUICtrlEdit_SetReadOnly($g_hTxtForecastHopingSwitchMax, GUICtrlRead($g_hChkForecastHopingSwitchMax) = $GUI_CHECKED ? False : True)
+	_GUICtrlEdit_SetReadOnly($g_hTxtForecastHopingSwitchMin, GUICtrlRead($g_hChkForecastHopingSwitchMin) = $GUI_CHECKED ? False : True)
+EndFunc   ;==>chkForecastHopingSwitch
+
+Func cmbSwLang()
+	Switch GUICtrlRead($g_hCmbSwLang)
+		Case "EN"
+			setForecast2()
+		Case "RU"
+			setForecast3()
+		Case "FR"
+			setForecast4()
+		Case "DE"
+			setForecast5()
+		Case "ES"
+			setForecast6()
+		Case "FA"
+			setForecast7()
+		Case "PT"
+			setForecast8()
+		Case "IN"
+			setForecast9()
+	EndSwitch
+EndFunc   ;==>cmbSwLang
 
 ; Switch Profile - Team AiO MOD++ (#-25)
 Func btnRecycle()

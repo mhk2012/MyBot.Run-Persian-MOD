@@ -50,6 +50,9 @@
 #include "functions\Bot Humanization\ClanActions.au3"
 #include "functions\Bot Humanization\ClanWarActions.au3"
 
+; Forecast - Team AiO MOD++ (#-17)
+#include "functions\Mod's\Forecast.au3"
+
 ; Goblin XP - Team AiO MOD++ (#-19)
 #include "functions\GoblinXP\GoblinXP.au3"
 #include "functions\GoblinXP\multiSearch.au3"

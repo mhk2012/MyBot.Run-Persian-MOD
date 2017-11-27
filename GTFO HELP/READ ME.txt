@@ -1,0 +1,64 @@
+Note:  GTFO SUPPORT ONLY 1 TROOP(MODE NOT MIXED)
+USE BLUESTACKS FOR BETTER RESULT IF YOU ARE USING CHAT OPTION IN GTFO
+
+CLAN WILL BE OPENED BY BOT AUTOMATICALLY
+BOT WILL BE IDLE FOR 3 MINS IF CLAN IS IN INVITE MODE, AFTER IDLE TIME BOT WILL RESTORE IT TO OPEN MODE. ( HELPS PLAYERS TO GET WAR TROOPS / TO START WAR)
+
+STEP 1:
+Set Troop and spell along with Capacity
+
+STEP 2:
+Set halt Attack Resources to stop GTFO bot if resources reach minimal value
+Enable Ream, Collect and Clear Tombs (For Keep Village updated and Clean)
+
+and relocate your Town Hall and Restart Bot It is Required (MUST)
+
+
+STEP 3:
+Enable Troop Request and Request Text
+
+STEP 4:
+Set Game Language to English
+Set Forced Single PB logoff time
+
+STEP 5:
+Set Kick Limite according to your need
+Set Donation Cap (Donations per round / troop limit for donation request)
+Set Received Cap (To Kick members after certain donation they received)
+Set Troop (Same as Troop Tab) and Spell if you want (Optional)
+Mass Donate Not required (Leave it Unchecked)
+Kick Spammer to kick only donating members
+Only Kick turns in to kick mode (No donations Only Kicking)
+Wait for troops Idle time to wait while troops are trained
+Trophies to set clan trophies constant, it will help a lot if other staff try to change it Bot will restore it back
+Boost Count set them according to your need
+Friend Request set them according to your need
+Kick with note. If you want to kick members with a note.
+Auto Chat and random Chat are for to send predefined chat templates at clan chat.
+
+Send Chat - While running bot there is no need to pause bot to use clan chat just use bottom text bot to chat just type and press send
+
+
+TIP1 AND TIP 2:
+Both are used to Load and Save Troop Combinations Helps us to switch troops.
+
+
+HIDE EMULATOR BAR:
+To Hide emulator bottom bot which is overlapped on clan chat button.
+
+
+
+
+START : To Start Gtfo which is in Step 5 PIC
+PAUSE : to Pause GTFO
+STOP : to Stop
+
+
+
+
+ANY NEW IDEAS AND SUGESSIONS PLZ LET ME KNOW ON
+REPORT BUGS
+
+HAVE FUN
+
+CLASH ON!!

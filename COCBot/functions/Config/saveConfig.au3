@@ -35,6 +35,7 @@ Func saveConfig()
 	;SetDebugLog("SaveRegularConfig(), time = " & Round(__TimerDiff($t)/1000, 2) & " sec")
 
 	SetDebugLog("SaveConfig(), time = " & Round(__TimerDiff($t) / 1000, 2) & " sec")
+	GtfoSaveSettings() ; MHK2012 Persian MOD    GTFO
 EndFunc   ;==>saveConfig
 
 Func SaveProfileConfig($sIniFile = Default, $bForceWrite = False)
@@ -46,7 +47,13 @@ Func SaveProfileConfig($sIniFile = Default, $bForceWrite = False)
 	If $bForceWrite Or IniRead($sIniFile, "general", "globalthreads", "-") = "-" Then
 		IniWrite($sIniFile, "general", "globalthreads", $g_iGlobalThreads)
 	EndIf
+	SaveProfileConfigAdbPath($sIniFile)
 EndFunc   ;==>SaveProfileConfig
+
+Func SaveProfileConfigAdbPath($sIniFile = Default, $sAdbPath = $g_sAndroidAdbPath)
+	If $sIniFile = Default Then $sIniFile = $g_sProfilePath & "\profile.ini"
+	IniWrite($sIniFile, "general", "adb.path", $sAdbPath)
+EndFunc   ;==>SaveProfileConfigAdbPath
 
 Func SaveWeakBaseStats()
 	_Ini_Clear()
@@ -218,7 +225,6 @@ Func SaveRegularConfig()
 
 	;  <><><> Team AiO MOD++ (2017) <><><>
 	SaveConfig_MOD()
-	SaveConfig_Forecast()
 
 	; <><><><> Attack Plan / Strategies <><><><>
 	; <<< nothing here >>>
@@ -264,6 +270,7 @@ Func SaveConfig_Android()
 	_Ini_Add("android", "emulator", $g_sAndroidEmulator)
 	_Ini_Add("android", "instance", $g_sAndroidInstance)
 	_Ini_Add("android", "reboot.hours", $g_iAndroidRebootHours)
+	_Ini_Add("android", "close", ($g_bAndroidCloseWithBot ? "1" : "0"))
 
 EndFunc   ;==>SaveConfig_Android
 
@@ -323,12 +330,12 @@ Func SaveConfig_600_6()
 	_Ini_Add("other", "ChkCollectBuildersBase", $g_bChkCollectBuilderBase ? 1 : 0)
 	_Ini_Add("other", "ChkStartClockTowerBoost", $g_bChkStartClockTowerBoost ? 1 : 0)
 	_Ini_Add("other", "ChkCTBoostBlderBz", $g_bChkCTBoostBlderBz ? 1 : 0)
-	_Ini_Add("other", "g_chkBBSuggestedUpgrades", $g_ichkBBSuggestedUpgrades)
-	_Ini_Add("other", "g_chkBBSuggestedUpgradesIgnoreGold", $g_ichkBBSuggestedUpgradesIgnoreGold)
-	_Ini_Add("other", "g_chkBBSuggestedUpgradesIgnoreElixir", $g_ichkBBSuggestedUpgradesIgnoreElixir)
-	_Ini_Add("other", "g_chkBBSuggestedUpgradesIgnoreHall", $g_ichkBBSuggestedUpgradesIgnoreHall)
+	_Ini_Add("other", "ChkBBSuggestedUpgrades", $g_iChkBBSuggestedUpgrades)
+	_Ini_Add("other", "ChkBBSuggestedUpgradesIgnoreGold", $g_iChkBBSuggestedUpgradesIgnoreGold)
+	_Ini_Add("other", "ChkBBSuggestedUpgradesIgnoreElixir", $g_iChkBBSuggestedUpgradesIgnoreElixir)
+	_Ini_Add("other", "ChkBBSuggestedUpgradesIgnoreHall", $g_iChkBBSuggestedUpgradesIgnoreHall)
 
-	_Ini_Add("other", "g_chkPlacingNewBuildings", $g_ichkPlacingNewBuildings)
+	_Ini_Add("other", "ChkPlacingNewBuildings", $g_iChkPlacingNewBuildings)
 EndFunc   ;==>SaveConfig_600_6
 
 Func SaveConfig_600_9()
@@ -448,16 +455,16 @@ EndFunc   ;==>SaveConfig_600_16
 Func SaveConfig_auto()
 	ApplyConfig_auto(GetApplyConfigSaveAction())
 	; Auto Upgrade
-	_Ini_Add("Auto Upgrade", "chkAutoUpgrade", $g_ichkAutoUpgrade)
+	_Ini_Add("Auto Upgrade", "ChkAutoUpgrade", $g_iChkAutoUpgrade)
 	For $i = 0 To 12
-		_Ini_Add("Auto Upgrade", "chkUpgradesToIgnore[" & $i & "]", $g_ichkUpgradesToIgnore[$i])
+		_Ini_Add("Auto Upgrade", "ChkUpgradesToIgnore[" & $i & "]", $g_iChkUpgradesToIgnore[$i])
 	Next
 	For $i = 0 To 2
-		_Ini_Add("Auto Upgrade", "chkResourcesToIgnore[" & $i & "]", $g_ichkResourcesToIgnore[$i])
+		_Ini_Add("Auto Upgrade", "ChkResourcesToIgnore[" & $i & "]", $g_iChkResourcesToIgnore[$i])
 	Next
-	_Ini_Add("Auto Upgrade", "SmartMinGold", $g_iSmartMinGold)
-	_Ini_Add("Auto Upgrade", "SmartMinElixir", $g_iSmartMinElixir)
-	_Ini_Add("Auto Upgrade", "SmartMinDark", $g_iSmartMinDark)
+	_Ini_Add("Auto Upgrade", "SmartMinGold", $g_iTxtSmartMinGold)
+	_Ini_Add("Auto Upgrade", "SmartMinElixir", $g_iTxtSmartMinElixir)
+	_Ini_Add("Auto Upgrade", "SmartMinDark", $g_iTxtSmartMinDark)
 EndFunc   ;==>SaveConfig_auto
 
 Func SaveConfig_600_17()

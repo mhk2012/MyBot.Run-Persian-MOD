@@ -117,8 +117,8 @@ Func chkTroopDropOrder()
 		If IsUseCustomDropOrder() = True Then _GUICtrlSetImage($g_ahImgTroopOrderSet, $g_sLibIconPath, $eIcnRedLight)
 	Else
 		$g_bCustomTrainDropOrderEnable = False
-		GUICtrlSetBkColor($g_BtnCustomDropOrderDB, $COLOR_MONEYGREEN)
-		GUICtrlSetBkColor($g_BtnCustomDropOrderAB, $COLOR_MONEYGREEN)
+		GUICtrlSetBkColor($g_BtnCustomDropOrderDB, $COLOR_RED)
+		GUICtrlSetBkColor($g_BtnCustomDropOrderAB, $COLOR_RED)
 		GUICtrlSetState($g_hBtnTroopOrderSet2, $GUI_DISABLE) ; disable button
 		GUICtrlSetState($g_hBtnRemoveTroops2, $GUI_DISABLE)
 		For $i = 0 To UBound($cmbDropTroops) - 1
