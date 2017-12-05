@@ -174,6 +174,8 @@ Func ApplyConfig_MOD($TypeReadSave)
 
 			; ClanHop - Team AiO MOD++ (#-20)
 			GUICtrlSetState($g_hChkClanHop, $g_bChkClanHop ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_ahTxtCheckingtrain, $g_bChkClanHop ? $GUI_ENABLE : $GUI_DISABLE)
+			GUICtrlSetData($g_ahTxtCheckingtrain, $g_iTxtCheckingtraine)
 
 			; Max logout time - Team AiO MOD++ (#-21)
 			GUICtrlSetState($g_hChkTrainLogoutMaxTime, $g_bTrainLogoutMaxTime = True ? $GUI_CHECKED : $GUI_UNCHECKED)
@@ -351,6 +353,7 @@ Func ApplyConfig_MOD($TypeReadSave)
 
 			; ClanHop - Team AiO MOD++ (#-20)
 			$g_bChkClanHop = (GUICtrlRead($g_hChkClanHop) = $GUI_CHECKED)
+			$g_iTxtCheckingtraine = Int(GUICtrlRead($g_ahTxtCheckingtrain))
 
 			; Max logout time - Team AiO MOD++ (#-21)
 			$g_bTrainLogoutMaxTime = GUICtrlRead($g_hChkTrainLogoutMaxTime) = $GUI_CHECKED ? True : False

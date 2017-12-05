@@ -1,5 +1,5 @@
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: MOD GUI Design - Download CSV
+; Name ..........: MOD GUI Design - CSV Downloader
 ; Description ...:
 ; Syntax ........:
 ; Parameters ....: None
@@ -30,7 +30,7 @@ EndFunc
 
 Func btnDownloadCSV()
 	if GUICtrlRead($g_ahTxtDownloadLink) = "" Or GUICtrlRead($g_ahTxtCSVName) = "" Then
-		MsgBox($MB_ICONWARNING, "Error", GetTranslatedFileIni("MBR GUI Design - Download CSV", "ErrorFillFields", "Fill in all fields!"))
+		MsgBox($MB_ICONWARNING, "Error", GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "ErrorFillFields", "Fill in all fields!"))
 		Return
 	EndIf
 
@@ -41,10 +41,10 @@ Func btnDownloadCSV()
 	InetGet($FileURL, $FileSaveLocation)
 
 	if FileExists($FileSaveLocation) Then
-		MsgBox($MB_ICONINFORMATION, "", GetTranslatedFileIni("MBR GUI Design - Download CSV", "downloadSeccessful", "The download was successful, Reload scripts!"))
+		MsgBox($MB_ICONINFORMATION, "", GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "downloadSeccessful", "The download was successful, Reload scripts!"))
 		UpdateComboScriptNameDB()
 	Else
-		MsgBox($MB_ICONERROR, "", GetTranslatedFileIni("MBR GUI Design - Download CSV", "NotdownloadSeccessful", "The download wasn't successful"))
+		MsgBox($MB_ICONERROR, "", GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "NotdownloadSeccessful", "The download wasn't successful"))
 	EndIf
 
 	btnCancel()

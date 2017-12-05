@@ -121,6 +121,7 @@ Func ReadConfig_MOD()
 
 	; ClanHop - Team AiO MOD++ (#-20)
 	$g_bChkClanHop = (IniRead($g_sProfileConfigPath, "donate", "chkClanHop", "0") = "1")
+	IniReadS($g_iTxtCheckingtraine, $g_sProfileConfigPath, "donate", "txtCheckingtraine", 5, "int")
 
 	; Max logout time - Team AiO MOD++ (#-21)
 	IniReadS($g_bTrainLogoutMaxTime, $g_sProfileConfigPath, "TrainLogout", "TrainLogoutMaxTime", False, "Bool")

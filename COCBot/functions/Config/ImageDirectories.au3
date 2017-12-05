@@ -41,7 +41,7 @@ Global $g_sImgGemBox = @ScriptDir & "\imgxml\Resources\GemBox"
 #EndRegion
 
 #Region Builder Base
-Global $g_sImgCollectRessources = @ScriptDir & "\imgxml\Resources\BuildersBase\Collect"
+Global $g_sImgCollectRessourcesBB = @ScriptDir & "\imgxml\Resources\BuildersBase\Collect"
 Global $g_sImgBoatBB = @ScriptDir & "\imgxml\Boat\BoatBuilderBase_0_89.xml"
 Global $g_sImgZoomOutDirBB = @ScriptDir & "\imgxml\village\BuilderBase"
 Global $g_sImgStartCTBoost = @ScriptDir & "\imgxml\Resources\BuildersBase\ClockTower\ClockTowerAvailable*.xml"

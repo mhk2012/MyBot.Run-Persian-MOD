@@ -30,8 +30,9 @@
 Opt("MustDeclareVars", 1)
 
 ; Check Version - Team AiO MOD++ (#-03)
-Global $g_sModversion = "v2.1" ;<== Just Change This to Version Number
+Global $g_sModversion = "v2.1.1" ;<== Just Change This to Version Number
 Global $g_sAio = "Persian MOD"
+Global $g_sModDownloadUrl = "https://github.com/mhk2012/MyBot.Run-Persian-MOD/releases" ;<== Our Website Link Download
 
 Global $g_sBotTitle = "" ;~ Don't assign any title here, use Func UpdateBotTitle()
 Global $g_hFrmBot = 0 ; The main GUI window
@@ -597,7 +598,7 @@ Func FinalInitialization(Const $sAI)
 	SetLog("            » " & "Thanks To Parsa And Reza Haghighat" & " «", $COLOR_TEAL, "Segoe Print", 9)
 	SetLog("-----------------------------------------------------------------------", $COLOR_MONEYGREEN)
 	SetLog("                       » " & "Based On: MyBot " & $g_sBotVersion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
-	SetLog("                       » " & $g_sAio & " " & $g_sModversion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
+	SetLog("                           » " & $g_sAio & " " & $g_sModversion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
 	SetLog("-----------------------------------------------------------------------", $COLOR_MONEYGREEN)
 	SetLog(" ", $COLOR_MEDGRAY)
 

@@ -157,11 +157,11 @@ Func ClanHop()
 			ContinueLoop
 		EndIf
 
-		DonateCC(False) ; Start Donate Sequence
+		DonateCC(False, False) ; Start Donate Sequence
 
 		If _Sleep(300) Then Return ; Little Sleep if requests got filled and chat moves
 
-		DonateCC(False)
+		DonateCC(False, False)
 
 		ForceCaptureRegion()
 		If Not _CheckPixel($aChatTab, $g_bCapturePixel) Then ClickP($aOpenChat, 1, 0, "#0168") ; Clicks chat tab
@@ -185,7 +185,7 @@ Func ClanHop()
 			ContinueLoop
 		EndIf
 
-		If $iHopLoops >= 5 Then
+		If $iHopLoops >= $g_iTxtCheckingtraine - 1 Then
 			; Update Troops and Spells Capacity
 			Local $i = 0
 			While 1

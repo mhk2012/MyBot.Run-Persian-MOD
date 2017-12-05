@@ -26,13 +26,11 @@ Func Collect($bCheckTreasury = True)
 	SetLog("Collecting Resources", $COLOR_INFO)
 	If _Sleep($DELAYCOLLECT2) Then Return
 
-	; Collect function to Parallel Search , will run all pictures inside the directory
-	Local $directory = @ScriptDir & "\imgxml\Resources\Collect"
 	; Setup arrays, including default return values for $return
 	Local $sFileName = ""
 	Local $aCollectXY, $t
 
-	Local $aResult = returnMultipleMatchesOwnVillage($directory)
+	Local $aResult = returnMultipleMatchesOwnVillage($g_sImgCollectRessources)
 
 	If UBound($aResult) > 1 Then ; we have an array with data of images found
 		For $i = 1 To UBound($aResult) - 1  ; loop through array rows

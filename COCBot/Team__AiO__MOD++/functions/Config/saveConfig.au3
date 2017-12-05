@@ -115,6 +115,7 @@ Func SaveConfig_MOD()
 
 	; ClanHop - Team AiO MOD++ (#-20)
 	_Ini_Add("donate", "chkClanHop", $g_bChkClanHop ? 1 : 0)
+	_Ini_Add("donate", "txtCheckingtraine", GUICtrlRead($g_ahTxtCheckingtrain))
 
 	; Max logout time - Team AiO MOD++ (#-21)
 	_Ini_Add("TrainLogout", "TrainLogoutMaxTime", $g_bTrainLogoutMaxTime)

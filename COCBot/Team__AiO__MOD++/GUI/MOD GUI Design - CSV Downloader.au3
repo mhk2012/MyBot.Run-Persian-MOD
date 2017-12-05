@@ -1,5 +1,5 @@
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: MOD GUI Design - Download CSV
+; Name ..........: MOD GUI Design - CSV Downloader
 ; Description ...:
 ; Syntax ........:
 ; Parameters ....: None
@@ -17,23 +17,23 @@
 Global $Form1 = 0, $g_ahTxtDownloadLink = 0, $g_ahTxtCSVName = 0, $g_hBtnOK = 0, $g_hBtnCansel = 0
 
 Func CreateDownloadCSV()
-	$Form1 = GUICreate(GetTranslatedFileIni("MBR GUI Design - Download CSV", "DownloadCSVTitle", "Download CSV"), 385, 112, 192, 124)
+	$Form1 = GUICreate(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderTitle", "CSV Downloader"), 385, 112, 192, 124)
 	GUISetOnEvent($GUI_EVENT_CLOSE, "SpecialEvents")
 	GUISetOnEvent($GUI_EVENT_MINIMIZE, "SpecialEvents")
 	GUISetOnEvent($GUI_EVENT_RESTORE, "SpecialEvents")
 
 	Local $x = 8, $y = 16
-	GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design - Download CSV", "DownloadCSVLink", "Download Link:"), $x, $y, 74, 17)
-	GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design - Download CSV", "DownloadCSVName", "CSV Name:"), $x + 16, $y + 32, 59, 17)
+	GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderLink", "Download Link:"), $x, $y, 74, 17)
+	GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderName", "CSV Name:"), $x + 16, $y + 32, 59, 17)
 
 	$x += 80
 	$g_ahTxtDownloadLink = GUICtrlCreateInput("", $x, $y, 281, 21)
 	$g_ahTxtCSVName = GUICtrlCreateInput("", $x, $y + 29, 281, 21)
 
 	$x += 80
-	$g_hBtnOK = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design - Download CSV", "DownloadCSVbtnOK", "OK"), $x + 128, $y + 56, 73, 25)
+	$g_hBtnOK = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderbtnOK", "OK"), $x + 128, $y + 56, 73, 25)
 	GUICtrlSetOnEvent(-1, "btnDownloadCSV")
-	$g_hBtnCansel = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design - Download CSV", "DownloadCSVbtnCansel", "Cansel"), $x, $y + 56, 73, 25)
+	$g_hBtnCansel = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderbtnCansel", "Cansel"), $x, $y + 56, 73, 25)
 	GUICtrlSetOnEvent(-1, "btnCancel")
 	GUISetState(@SW_SHOW, $Form1)
 

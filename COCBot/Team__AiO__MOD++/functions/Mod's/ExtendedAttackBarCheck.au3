@@ -22,15 +22,13 @@ Func ExtendedAttackBarCheck($aTroop1stPage, $Remaining)
 	Local $iCCSpell = 0
 	; Setup arrays, including default return values for $return
 	Local $aResult[1][6], $aCoordArray[1][2], $aCoords, $aCoordsSplit, $aValue
-	Local $redLines = "FV"
-	Local $directory = @ScriptDir & "\imgxml\AttackBar"
-	If $g_bRunState = False Then Return
+	If Not $g_bRunState Then Return
 	; Capture the screen for comparison
 	_CaptureRegion2($x, $y, $x1, $y1)
 
 	Local $strinToReturn = ""
 	; Perform the search
-	Local $res = DllCallMyBot("SearchMultipleTilesBetweenLevels", "handle", $g_hHBitmap2, "str", $directory, "str", "FV", "Int", 0, "str", $redLines, "Int", 0, "Int", 1000)
+	Local $res = DllCallMyBot("SearchMultipleTilesBetweenLevels", "handle", $g_hHBitmap2, "str", $g_sImgAttackBarDir, "str", "FV", "Int", 0, "str", "FV", "Int", 0, "Int", 1000)
 
 	If IsArray($res) Then
 		If $res[0] = "0" Or $res[0] = "" Then

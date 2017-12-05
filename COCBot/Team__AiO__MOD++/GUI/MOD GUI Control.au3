@@ -14,7 +14,8 @@
 ; ===============================================================================================================================
 #include-once
 
-#include "MOD GUI Control - Download CSV.au3"
+; CSV Downloader
+#include "MOD GUI Control - CSV Downloader.au3"
 
 ; Classic Four Finger - Team AiO MOD++ (#-04)
 Func cmbStandardDropSidesAB() ; avoid conflict between FourFinger and SmartAttack

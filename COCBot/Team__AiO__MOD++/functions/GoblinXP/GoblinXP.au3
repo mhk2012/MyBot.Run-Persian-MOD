@@ -915,8 +915,8 @@ Func IsGoblinPicnicFound()
 		$ToReturn = StringSplit($result, ",", 2)
 	EndIf
 
-	$ToReturn[0] += 554
-	$ToReturn[1] += 120
+	$ToReturn[0] += 560
+	$ToReturn[1] += 125
 	If $g_bDebugSX Then SetLog("SX|IGPF Return $ToReturn[2] = [0]=" & $ToReturn[0] & ",[1]=" & $ToReturn[1])
 	Return $ToReturn
 EndFunc   ;==>IsGoblinPicnicFound

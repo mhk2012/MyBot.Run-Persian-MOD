@@ -53,7 +53,7 @@ Global $g_hLblDonateTroopTBD1 = 0, $g_hLblDonateTroopTBD2 = 0, $g_hLblDonateTroo
 	   $g_hLblDonateTroopCustomI = 0, $g_hLblDonateTroopCustomJ = 0, $g_hLblDonateSpellTBD1 = 0
 
 Global $g_hGrpDonateGeneralBlacklist = 0, $g_hTxtGeneralBlacklist = 0
-Global $g_hGrpDonateOptions = 0, $g_hChkClanHop = 0 ; ClanHop - Team AiO MOD++ (#-20)
+Global $g_hGrpDonateOptions = 0, $g_hChkClanHop = 0, $g_ahTxtCheckingtrain = 0 ; ClanHop - Team AiO MOD++ (#-20)
 Global $lblBtnCustomE = 0
 
 ; Schedule
@@ -2091,6 +2091,15 @@ Func CreateDonateSubTab()
 		GUICtrlSetState(-1, $GUI_HIDE)
 		$g_hChkClanHop = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "ChkClanHop", "Clan Hop"), $x, $y)
 			GUICtrlSetState(-1,$GUI_HIDE)
+			GUICtrlSetOnEvent(-1, "ChkClanHop")
+	$y += 30
+		GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "TxtCheckingtrain", "Checking train:"), $x, $y)
+			GUICtrlSetState(-1, $GUI_HIDE)
+		$g_ahTxtCheckingtrain = GUICtrlCreateInput("5", $x + 75, $y - 3, 30, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+			GUICtrlSetLimit(-1, 1)
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "TxtCheckingtrain_Info_01", "Check the train, after join to how clan (choose ur num)"))
+			GUICtrlSetState(-1, $GUI_HIDE)
+			GUICtrlSetState(-1, $GUI_DISABLE)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 EndFunc   ;==>CreateDonateSubTab

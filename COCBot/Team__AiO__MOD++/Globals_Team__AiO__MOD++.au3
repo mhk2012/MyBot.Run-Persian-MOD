@@ -13,7 +13,10 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-
+; Check Version - Team AiO MOD++ (#-03)
+Global $g_sLastModversion = "" ;latest version from GIT
+Global $g_sLastModmessage = "" ;message for last version
+Global $g_sOldModversmessage = "" ;warning message for old bot
 
 ; Attack Settings [Dec 2016] used on Classic Attack
 Global Const $g_aaiTopLeftDropPoints[5][2] = [[62, 306], [156, 238], [221, 188], [288, 142], [383, 76]]
@@ -152,6 +155,7 @@ Global $g_canGainXP = False
 
 ; ClanHop - Team AiO MOD++ (#-20)
 Global $g_bChkClanHop = False
+Global $g_iTxtCheckingtraine = 5
 
 ; Max logout time - Team AiO MOD++ (#-21)
 Global $g_bTrainLogoutMaxTime = False, $g_iTrainLogoutMaxTime = 4

@@ -42,7 +42,7 @@ Func PrepareDonateCC()
 	$g_iActiveDonate = BitOR($g_abPrepDon[0], $g_abPrepDon[1], $g_abPrepDon[2], $g_abPrepDon[3])
 EndFunc   ;==>PrepareDonateCC
 
-Func DonateCC($Check = False)
+Func DonateCC($Check = False, $Train = True)
 
 	Local $bDonateTroop = $g_abPrepDon[0]
 
@@ -590,7 +590,7 @@ Func DonateCC($Check = False)
 	If _Sleep($DELAYDONATECC2) Then Return
 
 	; Smart Train - Team AiO MOD++ (#-13)
-	If $ichkSmartTrain = 1 Then
+	If $ichkSmartTrain = 1 And $Train Then
 		OpenArmyWindow()
 		MakingDonatedTroops()
 		ClickP($aAway, 1, 0, "#0176")
