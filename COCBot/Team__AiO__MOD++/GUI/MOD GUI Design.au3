@@ -41,7 +41,7 @@ Global $g_hGUI_MOD_PROFILES_TAB = 0, $g_hGUI_MOD_PROFILES_TAB_ITEM1 = 0, $g_hGUI
 ; Farm Schedule
 #include "MOD GUI Design - FarmSchedule.au3"
 
-;CSV Downloader
+; CSV Downloader - Persian MOD (#-32)
 #include "MOD GUI Design - CSV Downloader.au3"
 
 Func CreateMODTab()

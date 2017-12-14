@@ -14,6 +14,8 @@
 ; ===============================================================================================================================
 #include-once
 
+#Region
+
 Global $g_aiDonIcons[20] = [$eIcnDonBarbarian, $eIcnDonArcher, $eIcnDonGiant, $eIcnDonGoblin, $eIcnDonWallBreaker, $eIcnDonBalloon, $eIcnDonWizard, $eIcnDonHealer, _
 							$eIcnDonDragon, $eIcnDonPekka, $eIcnDonBabyDragon, $eIcnDonMiner, $eIcnDonMinion, $eIcnDonHogRider, $eIcnDonValkyrie, $eIcnDonGolem, _
 							$eIcnDonWitch, $eIcnDonLavaHound, $eIcnDonBowler, $eIcnDonBlank]
@@ -293,9 +295,13 @@ Func cmbBalanceDR()
 	EndIf
 EndFunc   ;==>cmbBalanceDR
 
+Func Doncheck()
+	tabDONATE() ; just call tabDONATE()
+EndFunc   ;==>Doncheck
+
 #EndRegion
 
-; MHK2012 Persian MOD     GTFO
+; GTFO - Persian MOD (#-31)
 Global $GtfoIdleTime = 0, $bSetTrophies = 0, $aUpdateTrophies = 0, $GtfoDonationCap = 0, $GtfoMassKickMode = 0, $GtfoReceiveCap = 0, $GtfoModStatus = 0, $ChatIdleDelay = 0, $GtfoTrainCount = 0, _
 $GtfoTroopTrainCount = 0, $GtfoSpellBrewCount = 0, $FirstStart = 0,$GtfoSpellType = 0, $FirstStart = 0, $DonateCount = 0, $g_iDonTroopsLimit = 0, $iDonSpellsLimit = 0, $g_iDonTroopsAv = 0, _
 $g_iDonSpellsAv = 0, $g_iDonTroopsQuantityAv = 0, $g_iDonTroopsQuantity = 0, $g_iDonSpellsQuantityAv = 0,$g_bSkipDonTroops = 0, $g_bSkipDonSpells = 0, $g_aiDonatePixel = 0, $g_iTotalDonateCapacity = 0, _
@@ -303,7 +309,7 @@ $g_iTotalDonateSpellCapacity = 0, $g_iDebugSetlog = 0, $DonateCount = 0, $currCl
 $g_iDonSpellsQuantityAv = 0, $currClanTrophies = 0, $x_start = 0, $y_start = 0, $GemResult = 0
 Global Enum $GtfoIdle, $GtfoStart, $GtfoPause , $GtfoResume , $GtfoStop
 
-;~ GTFO Functions
+; GTFO - Persian MOD (#-31)
 Func __WinAPI_GetBkColor($hWnd)
         ; Not Prog@ndy
         Local $aResult, $hDC, $Res
@@ -1297,13 +1303,18 @@ Func SetTroopIdle()
 	EndIf
 
 EndFunc
-; MHK2012  Perisan MOD
+; GTFO - Persian MOD (#-31)
 Func GtfoCheckTrainingTab($sText = "troop")
-	Local $Tab = $TrainTroopsTAB
+	Local $Tab
 
-	If $sText = "spell" Then $Tab = $BrewSpellsTAB
+	If $sText = "troop" Then
+		If Not OpenTroopsTab(True) Then Return
+		$Tab = $TrainTroopsTAB
+	Else
+		If Not OpenSpellsTab(True) Then Return
+		$Tab = $BrewSpellsTAB
+	EndIf
 
-	OpenTrainTabNumber($Tab, "GtfoCheckTrainingTab()")
 	If _Sleep(1000) Then Return
 	If Not ISArmyWindow(False, $Tab) Then Return
 
@@ -1475,7 +1486,7 @@ Func GtfoTrain($ClanMode = False)
 		Local $iSplAdj = 1
 		if $TotalSpell >= 10 then $iSplAdj = 2
 		$getSpellCap = getOcrAndCapture("coc-train-quant1", 48, 160, 40, 18, True)
-		Local $ArmyCampSpell = GtfoCheckTrainingTab("spell") ; MHK2012  Perisan MOD
+		Local $ArmyCampSpell = GtfoCheckTrainingTab("spell") ; GTFO - Persian MOD (#-31)
 		If $g_bDebugSetlogTrain Then SetLog("OCR $sArmyInfo = " & StringLeft($getSpellCap, StringLen($getSpellCap)-$iSplAdj), $COLOR_DEBUG)
 
 		Local $iSpellBrew = ($TotalSpell*2) - Number($ArmyCampSpell[0])
@@ -2339,29 +2350,6 @@ Func ProcessFriendRequests()
 
 
 EndFunc
-
-;~ Func ReturnAtHome()
-;~ 	Local $CheckStep = 0
-;~ 	While Not IsMainScreen() And $CheckStep <= 5
-;~ 		AndroidBackButton()
-;~ 		Sleep(3000)
-;~ 		$CheckStep += 1
-;~ 	WEnd
-;~ 	If Not IsMainScreen() Then
-;~ 		SetLog("Main screen not found, need to restart CoC app...", $COLOR_ERROR)
-;~ 		RestartAndroidCoC()
-;~ 		waitMainScreen()
-;~ 	EndIf
-
-;~ EndFunc   ;==>ReturnAtHome
-
-;~ Func IsMainScreen()
-;~ 	04579A old
-;~ 	Local $Result = _ColorCheck(_GetPixelColor(22, 49, True), "0A61A1", 20)
-;~ 	Return $Result
-
-;~ EndFunc   ;==>IsMainScreen
-
 
 Func GtfoDetectSlotTroop($Type)
 

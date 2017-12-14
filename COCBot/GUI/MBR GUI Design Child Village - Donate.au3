@@ -72,7 +72,7 @@ Global $g_hChkUseCCBalanced = 0, $g_hCmbCCDonated = 0, $g_hCmbCCReceived = 0
 GLobal $g_hLblDonateCChour = 0, $g_ahLblDonateCChoursE = 0
 GLobal $g_hLblDonateCChours[12] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-; MHK2012 Persian MOD     GTFO
+; GTFO - Persian MOD (#-31)
 Global $GTFOcheck = 0, $lblGTFOdisabled = 0, $hGUI_GTFOMode = 0, $grpGtfo = 0, $cmbGtfo = 0, $btnGtfoStart = 0, $btnGtfoPause = 0, $btnGtfoStop = 0, $chkMassDonate = 0, $chkKickMode = 0, $cmbTroopIdleTime = 0, _
 $chkWaitForTroops = 0, $chkMassKick = 0, $chkSetTrophies = 0, $cmbGtfoTrophies = 0, $cmbGtfoDonationCap = 0, $cmbGtfoKickCap = 0, $cmbGtfoTroop = 0, $SliderGtfoIdleTime = 0, $chkGtfoNote = 0, $txtGtfoNote = 0, _
 $txtGtfoChat = 0, $btnGtfoSendChat = 0, $lstGtfoChatTemplates = 0, $btnGtfoChatAdd = 0, $btnGtfoChatRemove = 0, $chkGtfoChatAuto = 0, $chkGtfoChatRandom = 0, $lblGtfoDonationCap = 0, $lblGtfoKickCap = 0, _
@@ -98,6 +98,7 @@ Func CreateVillageDonate()
 
 	$g_hGUI_DONATE_TAB = GUICtrlCreateTab(0, 0, $g_iSizeWGrpTab2, $g_iSizeHGrpTab2, BitOR($TCS_MULTILINE, $TCS_RIGHTJUSTIFY))
 	$g_hGUI_DONATE_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslatedFileIni("MBR Main GUI", "Tab_02_STab_02_STab_01", "Request Troops"))
+	; GTFO - Persian MOD (-#31)
 	$g_hGUI_DONATE_TAB_ITEM4 = GUICtrlCreateTabItem("GTFO    ")
 	$lblGTFOdisabled = GUICtrlCreateLabel("Note: GTFO is disabled, tick the checkmark on the tab to enable it!", 20, 30, $_GUI_MAIN_WIDTH - 40, -1)
 	GUICtrlSetState(-1, $GUI_HIDE)
@@ -245,6 +246,7 @@ EndFunc   ;==>CreateRequestSubTab
 #EndRegion
 
 #Region CreateGTFOSubTab
+; GTFO - Persian MOD (#-31)
 Func CreateGTFOSubTab()
 	$hGUI_GTFOMode = GUICreate("", $_GUI_MAIN_WIDTH - 30 - 10, $_GUI_MAIN_HEIGHT - 255 - 30 - 30, 5, 25, BitOR($WS_CHILD, $WS_TABSTOP), -1, $g_hGUI_DONATE)
 	Local $ic = __WinAPI_GetBkColor($g_hFrmBot)
@@ -467,10 +469,6 @@ Func CreateGTFOSubTab()
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	GUISwitch($g_hGUI_DONATE)
-
-
-
-
 
 ;~ GUICtrlCreateTabItem("")
 EndFunc

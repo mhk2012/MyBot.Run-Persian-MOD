@@ -13,7 +13,6 @@
 ; AutoIt pragmas
 #NoTrayIcon
 #RequireAdmin
-#AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_UseX64=7n
 ;#AutoIt3Wrapper_Res_HiDpi=Y ; HiDpi will be set during run-time!
 #AutoIt3Wrapper_Run_Au3Stripper=y
@@ -29,9 +28,7 @@
 ; Enforce variable declarations
 Opt("MustDeclareVars", 1)
 
-; Check Version - Team AiO MOD++ (#-03)
-Global $g_sModversion = "v2.1.1" ;<== Just Change This to Version Number
-Global $g_sAio = "Persian MOD"
+; Check Version - Persian MOD (#-03)
 Global $g_sModDownloadUrl = "https://github.com/mhk2012/MyBot.Run-Persian-MOD/releases" ;<== Our Website Link Download
 
 Global $g_sBotTitle = "" ;~ Don't assign any title here, use Func UpdateBotTitle()
@@ -72,7 +69,7 @@ InitializeBot()
 MainLoop()
 
 Func UpdateBotTitle()
-	Local $sTitle = "My Bot " & $g_sBotVersion & " - " & $g_sAio & " " & $g_sModversion & " -"
+	Local $sTitle = "My Bot " & $g_sBotVersion & " - " & $g_sMODName & " " & $g_sModversion & " -"
 	Local $sConsoleTitle ; Console title has also Android Emulator Name
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
@@ -137,6 +134,7 @@ Func InitializeBot()
 	_Crypt_Startup()
 	__GDIPlus_Startup() ; Start GDI+ Engine (incl. a new thread)
 
+	InitAndroidConfig()
 	If FileExists(@ScriptDir & "\EnableMBRDebug.txt") Then ; Set developer mode
 		$g_bDevMode = True
 		Local $aText = FileReadToArray(@ScriptDir & "\EnableMBRDebug.txt") ; check if special debug flags set inside EnableMBRDebug.txt file
@@ -588,7 +586,7 @@ Func FinalInitialization(Const $sAI)
 	EndIf
 
 	SetLog(" ", $COLOR_SUCCESS)
-	SetLog("___________ " & $g_sAio & "___________", $COLOR_MONEYGREEN, "Impact", 14)
+	SetLog("___________ " & $g_sMODName & "___________", $COLOR_MONEYGREEN, "Impact", 14)
 	SetLog("                                   » " & "Warning" & " «", $COLOR_TEAL, "Segoe UI Semibold", 12)
 	SetLog("          » " & "Please Set The Bot Language To ENGLISH" & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
 	SetLog("            » " & "Make a Fresh Configuration, Don't Use Old Profile" & " «", $COLOR_TEAL, "Segoe UI Semibold", 9)
@@ -598,7 +596,7 @@ Func FinalInitialization(Const $sAI)
 	SetLog("            » " & "Thanks To Parsa And Reza Haghighat" & " «", $COLOR_TEAL, "Segoe Print", 9)
 	SetLog("-----------------------------------------------------------------------", $COLOR_MONEYGREEN)
 	SetLog("                       » " & "Based On: MyBot " & $g_sBotVersion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
-	SetLog("                           » " & $g_sAio & " " & $g_sModversion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
+	SetLog("                           » " & $g_sMODName & " " & $g_sModversion & " «", $COLOR_TEAL, "Segoe UI Semibold", 10)
 	SetLog("-----------------------------------------------------------------------", $COLOR_MONEYGREEN)
 	SetLog(" ", $COLOR_MEDGRAY)
 
@@ -1240,7 +1238,7 @@ Func _RunFunction($action)
 						$g_iActualTrainSkip = 0
 					EndIf
 					CheckOverviewFullArmy(True, False) ; use true parameter to open train overview window
-					If ISArmyWindow(False, $ArmyTAB) Then CheckExistentArmy("Spells") ; Imgloc Method
+					getArmySpells()
 					getArmyHeroCount(False, True)
 				EndIf
 			Else

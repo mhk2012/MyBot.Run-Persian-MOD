@@ -26,12 +26,6 @@ Func ReadConfig_MOD()
 	IniReadS($g_iChkWaveFactor, $g_sProfileConfigPath, "SetSleep", "EnableWaveFactor", $g_iChkWaveFactor, "int")
 	IniReadS($g_iTxtWaveFactor, $g_sProfileConfigPath, "SetSleep", "WaveFactor", $g_iTxtWaveFactor, "int")
 
-	; Drop Order Troops - Team AiO MOD++ (#-06)
-	IniReadS($g_bCustomTrainDropOrderEnable, $g_sProfileConfigPath, "DropOrder", "chkTroopDropOrder", $g_bCustomTrainDropOrderEnable, "Bool")
-	For $p = 0 To UBound($icmbDropTroops) - 1
-		IniReadS($icmbDropTroops[$p], $g_sProfileConfigPath, "DropOrder", "cmbDropTroops[" & $p & "]", $icmbDropTroops[$p] , "int")
-	Next
-
 	; Auto Dock, Hide Emulator & Bot - Team AiO MOD++ (#-07)
 	IniReadS($g_bEnableAuto, $g_sProfileConfigPath, "general", "EnableAuto", $g_bEnableAuto, "Bool")
 	IniReadS($g_iChkAutoDock, $g_sProfileConfigPath, "general", "AutoDock", $g_iChkAutoDock, "Bool")
@@ -208,9 +202,14 @@ Func ReadConfig_MOD()
 	$g_bStopOnBatt = (IniRead($g_sProfileConfigPath, "other", "ChkStopOnBatt", "0") = "1")
 	$g_iStopOnBatt = Int(IniRead($g_sProfileConfigPath, "other", "StopOnBatt", 10))
 
-	; MHK2012 Persian MOD
+	; Robot Transparency - Persian MOD (#-34)
 	GUICtrlSetData($SldTransLevel, IniRead($g_sProfileConfigPath, "other", "Decor", 0))
 	Slider()
+
+	Global $iMultiFingerStyle = 0
+
+	; Multi Finger - Persian MOD(#-04)
+	IniReadS($iMultiFingerStyle, $g_sProfileConfigPath, "MultiFinger", "Select", "1")
 
 EndFunc   ;==>ReadConfig_MOD
 

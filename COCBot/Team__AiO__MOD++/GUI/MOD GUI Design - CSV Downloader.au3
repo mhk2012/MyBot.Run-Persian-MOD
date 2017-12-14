@@ -16,7 +16,7 @@
 
 Global $Form1 = 0, $g_ahTxtDownloadLink = 0, $g_ahTxtCSVName = 0, $g_hBtnOK = 0, $g_hBtnCansel = 0
 
-Func CreateDownloadCSV()
+Func CreateCSVDownloader()
 	$Form1 = GUICreate(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderTitle", "CSV Downloader"), 385, 112, 192, 124)
 	GUISetOnEvent($GUI_EVENT_CLOSE, "SpecialEvents")
 	GUISetOnEvent($GUI_EVENT_MINIMIZE, "SpecialEvents")
@@ -32,7 +32,7 @@ Func CreateDownloadCSV()
 
 	$x += 80
 	$g_hBtnOK = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderbtnOK", "OK"), $x + 128, $y + 56, 73, 25)
-	GUICtrlSetOnEvent(-1, "btnDownloadCSV")
+	GUICtrlSetOnEvent(-1, "btnCSVDownloader")
 	$g_hBtnCansel = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "CSVDownloaderbtnCansel", "Cansel"), $x, $y + 56, 73, 25)
 	GUICtrlSetOnEvent(-1, "btnCancel")
 	GUISetState(@SW_SHOW, $Form1)

@@ -124,7 +124,7 @@ Func CreateBottomPanel()
 	$g_hLblVersion = GUICtrlCreateLabel($g_sBotVersion, 200, $y + 66, 60, 17, $SS_CENTER)
 		GUICtrlSetColor(-1, 0X008080)
 		GUICtrlSetFont(-1, 8)
-    GUICtrlCreateLabel($g_sAiO, 195, $y + 82, 70, 17, $SS_CENTER)
+    GUICtrlCreateLabel($g_sMODName, 195, $y + 82, 70, 17, $SS_CENTER)
         GUICtrlSetColor(-1, 0x008080)
         GUICtrlSetFont(-1, 8.5)
 

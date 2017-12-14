@@ -27,7 +27,7 @@ Global $g_hChkUnitFactor = 0, $g_hTxtUnitFactor = 0
 Global $g_hChkWaveFactor = 0, $g_hTxtWaveFactor = 0
 
 ; Drop Order Troops - Team AiO MOD++ (#-06)
-Global $g_BtnCustomDropOrderDB = 0
+Global $g_hBtnCustomDropOrderDB = 0
 
 Func CreateAttackSearchDeadBaseStandard()
 
@@ -60,9 +60,9 @@ Func CreateAttackSearchDeadBaseStandard()
 								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_02", "two sides") & "|" & _
 								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_03", "three sides") & "|" & _
 								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_04", "all sides equally") & "|" & _
-								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_07", "Classic 4Fingers"), _
+								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_07", "Multy Finger"), _
 								   GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "CmbStandardDropSides_Item_04", -1))
-								   GUICtrlSetOnEvent(-1, "Bridge") ; Uncheck SmartAttack Red Area when enable FourFinger to avoid conflict
+								   GUICtrlSetOnEvent(-1, "Bridge") ; Uncheck SmartAttack Red Area when enable Multi Finger to avoid conflict
 
 		$y += 25
 			GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "Lbl-CmbStandardUnitDelay", "Delay Unit") & ":", $x, $y + 5, -1, -1)
@@ -120,6 +120,26 @@ Func CreateAttackSearchDeadBaseStandard()
 				_GUICtrlSetTip(-1, $sTxtTip)
 			$g_hPicAttackNearDarkElixirDrillDB = _GUICtrlCreateIcon($g_sLibIconPath, $eIcnDrill, $x + 20 , $y - 3, 24, 24)
 				_GUICtrlSetTip(-1, $sTxtTip)
+
+			; Multi Finger - Persian MOD (#-04)
+			$x = 25
+			$y += 60
+			$lblDBMultiFinger = GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","lblDBMultiFinger","Style:"), $x, $y, 60)
+			$y += 20
+			$cmbDBMultiFinger = GUICtrlCreateCombo("", $x, $y, 170, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+				$sTxtTip = "Select which multi finger attack style you would like." & @CRLF & @CRLF & _
+						  "     Random will chose one of the attacks at random." & @CRLF & _
+						  "     Four Finger and Eight Finger attacks will attack from all 4 sides at once."
+			GUICtrlSetTip(-1, $sTxtTip)
+			GUICtrlSetData(-1,  GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_01","Random") & "|" & _
+								GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_02","Four Finger Standard") & "|" & _
+								GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_03","Four Finger Spiral Left") & "|" & _
+								GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_04","Four Finger Spiral Right") & "|" & _
+								GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_05","Eight Finger Blossom") & "|" & _
+								GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_06","Eight Finger Implosion") & "|" & _
+								GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_07","Eight Finger Pin Wheel Spiral Left") & "|" & _
+								GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_08","Eight Finger Pin Wheel Spiral Right"), GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard","DBMultiFinger_Info_01","Random"))
+			GUICtrlSetOnEvent(-1, "cmbDBMultiFinger")
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 				   ; Unit/Wave Factor - Team AiO MOD++ (#-05)
@@ -163,11 +183,11 @@ Func CreateAttackSearchDeadBaseStandard()
 		   Next
 
 		   ; Drop Order Troops - Team AiO MOD++ (#-06)
-		   $y += 40
-		   $x = 98
-		   $g_BtnCustomDropOrderDB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "BtnCustomDropOrder", "Drop Order"), $x, $y, 85, 25)
-			   _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "BtnCustomDropOrder_Info_01", "Select Custom Troops Dropping Order"))
-			   GUICtrlSetOnEvent(-1, "CustomDropOrder")
-	   GUICtrlCreateGroup("", -99, -99, 1, 1)
+		$y += 40
+		$x = 98
+			$g_hBtnCustomDropOrderDB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack", "BtnCustomDropOrder", "Drop Order"), $x, $y, 85, 25)
+				_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack", "BtnCustomDropOrder_Info_01", "Select Custom Troops Dropping Order"))
+				GUICtrlSetOnEvent(-1, "CustomDropOrder")
+		GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 EndFunc   ;==>CreateAttackSearchDeadBaseStandard

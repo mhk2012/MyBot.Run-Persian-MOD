@@ -77,7 +77,6 @@ Global $hTimeoutAutoClose = 0 ; Timer Handle for $iTimeoutAutoClose
 Global $g_iMainLoopSleep = 50 ;
 ;Global $g_bBotLaunchOption_NoBotSlot = True
 
-Global $g_sModSupportUrl = "https://mybot.run/forums/index.php?/topic/31096-mods-mbr-v722-official-aio-mod-v171-update-1207/" ;<== Our Website Link Support Or Link Download
 Global $g_sBotTitle = "My Bot Mini " & $g_sBotVersion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 Global $g_hFrmBot = 0
 Global $g_hFrmBotBackend = 0
@@ -778,8 +777,6 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnResume()
 		Case $g_hBtnHide
 			btnHide()
-		Case $g_hBtnSupportMOD ; Support MOD Button - Team AiO MOD++ (#-02)
-			ShellExecute($g_sModSupportUrl)
 		Case $g_hBtnMakeScreenshot
 			btnMakeScreenshot()
 		Case $g_hPicTwoArrowShield
@@ -1437,3 +1434,6 @@ WEnd
 
 ReferenceFunctions()
 ReferenceGlobals()
+
+Func Slider()
+EndFunc

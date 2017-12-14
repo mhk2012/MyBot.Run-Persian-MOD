@@ -68,10 +68,11 @@ Func CreateAttackSearchActiveBaseScripted()
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "IconCopy_Info_01", -1))
 			GUICtrlSetOnEvent(-1, "DuplicateScriptAB")
 
+	; CSV Downloder - Persian MOD (-#32)
 	$y +=25
-		_GUICtrlCreateIcon($g_sLibIconPath, $eIcnDownloadCSV, $x + 210, $y + 2, 16, 16)
-			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "IconDownloadCSV_Info_01", -1))
-			GUICtrlSetOnEvent(-1, "DownloadCSV")
+		_GUICtrlCreateIcon($g_sLibIconPath, $eIcnCSVDownloader, $x + 210, $y + 2, 16, 16)
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "IconCSVDownloader_Info_01", -1))
+			GUICtrlSetOnEvent(-1, "CSVDownloader")
 
 		; CSV Deploy Speed - Team AiO MOD++ (#-09)
 		Local $Group = GUICtrlCreateGroup("", $x, $y + 189, 230, 38)

@@ -281,7 +281,7 @@ Func InitializeControlVariables()
 	$oAlwaysEnabledControls($g_hTabBot) = 1
 	$oAlwaysEnabledControls($g_hTabMOD) = 1
 	$oAlwaysEnabledControls($g_hTabAbout) = 1
-
+	; GTFO - Persian MOD (-#31)
 	$oAlwaysEnabledControls($btnGtfoChatAdd) = 1
 	$oAlwaysEnabledControls($cmbGtfo) = 1
 	$oAlwaysEnabledControls($chkKickMode) = 1

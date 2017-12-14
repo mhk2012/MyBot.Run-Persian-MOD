@@ -122,7 +122,7 @@ Func ExtendedAttackBarCheck($aTroop1stPage, $Remaining)
 						ContinueLoop
 					EndIf
 
-					$Slottemp = SlotAttack(Number($aResult[$i][1]), False, False)
+					$Slottemp = SlotAttack(Number($aResult[$i][1]), False, False, False, TroopIndexLookup($aResult[$i][0]))
 					$Slottemp[0] += 18
 					If $iFirstExtendedSlot = 0 Then $iFirstExtendedSlot = $Slottemp[1]	; flag only once
 					$iSlotExtended = $Slottemp[1] - $iFirstExtendedSlot + 1
@@ -145,7 +145,7 @@ Func ExtendedAttackBarCheck($aTroop1stPage, $Remaining)
 						$aResult[$i][3] = -1
 						$aResult[$i][4] = -1
 					EndIf
-					$strinToReturn &= "|" & TroopIndexLookup($aResult[$i][0]) & "#" & $aResult[$i][4] & "#" & $aResult[$i][3]
+					$strinToReturn &= "|" & TroopIndexLookup($aResult[$i][0]) & "#" & $aResult[$i][4] & "#" & $aResult[$i][3] & "#" & $aResult[$i][1] ; SWIPE - Persian MOD (#-33)
 				EndIf
 			Next
 			If Not $Remaining Then

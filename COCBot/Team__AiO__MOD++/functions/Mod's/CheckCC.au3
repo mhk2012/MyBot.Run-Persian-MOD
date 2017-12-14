@@ -11,7 +11,7 @@
 ; ===============================================================================================================================
 
 Func CheckCC($close = True)
-	Local $directory = @ScriptDir & "\imgxml\ArmyTroops"
+	Local $directory = @ScriptDir & "\imgxml\ArmyOverview\Troops"
 	Local $aToRemove[8] ; 6 slots for troop and 2 slots for spell
 	Local $aPos[2] = [70, 575]
 	Local $bNeedRemoveCC = False
@@ -23,7 +23,7 @@ Func CheckCC($close = True)
 	ResetVariables("CCTroops")
 
 	If Not IsArmyWindow(False, $ArmyTAB) Then
-		OpenArmyWindow()
+		OpenArmyOverview()
 		If _Sleep(1500) Then Return
 	EndIf
 
@@ -33,7 +33,7 @@ Func CheckCC($close = True)
 	For $i = 0 To 7
 		If $i = 6 Then ; Start checking Spell
 			$Spell_Offset = 54 + $Mid_Offset
-			$directory = @ScriptDir & "\imgxml\ArmySpells"
+			$directory = $g_sImgArmyOverviewSpells
 		EndIf
 
 		If $g_bDebugSetlog Then SetLog("SLOT : " & $i, $COLOR_DEBUG) ;Debug

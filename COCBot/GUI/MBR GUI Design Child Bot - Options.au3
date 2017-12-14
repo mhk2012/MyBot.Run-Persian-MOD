@@ -279,7 +279,7 @@ Func CreateBotOptions()
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Bot - Options", "ChkFixClanCastle_Info_01", "If clan Castle it is undetected and it is NOT placed in the last slot, force bot to consider the undetected slot as Clan Castle"))
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 
-	; mhk2012 Persian MOD
+	; Robot Transparency - Persian MOD (#-34)
 	$y += 48
 	GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Bot - Options","Group_08", "Decor"), $x - 20, $y - 20, 210, 90)
 	$x += 120

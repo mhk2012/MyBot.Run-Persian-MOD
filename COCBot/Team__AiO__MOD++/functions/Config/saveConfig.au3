@@ -27,12 +27,6 @@ Func SaveConfig_MOD()
 	_Ini_Add("SetSleep", "EnableWaveFactor", $g_iChkWaveFactor)
 	_Ini_Add("SetSleep", "WaveFactor", GUICtrlRead($g_hTxtWaveFactor))
 
-	; Drop Order Troops - Team AiO MOD++ (#-06)
-	_Ini_Add("DropOrder", "chkTroopDropOrder", $g_bCustomTrainDropOrderEnable)
-	For $p = 0 To UBound($icmbDropTroops) - 1
-		_Ini_Add("DropOrder", "cmbDropTroops[" & $p & "]", _GUICtrlComboBox_GetCurSel($cmbDropTroops[$p]))
-	Next
-
 	; Auto Dock, Hide Emulator & Bot - Team AiO MOD++ (#-07)
 	_Ini_Add("general", "EnableAuto", $g_bEnableAuto ? 1 : 0)
 	_Ini_Add("general", "AutoDock", $g_iChkAutoDock ? 1 : 0)
@@ -180,8 +174,11 @@ Func SaveConfig_MOD()
 	_Ini_Add("other", "ChkStopOnBatt", $g_bStopOnBatt ? 1 : 0)
 	_Ini_Add("other", "StopOnBatt", $g_iStopOnBatt)
 
-	; MHK2012 Persian MOD
+	; Robot Transparency - Persian MOD (#-34)
 	_Ini_Add("other", "Decor", $iSldTransLevel)
+
+	; Multi Finger - Persian MOD (#-04)
+	_Ini_Add("MultiFinger", "Select", _GUICtrlComboBox_GetCurSel($cmbDBMultiFinger))
 
 EndFunc   ;==>SaveConfig_MOD
 

@@ -38,7 +38,7 @@ Func AttackBarCheck($Remaining = False)
 	EndIf
 
 	; ExtendedAttackBar - Team AiO MOD++ (#-22)
-	If $g_bDraggedAttackBar Then DragAttackBar($g_iTotalAttackSlot, True)
+	If $g_bDraggedAttackBar And $SWIPE = "" Then DragAttackBar($g_iTotalAttackSlot, True)
 
 	; Reset to level one the Spells level
 	$g_iLSpellLevel = 1
@@ -130,12 +130,17 @@ Func AttackBarCheck($Remaining = False)
 			EndIf
 
 			Local $iSlotCompensation = -6
+			; SWIPE - Persian MOD (#-33)
+			Local $SRIGHT = False
+			If $SWIPE = "RIGHT" Then $SRIGHT = True
+
 			For $i = 0 To UBound($aResult) - 1
 				Local $Slottemp
 				If $aResult[$i][1] > 0 Then
 					If $g_bDebugSetlog Then SetLog("SLOT : " & $i, $COLOR_DEBUG) ;Debug
 					If $g_bDebugSetlog Then SetLog("Detection : " & $aResult[$i][0] & "|x" & $aResult[$i][1] & "|y" & $aResult[$i][2], $COLOR_DEBUG) ;Debug
-					$Slottemp = SlotAttack(Number($aResult[$i][1]), $CheckSlot12, $CheckSlotwHero)
+					; SWIPE - Persian MOD (#-33)
+					$Slottemp = SlotAttack(Number($aResult[$i][1]), $CheckSlot12, $CheckSlotwHero, $SRIGHT, TroopIndexLookup($aResult[$i][0]))
 					If $g_bRunState = False Then Return ; Stop function
 					If _Sleep(20) Then Return ; Pause function
 					If UBound($Slottemp) = 2 Then
@@ -168,8 +173,8 @@ Func AttackBarCheck($Remaining = False)
 						$aResult[$i][3] = -1
 						$aResult[$i][4] = -1
 					EndIf
-					If $aResult[$i][4] <= 10 Or Not $g_abChkExtendedAttackBar[$g_iMatchMode] Then ; ExtendedAttackBar - Team AiO MOD++ (#-22)
-						$strinToReturn &= "|" & TroopIndexLookup($aResult[$i][0]) & "#" & $aResult[$i][4] & "#" & $aResult[$i][3]
+					If $aResult[$i][4] <= 10 Or Not $g_abChkExtendedAttackBar[$g_iMatchMode] Or Not $SWIPE = "" Then ; ExtendedAttackBar - Team AiO MOD++ (#-22)
+						$strinToReturn &= "|" & TroopIndexLookup($aResult[$i][0]) & "#" & $aResult[$i][4] & "#" & $aResult[$i][3] & "#" & $aResult[$i][1] ; SWIPE - Persian MOD (#-33)
 					EndIf
 				EndIf
 			Next
@@ -201,7 +206,7 @@ Func AttackBarCheck($Remaining = False)
 
 	; ExtendedAttackBar - Team AiO MOD++ (#-22)
 	If $g_iMatchMode <= $LB Then
-		If $g_abChkExtendedAttackBar[$g_iMatchMode] And $CheckSlot12 And IsArray($aResult) Then
+		If $g_abChkExtendedAttackBar[$g_iMatchMode] And $CheckSlot12 And IsArray($aResult) And $SWIPE = "" Then
 			If $g_bDebugSetlog Then Setlog("$strinToReturn 1st page = " & $strinToReturn)
 			Local $aTroop1stPage[UBound($aResult)][2] ; Troop Name & Slot
 			For $i = 0 To UBound($aResult) - 1
@@ -223,26 +228,42 @@ Func AttackBarCheck($Remaining = False)
 
 EndFunc   ;==>AttackBarCheck
 
-Func SlotAttack($PosX, $CheckSlot12, $CheckSlotwHero)
+; SWIPE - Persian MOD (#-33)
+Func SlotAttack($PosX, $CheckSlot12, $CheckSlotwHero, $SRIGHT, $Troop)
 
 	Local $Slottemp[2] = [0, 0]
+	Local $iStartOffset = 0
+	Local $iStartOffsetHero = 0
+
+	Select
+		Case $Troop = $eKing Or $Troop = $eQueen Or $Troop = $eWarden
+			$iStartOffsetHero = 8
+		Case $Troop >= $eLSpell And $Troop <= $eSkSpell
+			If $CheckSlotwHero Then $iStartOffsetHero = 16
+	EndSelect
+
+	If $SRIGHT Then
+		$iStartOffset = 56
+		If $CheckSlotwHero Then $iStartOffset = 39
+	ElseIf $CheckSlot12 Then
+		$iStartOffset = 11
+	Else
+		$iStartOffset = 33
+		If $CheckSlotwHero Then $iStartOffset = 25
+	EndIf
 
 	For $i = 0 To 12
-		If $PosX >= 25 + ($i * 73) And $PosX < 98 + ($i * 73) Then
-			$Slottemp[0] = 35 + ($i * 73)
+		If $PosX >= $iStartOffset + ($i * 73) And $PosX < (($iStartOffset + 73 + $iStartOffsetHero) + ($i * 73)) Then
+
+			$Slottemp[0] = $iStartOffset + ($i * 73) + 10 + $iStartOffsetHero
 			$Slottemp[1] = $i
-			If $CheckSlot12 = True Then
-				$Slottemp[0] -= 13
-			ElseIf $CheckSlotwHero = False Then
-				$Slottemp[0] += 8
-			EndIf
-			If $g_bDebugSetlog Then Setlog("Slot: " & $i & " | $x > " & 25 + ($i * 73) & " and $x < " & 98 + ($i * 73))
-			If $g_bDebugSetlog Then Setlog("Slot: " & $i & " | $PosX: " & $PosX & " |  OCR x position: " & $Slottemp[0] & " | OCR Slot: " & $Slottemp[1])
+
+			If $g_bDebugSetlog = 1 Then Setlog("Slot: " & $i & " | $x > " & $iStartOffset + ($i * 73) & " and $x < " & ($iStartOffset + 73 + $iStartOffsetHero) + ($i * 73))
+			If $g_bDebugSetlog = 1 Then Setlog("Slot: " & $i & " | $PosX: " & $PosX & " |  OCR x position: " & $Slottemp[0] & " | OCR Slot: " & $Slottemp[1])
 			Return $Slottemp
 		EndIf
 		If $g_bRunState = False Then Return
 	Next
-
 	Return $Slottemp
 
 EndFunc   ;==>SlotAttack

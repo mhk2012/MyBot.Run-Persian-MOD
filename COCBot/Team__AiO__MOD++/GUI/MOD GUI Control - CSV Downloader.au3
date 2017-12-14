@@ -28,7 +28,7 @@ Func SpecialEvents()
 	EndSelect
 EndFunc
 
-Func btnDownloadCSV()
+Func btnCSVDownloader()
 	if GUICtrlRead($g_ahTxtDownloadLink) = "" Or GUICtrlRead($g_ahTxtCSVName) = "" Then
 		MsgBox($MB_ICONWARNING, "Error", GetTranslatedFileIni("MBR GUI Design - CSV Downloader", "ErrorFillFields", "Fill in all fields!"))
 		Return

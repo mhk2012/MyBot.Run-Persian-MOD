@@ -32,6 +32,7 @@ Global $iSldTransLevel = 0 ; mhk2012 Persian MOD
 #include "GUI\MBR GUI Control Tab Village.au3"
 #include "GUI\MBR GUI Control Tab Search.au3"
 #include "GUI\MBR GUI Control Child Attack.au3"
+#include "GUI\MBR GUI Control Tab DropOrder.au3"
 #include "GUI\MBR GUI Control Tab EndBattle.au3"
 #include "GUI\MBR GUI Control Tab SmartZap.au3"
 #include "GUI\MBR GUI Control Tab Stats.au3"
@@ -51,10 +52,7 @@ Global $iSldTransLevel = 0 ; mhk2012 Persian MOD
 ; Team AiO MOD++ (2017)
 #include "Team__AiO__MOD++\GUI\MOD GUI Control.au3"
 
-; MHK2012 Persian MOD    GTFO
-#include <ListboxConstants.au3>
-
-
+; GTFO - Persian MOD (-#31)
 Global $DonationWindowY, $bDonate, $GTFOcheck, $hGUI_GTFOMode
 Global $iTotalDonateCapacity, $iTotalDonateSpellCapacity
 Global $iDonTroopsLimit, $iDonSpellsLimit, $iDonTroopsAv, $iDonSpellsAv
@@ -66,7 +64,6 @@ Global $btnGtfoProfileRemove, $SliderGtfoIdleTime, $chkGtfoNote, $txtGtfoNote, $
 Global $btnGtfoChatAdd, $btnGtfoChatRemove, $chkGtfoChatAuto, $chkGtfoChatRandom, $lblGtfoTroop, $lblGtfoHelp, $lblGtfoIdle, $lblGtfoSpell
 Global $lblGtfoTroopBoost, $lblGtfoChat, $lblGtfoSpellBoost, $lblKick, $txtGtfoIdleTime, $chkChatStatus,$lblGtfoChatIdleDelay,$cmbGtfoChatIdleDelay
 Global $lblStartXp, $lblCurrentXP,$lblStartXpVal, $lblCurrentXPVal, $lblGtfoDonationCap,$lblGtfoKickCap, $lblGTFOdisabled
-;~ Global Enum $GtfoIdle, $GtfoStart, $GtfoPause , $GtfoResume , $GtfoStop
 Global $GtfoModStatus = $GtfoIdle
 Global $GtfoTroopType, $GtfoSpellType, $GtfoChatCount = 0, $FirstStart = True
 Global $GtfoHours = 0, $GtfoMins = 0, $GtfoSecs = 0, $GtfoTroopTrainCount = 0, $GtfoSpellBrewCount = 0
@@ -108,7 +105,7 @@ Func InitializeMainGUI($bGuiModeUpdate = False)
 	EndIf
 
 	; Developer mode controls
-	If $g_bDevMode = True Then
+	If $g_bDevMode Then
 		GUICtrlSetState($g_hChkDebugSetlog, $GUI_SHOW + $GUI_ENABLE)
 		GUICtrlSetState($g_hChkDebugDisableZoomout, $GUI_SHOW + $GUI_ENABLE)
 		GUICtrlSetState($g_hChkDebugDisableVillageCentering, $GUI_SHOW + $GUI_ENABLE)
@@ -482,7 +479,7 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			; Clean up resources
 			BotCloseRequest()
 		Case $g_hLblBotMiniGUI, $g_hLblBotNormalGUI
-			BotGuiModeToggle()
+			BotGuiModeToggleRequest()
 		Case $g_hLblCreditsBckGrnd
 			; Handle open URL clicks when label of link is over another background label
 			Local $CursorInfo = GUIGetCursorInfo($g_hFrmBot)
@@ -516,8 +513,8 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnAttackNowLB()
 		Case $g_hBtnAttackNowTS
 			btnAttackNowTS()
-		;Case $idMENU_DONATE_SUPPORT
-		;	ShellExecute("https://mybot.run/forums/index.php?/donate/make-donation/")
+			;Case $idMENU_DONATE_SUPPORT
+			;	ShellExecute("https://mybot.run/forums/index.php?/donate/make-donation/")
 		Case $g_hBtnNotifyDeleteMessages
 			If $g_bRunState Then
 				btnDeletePBMessages() ; call with flag when bot is running to execute on _sleep() idle
@@ -629,6 +626,8 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnTestClickAway()
 		Case $g_hBtnTestAutoUpgrade
 			AutoUpgrade(True)
+		Case $g_hBtnTestUpgradeWindow
+			btnTestUpgradeWindow()
 	EndSwitch
 
 	If $lParam = $g_hCmbGUILanguage Then
@@ -1137,8 +1136,17 @@ Func BotShrinkExpandToggleExecute()
 	Return True
 EndFunc   ;==>BotShrinkExpandToggleExecute
 
-Func BotGuiModeToggle()
+Func BotGuiModeToggleRequest()
+	If Not $g_bRunState Then
+		BotGuiModeToggle()
+		Return False
+	EndIf
+	$g_bBotGuiModeToggleRequested = True
+	Return True
+EndFunc
 
+Func BotGuiModeToggle()
+	$g_bBotGuiModeToggleRequested = False
 	If $g_iGuiMode = 0 Then Return False
 	If $g_iBotAction = $eBotClose Then Return False
 
@@ -1312,6 +1320,7 @@ Func CheckBotRequests()
 		_WinAPI_PostMessage($g_hFrmBot, $WM_SYSCOMMAND, 0xF012, 0) ; SC_DRAGMOVE = 0xF012
 	Else
 		If $g_bBotShrinkExpandToggleRequested Then BotShrinkExpandToggleExecute()
+		If $g_bBotGuiModeToggleRequested Then BotGuiModeToggle()
 	EndIf
 EndFunc   ;==>CheckBotMoveRequests
 
@@ -1337,7 +1346,7 @@ Func BotClose($SaveConfig = Default, $bExit = True)
 	$g_bRunState = False
 	$g_bBotPaused = False
 	ResumeAndroid()
-	GtfoSaveSettings()
+	GtfoSaveSettings(); GTFO - Persian MOD (-#31)
 	SetLog("Closing " & $g_sBotTitle & " now ...")
 	LockBotSlot(False)
 
@@ -2124,81 +2133,6 @@ Func tabTHSnipe()
 
 EndFunc   ;==>tabTHSnipe
 
-Func Doncheck()
-	tabDONATE() ; just call tabDONATE()
-EndFunc   ;==>Doncheck
-
-Func dbCheck()
-	$g_abAttackTypeEnable[$DB] = (GUICtrlRead($g_hChkDeadbase) = $GUI_CHECKED)
-
-	If $g_iBotLaunchTime > 0 Then _GUICtrlTab_SetCurFocus($g_hGUI_SEARCH_TAB, 0) ; activate deadbase tab
-	If BitAND(GUICtrlRead($g_hChkDBActivateSearches), GUICtrlRead($g_hChkDBActivateTropies), GUICtrlRead($g_hChkDBActivateCamps), GUICtrlRead($g_hChkDBSpellsWait)) = $GUI_UNCHECKED Then
-		GUICtrlSetState($g_hChkDBActivateSearches, $GUI_CHECKED)
-		chkDBActivateSearches() ; this includes a call to dbCheckall() -> tabSEARCH()
-	Else
-		tabSEARCH() ; just call tabSEARCH()
-	EndIf
-EndFunc   ;==>dbCheck
-
-Func dbCheckAll()
-	If BitAND(GUICtrlRead($g_hChkDBActivateSearches), GUICtrlRead($g_hChkDBActivateTropies), GUICtrlRead($g_hChkDBActivateCamps), GUICtrlRead($g_hChkDBSpellsWait)) = $GUI_UNCHECKED Then
-		GUICtrlSetState($g_hChkDeadbase, $GUI_UNCHECKED)
-	Else
-		GUICtrlSetState($g_hChkDeadbase, $GUI_CHECKED)
-	EndIf
-	tabSEARCH()
-EndFunc   ;==>dbCheckAll
-
-Func abCheck()
-	$g_abAttackTypeEnable[$LB] = (GUICtrlRead($g_hChkActivebase) = $GUI_CHECKED)
-
-	If $g_iBotLaunchTime > 0 Then _GUICtrlTab_SetCurFocus($g_hGUI_SEARCH_TAB, 1)
-	If BitAND(GUICtrlRead($g_hChkABActivateSearches), GUICtrlRead($g_hChkABActivateTropies), GUICtrlRead($g_hChkABActivateCamps), GUICtrlRead($g_hChkABSpellsWait)) = $GUI_UNCHECKED Then
-		GUICtrlSetState($g_hChkABActivateSearches, $GUI_CHECKED)
-		chkABActivateSearches() ; this includes a call to abCheckall() -> tabSEARCH()
-	Else
-		tabSEARCH() ; just call tabSEARCH()
-	EndIf
-EndFunc   ;==>abCheck
-
-Func abCheckAll()
-	If BitAND(GUICtrlRead($g_hChkABActivateSearches), GUICtrlRead($g_hChkABActivateTropies), GUICtrlRead($g_hChkABActivateCamps), GUICtrlRead($g_hChkABSpellsWait)) = $GUI_UNCHECKED Then
-		GUICtrlSetState($g_hChkActivebase, $GUI_UNCHECKED)
-	Else
-		GUICtrlSetState($g_hChkActivebase, $GUI_CHECKED)
-	EndIf
-	tabSEARCH()
-EndFunc   ;==>abCheckAll
-
-Func tsCheck()
-	$g_abAttackTypeEnable[$TS] = (GUICtrlRead($g_hChkTHSnipe) = $GUI_CHECKED)
-
-	If $g_iBotLaunchTime > 0 Then _GUICtrlTab_SetCurFocus($g_hGUI_SEARCH_TAB, 2)
-	If BitAND(GUICtrlRead($g_hChkTSActivateSearches), GUICtrlRead($g_hChkTSActivateTropies), GUICtrlRead($g_hChkTSActivateCamps)) = $GUI_UNCHECKED Then
-		GUICtrlSetState($g_hChkTSActivateSearches, $GUI_CHECKED)
-		chkTSActivateSearches() ; this includes a call to tsCheckall() -> tabSEARCH()
-	Else
-		tabSEARCH() ; just call tabSEARCH()
-	EndIf
-EndFunc   ;==>tsCheck
-
-Func tsCheckAll()
-	If BitAND(GUICtrlRead($g_hChkTSActivateSearches), GUICtrlRead($g_hChkTSActivateTropies), GUICtrlRead($g_hChkTSActivateCamps)) = $GUI_UNCHECKED Then
-		GUICtrlSetState($g_hChkTHSnipe, $GUI_UNCHECKED)
-	Else
-		GUICtrlSetState($g_hChkTHSnipe, $GUI_CHECKED)
-	EndIf
-	tabSEARCH()
-EndFunc   ;==>tsCheckAll
-
-Func bullyCheck()
-	$g_abAttackTypeEnable[$TB] = (GUICtrlRead($g_hChkBully) = $GUI_CHECKED)
-
-	If $g_iBotLaunchTime > 0 Then _GUICtrlTab_SetCurFocus($g_hGUI_SEARCH_TAB, 3)
-	tabSEARCH()
-EndFunc   ;==>bullyCheck
-
-
 ;---------------------------------------------------
 ; Extra Functions used on GUI Control
 ;---------------------------------------------------
@@ -2439,7 +2373,7 @@ Func IsGUICtrlHidden($hGUICtrl)
 	Return False
 EndFunc   ;==>IsGUICtrlHidden
 
-; mhk2012 Persian MOD
+; Robot Transparency - Persian MOD (#-34)
 Func Slider()
      $iSldTransLevel = GUICtrlRead($SldTransLevel)
      GUICtrlSetData($SldTransLevel, $iSldTransLevel)
@@ -2465,7 +2399,7 @@ Func Slider()
       EndSwitch
 EndFunc
 
-; MHK2012 Persian MOD     GTFO
+; GTFO - Persian MOD (-#31)
 Func GTFOcheck()
 	If $g_iBotLaunchTime  > 0 Then _GUICtrlTab_SetCurFocus($g_hGUI_DONATE_TAB, 1)
 	If GUICtrlRead($GTFOcheck) = $GUI_CHECKED Then

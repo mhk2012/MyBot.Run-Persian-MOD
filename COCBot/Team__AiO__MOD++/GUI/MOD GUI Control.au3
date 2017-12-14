@@ -14,8 +14,11 @@
 ; ===============================================================================================================================
 #include-once
 
-; CSV Downloader
+; CSV Downloder - Persian MOD (-#32)
 #include "MOD GUI Control - CSV Downloader.au3"
+
+; GTFO - Persian MOD (-#31)
+#include <ListboxConstants.au3>
 
 ; Classic Four Finger - Team AiO MOD++ (#-04)
 Func cmbStandardDropSidesAB() ; avoid conflict between FourFinger and SmartAttack
@@ -49,6 +52,7 @@ Func Bridge()
 	    Next
         chkSmartAttackRedAreaDB()
 	EndIf
+	cmbDBMultiFinger() ; Multi Finger - Persian MOD (#-04)
 
 EndFunc   ;==>Bridge
 

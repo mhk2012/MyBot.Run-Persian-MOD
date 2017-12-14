@@ -18,7 +18,7 @@
 ;~ Global $g_sLastMessage = "" ;message for last version
 ;~ Global $g_sOldVersionMessage = "" ;warning message for old bot
 
-; Check Version - Team AiO MOD++ (#-03)
+; Check Version - Persian MOD (#-03)
 Func CheckVersion()
 	If $g_bCheckVersion Then
 		CheckVersionHTML()
@@ -51,7 +51,7 @@ Func CheckVersionHTML()
 		FileCopy(@ScriptDir & "\TestVersion.txt", $versionfile, 1)
 	Else
 		;download page from site contains last bot version
-		Local $hDownload = InetGet("https://raw.githubusercontent.com/mhk2012/MyBot.Run-Official-Release/master/LastVersion.txt", $versionfile, 0, 1) ; Check Version - Team AiO MOD++ (#-03)
+		Local $hDownload = InetGet("https://raw.githubusercontent.com/mhk2012/MyBot.Run-Official-Release/master/LastVersion.txt", $versionfile, 0, 1) ; Check Version - Persian MOD (#-03)
 
 		; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 		Local $i = 0
@@ -66,17 +66,17 @@ Func CheckVersionHTML()
 	;search version into downloaded page
 	Local $line, $line2, $Casesense = 0, $chkvers = False, $chkmsg = False, $chkmsg2 = False, $i = 0
 	;$g_sLastVersion = ""
-	$g_sLastModversion = "" ; Check Version - Team AiO MOD++ (#-03)
+	$g_sLastModversion = "" ; Check Version - Persian MOD (#-03)
 	If FileExists($versionfile) Then
 		;$g_sLastVersion = IniRead($versionfile, "general", "version", "")
-		$g_sLastModversion = IniRead($versionfile, "mod", "version", "") ; Check Version - Team AiO MOD++ (#-03)
+		$g_sLastModversion = IniRead($versionfile, "mod", "version", "") ; Check Version - Persian MOD (#-03)
 		;look for localized messages for the new and old versions
 		Local $versionfilelocalized = @ScriptDir & "\LastVersion_" & $g_sLanguage & ".txt" ;
 		If FileExists(@ScriptDir & "\TestVersion_" & $g_sLanguage & ".txt") Then
 			FileCopy(@ScriptDir & "\TestVersion_" & $g_sLanguage & ".txt", $versionfilelocalized, 1)
 		Else
 			;download page from site contains last bot version localized messages
-			$hDownload = InetGet("https://raw.githubusercontent.com/mhk2012/MyBot.Run-Official-Release/master/LastVersion_" & $g_sLanguage & ".txt", $versionfilelocalized, 0, 1) ; Check Version - Team AiO MOD++ (#-03)
+			$hDownload = InetGet("https://raw.githubusercontent.com/mhk2012/MyBot.Run-Official-Release/master/LastVersion_" & $g_sLanguage & ".txt", $versionfilelocalized, 0, 1) ; Check Version - Persian MOD (#-03)
 
 			; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 			Local $i = 0
@@ -90,14 +90,14 @@ Func CheckVersionHTML()
 		If FileExists($versionfilelocalized) Then
 			;$g_sLastMessage = IniRead($versionfilelocalized, "general", "messagenew", "")
 			;$g_sOldVersionMessage = IniRead($versionfilelocalized, "general", "messageold", "")
-			; Check Version - Team AiO MOD++ (#-03)
+			; Check Version - Persian MOD (#-03)
 			$g_sLastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
 			$g_sOldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
 			FileDelete($versionfilelocalized)
 		Else
 			;$g_sLastMessage = IniRead($versionfile, "general", "messagenew", "")
 			;$g_sOldVersionMessage = IniRead($versionfile, "general", "messageold", "")
-			; Check Version - Team AiO MOD++ (#-03)
+			; Check Version - Persian MOD (#-03)
 			$g_sLastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
 			$g_sOldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
 		EndIf
@@ -171,7 +171,7 @@ Func GetVersionNormalized($VersionString, $Chars = 5)
 	Return _ArrayToString($a, ".")
 EndFunc   ;==>GetVersionNormalized
 
-; Check Version - Team AiO MOD++ (#-03)
+; Check Version - Persian MOD (#-03)
 Func CheckModVersion()
 	If $g_sLastModversion = "" Then
 		SetLog("WE CANNOT OBTAIN MOD VERSION AT THIS TIME" & @CRLF & "BAD CONNECTION", $COLOR_ACTION)

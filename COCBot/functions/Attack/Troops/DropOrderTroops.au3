@@ -1,8 +1,8 @@
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: Custom troops drop (#-06)
+; Name ..........: Custom Drop Troops
 ; Description ...: This file contains the Sequence that runs all MBR Bot
-; Author ........: Kychera 05/2017
-; Modified ......:
+; Author ........: Kychera (05-2017)
+; Modified ......: NguyenAnhHD (12-2017)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -11,7 +11,7 @@
 ; ===============================================================================================================================
 
 Func MatchTroopDropName($Num)
-	Switch _GUICtrlComboBox_GetCurSel($cmbDropTroops[$Num])
+	Switch _GUICtrlComboBox_GetCurSel($g_ahCmbDropOrder[$Num])
 		Case 0
 			Return $eBarb
 		Case 1
@@ -58,17 +58,13 @@ Func MatchTroopDropName($Num)
 EndFunc   ;==>MatchTroopDropName
 
 Func MatchSlotsPerEdge($Num)
-	Switch _GUICtrlComboBox_GetCurSel($cmbDropTroops[$Num])
+	Switch _GUICtrlComboBox_GetCurSel($g_ahCmbDropOrder[$Num])
 		Case 0 ;$eBarb
 			Return 0
 		Case 1 ;$eArch
 			Return 0
 		Case 2 ;$eGiants
-			If $nbSides = 5 Then
-				Return $g_aiSlotsGiants
-			Else
-				Return $g_iSlotsGiants
-			EndIf
+			Return $g_iSlotsGiants
 		Case 3 ;$eGobl
 			Return 0
 		Case 4 ;$eWall
@@ -145,7 +141,7 @@ Func MatchSlotsPerEdge($Num)
 EndFunc   ;==>MatchSlotsPerEdge
 
 Func MatchSidesDrop($Num)
-	Switch _GUICtrlComboBox_GetCurSel($cmbDropTroops[$Num])
+	Switch _GUICtrlComboBox_GetCurSel($g_ahCmbDropOrder[$Num])
 		Case 0 To 18 ;$eBarb to $eBowl
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 0 Then Return 1
 			If $g_aiAttackStdDropSides[$g_iMatchMode] = 1 Then Return 2

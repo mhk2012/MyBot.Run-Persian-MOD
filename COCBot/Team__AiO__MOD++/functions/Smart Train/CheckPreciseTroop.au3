@@ -43,7 +43,7 @@ Func CheckPreciseTroop()
 			$bReturnArmyTab = True
 		EndIf
 
-		If $bReturnArmyTab Then OpenTrainTabNumber($ArmyTAB, "CheckPreciseTroop()")
+		If $bReturnArmyTab Then OpenArmyTab()
 		If _Sleep(200) Then Return
 		RemoveWrongTroops($g_abRCheckWrongTroops[0], $g_abRCheckWrongTroops[1], $toRemove)
 		Return True
@@ -57,11 +57,11 @@ Func CheckWrongTroops($Troop = True, $Spell = False, $CheckExistentArmy = True)
 	$g_abRCheckWrongTroops[1] = False
 	Local $toRemove[1][2] = [["Arch", 0]] ; Wrong Troops & Spells to be removed
 
-	If ISArmyWindow(False, $ArmyTAB) = False Then OpenTrainTabNumber($ArmyTAB, "CheckWrongTroops()")
+	If ISArmyWindow(False, $ArmyTAB) = False Then OpenArmyTab()
 	If _Sleep(500) Then Return
 
 	If $Troop = True Then
-		If $CheckExistentArmy Then CheckExistentArmy("Troops", True)
+		If $CheckExistentArmy Then getArmyTroops(False, False, False, True)
 		For $i = 0 To ($eTroopCount - 1)
 			If $g_bRunState = False Then Return
 			If $g_aiCurrentTroops[$i] - $g_aiArmyCompTroops[$i] > 0 Then
@@ -73,7 +73,7 @@ Func CheckWrongTroops($Troop = True, $Spell = False, $CheckExistentArmy = True)
 	EndIf
 
 	If $Spell = True Then
-		If $CheckExistentArmy Then CheckExistentArmy("Spells", True)
+		If $CheckExistentArmy Then getArmySpells(False, False, False, True)
 		For $i = 0 To ($eSpellCount - 1)
 			If $g_bRunState = False Then Return
 			If $g_aiCurrentSpells[$i] - $g_aiArmyCompSpells[$i] > 0 Then

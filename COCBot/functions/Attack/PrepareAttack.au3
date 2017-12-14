@@ -57,13 +57,13 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 	Local $result = AttackBarCheck($Remaining)
 	If $g_bDebugSetlog Then SetLog("DLL Troopsbar list: " & $result, $COLOR_DEBUG)
 	Local $aTroopDataList = StringSplit($result, "|")
-	Local $aTemp[12][3]
+	Local $aTemp[12][4]
 
 	; ExtendedAttackBar - Team AiO MOD++ (#-22)
 	If $pMatchMode <= $LB Then
-		If $g_abChkExtendedAttackBar[$pMatchMode] Then
-			ReDim $aTemp[22][3]
-			ReDim $g_avAttackTroops[22][2]
+		If $g_abChkExtendedAttackBar[$pMatchMode] And $SWIPE = "" Then
+			ReDim $aTemp[22][4]
+			ReDim $g_avAttackTroops[22][3]
 		EndIf
 	EndIf
 
@@ -75,14 +75,17 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 			$aTemp[Number($troopData[1])][0] = $troopData[0]
 			$aTemp[Number($troopData[1])][1] = Number($troopData[2])
 			$aTemp[Number($troopData[1])][2] = Number($troopData[1])
+			$aTemp[Number($troopData[1])][3] = Number($troopData[3])
 		Next
 	EndIf
 	For $i = 0 To UBound($aTemp) - 1
 		If $aTemp[$i][0] = "" And $aTemp[$i][1] = "" Then
 			$g_avAttackTroops[$i][0] = -1
 			$g_avAttackTroops[$i][1] = 0
+			$g_avAttackTroops[$i][2] = -1
 		Else
 			Local $troopKind = $aTemp[$i][0]
+			$g_avAttackTroops[$i][2] = -1
 			If $troopKind < $eKing Then
 				;normal troop
 				If Not IsTroopToBeUsed($pMatchMode, $troopKind) Then
@@ -104,10 +107,16 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 					$troopsnumber += 1
 					;Setlog ("troopsnumber = " & $troopsnumber & "+1")
 					$g_avAttackTroops[$i][0] = $aTemp[$i][0]
-					$g_avAttackTroops[$i][1] = $aTemp[$i][1]
-					If $g_avAttackTroops[$i][0] = $eKing Or $g_avAttackTroops[$i][0] = $eQueen Or $g_avAttackTroops[$i][0] = $eWarden Then $g_avAttackTroops[$i][1] = 1
-					$troopKind = $g_avAttackTroops[$i][1]
-					$troopsnumber += 1
+;~ 					$g_avAttackTroops[$i][1] = $aTemp[$i][1]
+					If $g_avAttackTroops[$i][0] = $eKing Or $g_avAttackTroops[$i][0] = $eQueen Or $g_avAttackTroops[$i][0] = $eWarden Then
+						$g_avAttackTroops[$i][1] = 1
+						$troopsnumber += 1
+					Else
+						$g_avAttackTroops[$i][1] = $aTemp[$i][1]
+						If $Remaining = False Then $troopsnumber += 1
+					EndIf
+;~ 					$troopKind = $g_avAttackTroops[$i][1]
+
 				Else
 					If $g_bDebugSetlog Then Setlog($aTemp[$i][2] & " » Discard use hero/poison " & $troopKind & " " & NameOfTroop($troopKind), $COLOR_ERROR)
 					$troopKind = -1
@@ -116,8 +125,10 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 
 			$Plural = 0
 			If $aTemp[$i][1] > 1 Then $Plural = 1
-			If $troopKind <> -1 Then SetLog($aTemp[$i][2] & " » " & $g_avAttackTroops[$i][1] & " " & NameOfTroop($g_avAttackTroops[$i][0], $Plural), $COLOR_SUCCESS)
-
+			If $troopKind <> -1 Then
+				SetLog($aTemp[$i][2] & " » " & $g_avAttackTroops[$i][1] & " " & NameOfTroop($g_avAttackTroops[$i][0], $Plural), $COLOR_SUCCESS)
+				$g_avAttackTroops[$i][2] = $aTemp[$i][3]
+			EndIf
 		EndIf
 	Next
 

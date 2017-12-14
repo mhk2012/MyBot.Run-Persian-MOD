@@ -183,7 +183,7 @@ Func GetVariable(Const $ImageToUse, Const $iIndex)
 	; Capture the screen for comparison
 	_CaptureRegion2(25, 375, 840, 548)
 
-	Local $res = DllCall($g_hLibImgLoc, "str", "FindTile", "handle", $g_hHBitmap2, "str", $ImageToUse, "str", "FV", "int", 1)
+	Local $res = DllCallMyBot("FindTile", "handle", $g_hHBitmap2, "str", $ImageToUse, "str", "FV", "int", 1)
 
 	If @error Then _logErrorDLLCall($g_sLibImgLocPath, @error)
 	If IsArray($res) Then

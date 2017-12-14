@@ -38,11 +38,8 @@ Func BoostBarracks()
 		EndIf
 	EndIf
 
-	If OpenArmyWindow() = True Then
-		Local $CheckArmyWindow = ISArmyWindow()
-		OpenTrainTabNumber(1, "BoostBarracks")
-		If _Sleep(400) Then Return
-
+	If OpenArmyOverview() Then
+		OpenTroopsTab()
 		Local $ClickResult = ClickOnBoostArmyWindow()
 		If $ClickResult = True Then
 			Local $GemResult = IsGemWindowOpen(True)
@@ -72,11 +69,8 @@ Func BoostSpellFactory()
 
 		If $g_bChkForecastBoost And $currentForecast <= Number($g_iTxtForecastBoost, 3) Then Return
 
-		If OpenArmyWindow() = True Then
-			Local $CheckArmyWindow = ISArmyWindow()
-			OpenTrainTabNumber(2, "BoostSpellFactory")
-			If _Sleep(400) Then Return
-
+		If OpenArmyOverview() Then
+			OpenSpellsTab()
 			Local $ClickResult = ClickOnBoostArmyWindow()
 			If $ClickResult = True Then
 				Local $GemResult = IsGemWindowOpen(True)

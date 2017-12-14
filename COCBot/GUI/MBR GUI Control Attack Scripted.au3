@@ -292,6 +292,7 @@ Func cmbScriptDroplineAB()
 	$g_aiAttackScrDroplineEdge[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptDroplineAB)
 EndFunc   ;==>cmbScriptDroplineAB
 
-Func DownloadCSV()
-	CreateDownloadCSV()
+; CSV Downloder - Persian MOD (-#32)
+Func CSVDownloader()
+	CreateCSVDownloader()
 EndFunc   ;==>DownloadCSV

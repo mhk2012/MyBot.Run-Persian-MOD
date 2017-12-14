@@ -35,7 +35,7 @@ Func saveConfig()
 	;SetDebugLog("SaveRegularConfig(), time = " & Round(__TimerDiff($t)/1000, 2) & " sec")
 
 	SetDebugLog("SaveConfig(), time = " & Round(__TimerDiff($t) / 1000, 2) & " sec")
-	GtfoSaveSettings() ; MHK2012 Persian MOD    GTFO
+	GtfoSaveSettings() ; GTFO - Persian MOD (-#31)
 EndFunc   ;==>saveConfig
 
 Func SaveProfileConfig($sIniFile = Default, $bForceWrite = False)
@@ -207,11 +207,13 @@ Func SaveRegularConfig()
 	SaveConfig_600_31()
 	; <><><><> Attack Plan / Search & Attack / Options / Trophy Settings <><><><>
 	SaveConfig_600_32()
+	; <><><><> Attack Plan / Search & Attack / Drop Order Troops <><><><>
+	SaveConfig_600_33()
 	; <><><><> Bot / Options <><><><>
 	SaveConfig_600_35()
 	; <><><> Attack Plan / Train Army / Troops/Spells <><><>
 	; Quick train
- 	SaveConfig_600_52_1()
+	SaveConfig_600_52_1()
 	; troop/spell levels and counts
 	SaveConfig_600_52_2()
 	; <><><> Attack Plan / Train Army / Train Order <><><>
@@ -989,6 +991,14 @@ Func SaveConfig_600_32()
 	_Ini_Add("search", "chkTrophyAtkDead", $g_bDropTrophyAtkDead ? 1 : 0)
 	_Ini_Add("search", "DTArmyMin", $g_iDropTrophyArmyMinPct)
 EndFunc   ;==>SaveConfig_600_32
+
+Func SaveConfig_600_33()
+	; <><><><> Attack Plan / Search & Attack / Drop Order Troops <><><><>
+	_Ini_Add("DropOrder", "chkDropOrder", $g_bCustomDropOrderEnable ? 1 : 0)
+	For $p = 0 To UBound($g_aiCmbCustomDropOrder) - 1
+		_Ini_Add("DropOrder", "cmbDropOrder" & $p, $g_aiCmbCustomDropOrder[$p])
+	Next
+EndFunc   ;==>SaveConfig_600_33
 
 Func SaveConfig_600_35()
 	; <><><><> Bot / Options <><><><>

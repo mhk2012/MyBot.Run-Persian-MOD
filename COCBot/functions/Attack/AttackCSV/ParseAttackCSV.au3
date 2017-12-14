@@ -17,6 +17,8 @@ Func ParseAttackCSV($debug = False)
 	Local $bForceSideExist = False
 	Local $sErrorText, $sTargetVectors = ""
 	Local $iTroopIndex, $bWardenDrop = False
+	; SWIPE - Persian MOD (#-33)
+	$SWIPE = ""
 
 	For $v = 0 To 25 ; Zero all 26 vectors from last atttack in case here is error MAKE'ing new vectors
 		Assign("ATTACKVECTOR_" & Chr(65 + $v), "", $ASSIGN_EXISTFAIL) ; start with character "A" = ASCII 65
@@ -456,7 +458,8 @@ Func ParseAttackCSV($debug = False)
 					Case "RECALC"
 						ReleaseClicks()
 						PrepareAttack($g_iMatchMode, True)
-					; samm0d
+
+					; SWIPE - Persian MOD (#-33)
 					Case "SWIPE"
 						ReleaseClicks()
 						$value1 = StringStripWS($value1, $STR_STRIPALL)
@@ -475,12 +478,14 @@ Func ParseAttackCSV($debug = False)
 						EndIf
 						Select
 							Case $value1 = "RIGHT"
+								$SWIPE = "RIGHT"
 								SetLog("SWIPE RIGHT")
 								Local $iStartX = Random(770,780,1)
 								ClickDrag($iStartX,Random(680,690,1),$iStartX - $iDragPixelDistance,Random(680,690,1),$value4)
 								If _Sleep($value3) Then Return
 								PrepareAttack($g_iMatchMode, True)
 							Case $value1 = "LEFT"
+								$SWIPE = "LEFT"
 								SetLog("SWIPE LEFT")
 								Local $iStartX = Random(35,45,1)
 								ClickDrag($iStartX,Random(680,690,1),$iStartX + $iDragPixelDistance,Random(680,690,1),$value4)

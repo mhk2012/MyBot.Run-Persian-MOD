@@ -21,7 +21,7 @@ Global $g_hCmbStandardDropOrderAB = 0, $g_hCmbStandardDropSidesAB = 0, $g_hCmbSt
 Global $g_hLblSmartDeployAB = 0, $g_hPicAttackNearDarkElixirDrillAB = 0
 
 ; Drop Order Troops - Team AiO MOD++ (#-06)
-Global $g_BtnCustomDropOrderAB = 0
+Global $g_hBtnCustomDropOrderAB = 0
 
 Func CreateAttackSearchActiveBaseStandard()
 
@@ -119,12 +119,11 @@ Func CreateAttackSearchActiveBaseStandard()
 				_GUICtrlSetTip(-1, $sTxtTip)
 
 		; Drop Order Troops - Team AiO MOD++ (#-06)
-		    $y += 42
-		    $x = 98
-		    $g_BtnCustomDropOrderAB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "BtnCustomDropOrder", -1), $x, $y, 85, 25)
-			    _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "BtnCustomDropOrder_Info_01", -1))
-			    GUICtrlSetOnEvent(-1, "CustomDropOrder")
-
+		$y += 40
+		$x = 98
+			$g_hBtnCustomDropOrderAB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack", "BtnCustomDropOrder", -1), $x, $y, 85, 25)
+				_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack", "BtnCustomDropOrder_Info_01", -1))
+				GUICtrlSetOnEvent(-1, "CustomDropOrder")
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 EndFunc   ;==>CreateAttackSearchActiveBaseStandard

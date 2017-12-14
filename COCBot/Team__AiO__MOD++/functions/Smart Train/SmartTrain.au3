@@ -63,7 +63,7 @@ Func SmartTrain()
 			_ArrayConcatenate($aeTB_Method, $aeBrewMethod)
 			MakeCustomTrain("all", $aeTB_Method)
 		ElseIf $aeTrainMethod[1] <> $g_eNoTrain Or $aeBrewMethod[1] <> $g_eNoTrain Then ; Quick Train
-			OpenTrainTabNumber($QuickTrainTAB, "SmartTrain()")
+			OpenQuickTrainTab()
 			If _Sleep(500) Then Return
 			Local $iMultiClick = 1
 			If $g_bChkMultiClick Then $iMultiClick = $g_iMultiClick
@@ -92,8 +92,8 @@ Func MakeCustomTrain($sText, $aeMethod)
 	Local $aArmy, $bTrainQueue = False
 
 	If $sText <> "spell" Then
-		OpenTrainTabNumber($TrainTroopsTAB, "MakeCustomTrain()")
-		If ISArmyWindow(False, $TrainTroopsTAB) = False Then OpenTrainTabNumber($TrainTroopsTAB, "MakeCustomTrain()")
+		OpenTroopsTab()
+		If ISArmyWindow(False, $TrainTroopsTAB) = False Then OpenTroopsTab()
 		If $g_bRunState = False Then Return
 		For $i = 0 To 1
 			If $i = 1 Then $bTrainQueue = True
@@ -103,8 +103,8 @@ Func MakeCustomTrain($sText, $aeMethod)
 	EndIf
 
 	If $sText <> "troop" Then
-		OpenTrainTabNumber($BrewSpellsTAB, "MakeCustomTrain()")
-		If ISArmyWindow(False, $BrewSpellsTAB) = False Then OpenTrainTabNumber($BrewSpellsTAB, "MakeCustomTrain()")
+		OpenSpellsTab()
+		If ISArmyWindow(False, $BrewSpellsTAB) = False Then OpenSpellsTab()
 		If $g_bRunState = False Then Return
 		Local $x = 0
 		If $sText = "all" Then $x = 2

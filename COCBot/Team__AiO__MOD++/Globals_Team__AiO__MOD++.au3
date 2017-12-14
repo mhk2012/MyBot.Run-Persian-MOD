@@ -13,7 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-; Check Version - Team AiO MOD++ (#-03)
+; Check Version - Persian MOD (#-03)
 Global $g_sLastModversion = "" ;latest version from GIT
 Global $g_sLastModmessage = "" ;message for last version
 Global $g_sOldModversmessage = "" ;warning message for old bot
@@ -29,32 +29,6 @@ Global Const $g_aaiEdgeDropPoints[4] = [$g_aaiBottomRightDropPoints, $g_aaiTopLe
 Global $g_iChkGiantSlot = 0, $g_iChkUnitFactor = 0, $g_iChkWaveFactor = 0
 Global $g_iCmbGiantSlot = 0, $g_iTxtUnitFactor = 10, $g_iTxtWaveFactor = 100
 Global $g_iSlotsGiants = 1, $g_aiSlotsGiants = 1
-
-; Drop Order Troops - Team AiO MOD++ (#-06)
-Global Enum $eTroopBarbarianS, $eTroopArcherS, $eTroopGiantS, $eTroopGoblinS, $eTroopWallBreakerS, $eTroopBalloonS, _
-		$eTroopWizardS, $eTroopHealerS, $eTroopDragonS, $eTroopPekkaS, $eTroopBabyDragonS, $eTroopMinerS, _
-		$eTroopMinionS, $eTroopHogRiderS, $eTroopValkyrieS, $eTroopGolemS, $eTroopWitchS, _
-		$eTroopLavaHoundS, $eTroopBowlerS, $eHeroeS, $eCCS, $eTroopCountDrop
-Global $icmbDropTroops[$eTroopCountDrop] = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-Global Const $g_asTroopNamesPluralDrop[$eTroopCountDrop] = ["Barbarians", "Archers", "Giants", "Goblins", "Wall Breakers", "Balloons", "Wizards", "Healers", "Dragons", "Pekkas", "Baby Dragons", "Miners", "Minions", "Hog Riders", "Valkyries", "Golems", "Witches", "Lava Hounds", "Bowlers", "Clan Castle", "Heroes"]
-
-Global Const $g_aiTroopOrderDropIcon[23] = [ _
-		$eIcnOptions, $eIcnBarbarian, $eIcnArcher, $eIcnGiant, $eIcnGoblin, $eIcnWallBreaker, $eIcnBalloon, _
-		$eIcnWizard, $eIcnHealer, $eIcnDragon, $eIcnPekka, $eIcnBabyDragon, $eIcnMiner, $eIcnMinion, _
-		$eIcnHogRider, $eIcnValkyrie, $eIcnGolem, $eIcnWitch, $eIcnLavaHound, $eIcnBowler, $eIcnCC, $eIcnHeroes]
-
-Global $g_hChkCustomTrainDropOrderEnable = 0
-Global $g_bCustomTrainDropOrderEnable = False
-Global $g_hBtnRemoveTroops2, $g_hBtnTroopOrderSet2
-Global $g_ahImgTroopDropOrderSet = 0
-Global $g_ahImgTroopDropOrder[$eTroopCountDrop] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-Global $cmbDropTroops = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-Global Const $g_asTroopDropList[] = ["", _
-		"Barbarians", "Archers", "Giants", "Goblins", _
-		"Wall Breakers", "Balloons", "Wizards", "Healers", _
-		"Dragons", "Pekkas", "Baby Dragons", "Miners", _
-		"Minions", "Hog Riders", "Valkyries", "Golems", _
-		"Witches", "Lava Hounds", "Bowlers", "Clan Castle", "Heroes"]
 
 ; Auto Dock, Hide Emulator & Bot - Team AiO MOD++ (#-07)
 Global $g_bEnableAuto = False, $g_iChkAutoDock = False, $g_iChkAutoHideEmulator = True, $g_iChkAutoMinimizeBot = False
@@ -209,14 +183,28 @@ Global $g_bIsSearchTimeout = False, $g_iSearchTimeout = 10, $g_iTotalSearchTime 
 ; Stop on Low battery - Team AiO MOD++ (#-30)
 Global $g_bStopOnBatt = False, $g_iStopOnBatt = 10
 
-; MHK2012 Persian MOD
+; Robot Transparency - Persian MOD (#-34)
 Global $SldTransLevel = 0
+
+; SWIPE - Persian MOD (#-33)
+Global $SWIPE = ""
+
+;xbenk ~ legend league
+Global $g_iTotalSearchTime = 0
+
+; Multi Finger - Persian MOD (#-04)
+Global Enum $directionLeft, $directionRight
+Global Enum $sideBottomRight, $sideTopLeft, $sideBottomLeft, $sideTopRight
+Global Enum $mfRandom, $mfFFStandard, $mfFFSpiralLeft, $mfFFSpiralRight, $mf8FBlossom, $mf8FImplosion, $mf8FPinWheelLeft, $mf8FPinWheelRight
+
+Global $iMultiFingerStyle = 0
+
+Global Enum  $eCCSpell = $eSkSpell + 1
+Global $lblDBMultiFinger, $cmbDBMultiFinger
 
 ; ================= Team AiO MOD++ (2017) ================= ;
 ; Enable/Disable GUI while botting (#-01)
 ; Support MOD Button (#-02)
-; Check Version (#-03)
-; Classic Four Finger (#-04)
 ; Unit/Wave Factor (#-05)
 ; Drop Order Troops (#-06)
 ; Auto Dock, Hide Emulator & Bot (#-07)
@@ -243,3 +231,12 @@ Global $SldTransLevel = 0
 ; Restart Search Legend league (#-29)
 ; Stop on Low battery (#-30)
 ; ================= Team AiO MOD++ (2017) ================= ;
+
+; ================= Persian MOD (@MHK2012) ================ ;
+; Check Version (#-03)
+; Multi Finger (#-04)
+; GTFO (#-31)
+; CSV Downloader (#-32)
+; SWIPE (#-33)
+; Robot Transparency (#-34)
+; ================= Persian MOD (@MHK2012) ================ ;

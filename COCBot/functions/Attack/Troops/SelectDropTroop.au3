@@ -14,5 +14,12 @@
 ; Example .......: No
 ; ===============================================================================================================================
 Func SelectDropTroop($Troop)
-	If IsAttackPage() Then Click(GetXPosOfArmySlot($Troop, 68), 595 + $g_iBottomOffsetY, 1, 0, "#0111") ;860x780
+	; SWIPE - Persian MOD (#-33)
+	If IsAttackPage() Then
+		If Not $SWIPE = "" Then
+			Click($g_avAttackTroops[$Troop][2], 595 + $g_iBottomOffsetY, 1, 0, "#0111") ;860x780
+		Else
+			Click(GetXPosOfArmySlot($Troop, 68), 595 + $g_iBottomOffsetY, 1, 0, "#0111") ;860x780
+		EndIf
+	EndIf
 EndFunc   ;==>SelectDropTroop

@@ -35,27 +35,6 @@ Func ApplyConfig_MOD($TypeReadSave)
 			GUICtrlSetData($g_hTxtWaveFactor, $g_iTxtWaveFactor)
 			chkWaveFactor()
 
-			; Drop Order Troops - Team AiO MOD++ (#-06)
-			GUICtrlSetState($g_hChkCustomTrainDropOrderEnable, $g_bCustomTrainDropOrderEnable = True ? $GUI_CHECKED : $GUI_UNCHECKED)
-			For $p = 0 To UBound($icmbDropTroops) - 1
-				_GUICtrlComboBox_SetCurSel($cmbDropTroops[$p], $icmbDropTroops[$p])
-				_GUICtrlSetImage($g_ahImgTroopDropOrder[$p], $g_sLibIconPath, $g_aiTroopOrderDropIcon[$icmbDropTroops[$p] + 1])
-			Next
-			; process error
-			If $g_bCustomTrainDropOrderEnable = True Then ; only update troop train order if enabled
-				If ChangeTroopDropOrder() = False Then ; process error
-					;SetDefaultTroopGroup()
-					GUICtrlSetState($g_hChkCustomTrainDropOrderEnable, $GUI_UNCHECKED)
-					$g_bCustomTrainDropOrderEnable = False
-					GUICtrlSetState($g_hBtnTroopOrderSet2, $GUI_DISABLE) ; disable button
-					GUICtrlSetState($g_hBtnRemoveTroops2, $GUI_DISABLE)
-					For $i = 0 To UBound($cmbDropTroops) - 1
-						GUICtrlSetState($cmbDropTroops[$i], $GUI_DISABLE) ; disable combo boxes
-					Next
-				EndIf
-			EndIf
-			chkTroopDropOrder()
-
 			; Auto Dock, Hide Emulator & Bot - Team AiO MOD++ (#-07)
 			GUICtrlSetState($g_hChkEnableAuto, $g_bEnableAuto = True ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkEnableAuto()
@@ -247,7 +226,7 @@ Func ApplyConfig_MOD($TypeReadSave)
 			GUICtrlSetData($g_hTxtStopOnBatt, $g_iStopOnBatt)
 			chkStopOnBatt()
 
-			; MHK2012 Persian MOD
+			; Robot Transparency - Persian MOD (#-34)
 			GUICtrlSetData($SldTransLevel, $iSldTransLevel)
 
 		Case "Save"
@@ -264,12 +243,6 @@ Func ApplyConfig_MOD($TypeReadSave)
 
 			; MHK2012 Persian MOD
 			$iSldTransLevel = GUICtrlRead($SldTransLevel)
-
-			; Drop Order Troops - Team AiO MOD++ (#-06)
-			$g_bCustomTrainDropOrderEnable = GUICtrlRead($g_hChkCustomTrainDropOrderEnable) = $GUI_CHECKED ? True : False
-			For $p = 0 To UBound($icmbDropTroops) - 1
-				$icmbDropTroops[$p] = _GUICtrlComboBox_GetCurSel($cmbDropTroops[$p])
-			Next
 
 			; Auto Dock, Hide Emulator & Bot - Team AiO MOD++ (#-07)
 			$g_bEnableAuto = (GUICtrlRead($g_hChkEnableAuto) = $GUI_CHECKED)
