@@ -239,7 +239,7 @@ Func CheckIfArmyIsReady()
 		$iTotalSpellsToBrew += $g_aiArmyCompSpells[$i] * $g_aiSpellSpace[$i]
 	Next
 
-	If Number($g_iTotalSpells) = Number($g_iTotalTrainSpaceSpell) Or Number($g_iTotalSpells) >= Number($g_iTotalSpellValue) Or (Number($g_iTotalSpells) >= Number($iTotalSpellsToBrew) And $g_bQuickTrainEnable = False) Then
+	If Number($g_iCurrentSpells) = Number($g_iTotalTrainSpaceSpell) Or Number($g_iCurrentSpells) >= Number($g_iTotalSpellValue) Or (Number($g_iCurrentSpells) >= Number($iTotalSpellsToBrew) And $g_bQuickTrainEnable = False) Then
 		$g_bFullArmySpells = True
 	EndIf
 
@@ -394,7 +394,7 @@ Func IsFullClanCastleSpells($bReturnOnly = False)
 			RemoveCastleSpell($aShouldRemove)
 			If _Sleep(1000) Then Return
 			; Check the Request Clan troops & Spells buttom
-			$g_bCanRequestCC = _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], True), Hex($aRequestTroopsAO[2], 6), $aRequestTroopsAO[5])
+			$g_bCanRequestCC = _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1] + 20, True), Hex($aRequestTroopsAO[3], 6), $aRequestTroopsAO[5]) And _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], True), Hex($aRequestTroopsAO[4], 6), $aRequestTroopsAO[5])
 			; Debug
 			If $g_bDebugSetlogTrain Then Setlog(" » Clans Castle button available? " & $g_bCanRequestCC)
 			; Let´s request Troops & Spells
@@ -451,12 +451,12 @@ Func RemoveCastleSpell($Slots)
 
 	If $Slots[0] = 0 And $Slots[1] = 0 Then Return
 
-	If _ColorCheck(_GetPixelColor(806, 472, True), Hex(0xD0E878, 6), 25) = False Then ; If no 'Edit Army' Button found in army tab to edit troops
+	If _ColorCheck(_GetPixelColor(806, 516, True), Hex(0xCEEF76, 6), 25) = False Then ; If no 'Edit Army' Button found in army tab to edit troops
 		SetLog("Cannot find/verify 'Edit Army' Button in Army tab", $COLOR_ORANGE)
 		Return False ; Exit function
 	EndIf
 
-	Click(Random(723, 812, 1), Random(469, 513, 1)) ; Click on Edit Army Button
+	Click(Random(715, 825, 1), Random(507, 545, 1)) ; Click on Edit Army Button
 	If Not $g_bRunState Then Return
 
 	If _Sleep(500) Then Return
@@ -472,7 +472,7 @@ Func RemoveCastleSpell($Slots)
 
 	If _Sleep(400) Then Return
 
-	If _ColorCheck(_GetPixelColor(806, 561, True), Hex(0xD0E878, 6), 25) = False Then ; If no 'Okay' button found in army tab to save changes
+	If _ColorCheck(_GetPixelColor(806, 567, True), Hex(0xCDEF76, 6), 25) = False Then ; If no 'Okay' button found in army tab to save changes
 		SetLog("Cannot find/verify 'Okay' Button in Army tab", $COLOR_ORANGE)
 		ClickP($aAway, 2, 0, "#0346") ; Click Away, Necessary! due to possible errors/changes
 		If _Sleep(400) Then OpenArmyOverview() ; Open Army Window AGAIN
@@ -491,7 +491,7 @@ Func RemoveCastleSpell($Slots)
 		Return False ; Exit function
 	EndIf
 
-	Click(Random(445, 585, 1), Random(400, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
+	Click(Random(445, 583, 1), Random(402, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
 
 	SetLog("Clan Castle Spell Removed", $COLOR_GREEN)
 	If _Sleep(200) Then Return
@@ -1105,12 +1105,12 @@ Func RemoveExtraTroops($toRemove)
 			EndIf
 		EndIf
 
-		If _ColorCheck(_GetPixelColor(806, 472, True), Hex(0xD0E878, 6), 25) = False Then ; If no 'Edit Army' Button found in army tab to edit troops
+		If _ColorCheck(_GetPixelColor(806, 516, True), Hex(0xCEEF76, 6), 25) = False Then ; If no 'Edit Army' Button found in army tab to edit troops
 			SetLog("Cannot find/verify 'Edit Army' Button in Army tab", $COLOR_WARNING)
 			Return False ; Exit function
 		EndIf
 
-		Click(Random(723, 812, 1), Random(469, 513, 1)) ; Click on Edit Army Button
+		Click(Random(715, 825, 1), Random(507, 545, 1)) ; Click on Edit Army Button
 
 		; Loop through troops needed to get removed
 		$CounterToRemove = 0
@@ -1140,7 +1140,7 @@ Func RemoveExtraTroops($toRemove)
 
 		If _Sleep(150) Then Return
 
-		If _ColorCheck(_GetPixelColor(806, 561, True), Hex(0xD0E878, 6), 25) = False Then ; If no 'Okay' button found in army tab to save changes
+		If _ColorCheck(_GetPixelColor(806, 567, True), Hex(0xCDEF76, 6), 25) = False Then ; If no 'Okay' button found in army tab to save changes
 			SetLog("Cannot find/verify 'Okay' Button in Army tab", $COLOR_WARNING)
 			ClickP($aAway, 2, 0, "#0346") ; Click Away, Necessary! due to possible errors/changes
 			If _Sleep(400) Then OpenArmyOverview() ; Open Army Window AGAIN
@@ -1159,7 +1159,7 @@ Func RemoveExtraTroops($toRemove)
 			Return False ; Exit function
 		EndIf
 
-		Click(Random(445, 585, 1), Random(400, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
+		Click(Random(445, 585, 1), Random(402, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
 
 		SetLog("All Extra troops removed", $COLOR_SUCCESS)
 		If _Sleep(200) Then Return
@@ -1790,7 +1790,7 @@ Func DeleteQueued($sArmyTypeQueued, $iOffsetQueued = 802)
 		If Not $g_bRunState Then Return
 		Click($iOffsetQueued + 24, 202, 2, 50)
 		$x += 1
-		If $x = 250 Then ExitLoop
+		If $x = 270 Then ExitLoop
 	WEnd
 EndFunc   ;==>DeleteQueued
 
@@ -2005,7 +2005,7 @@ EndFunc   ;==>CheckIsFullQueuedAndNotFullArmy
 Func CheckIsEmptyQueuedAndNotFullArmy()
 
 	SetLog(" - Checking: Empty Queue and Not Full Army", $COLOR_ACTION1)
-	Local $CheckTroop[4] = [820, 220, 0xCFCFC8, 15] ; the gray background at slot 0 troop
+	Local $CheckTroop[4] = [825, 204, 0xCFCFC8, 15] ; the gray background at slot 0 troop
 	Local $CheckTroop1[4] = [390, 130, 0x78BE2B, 15] ; the Green Arrow on Troop Training tab
 	If Not $g_bRunState Then Return
 

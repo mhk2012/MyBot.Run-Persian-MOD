@@ -604,7 +604,7 @@ Global Const $g_asTroopShortNames[$eTroopCount] = [ _
 		"Mini", "Hogs", "Valk", "Gole", "Witc", "Lava", "Bowl"]
 
 Global Const $g_aiTroopSpace[$eTroopCount] = [ _
-		1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 5, _
+		1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 6, _
 		2, 5, 8, 30, 12, 30, 6]
 Global Const $g_aiTroopTrainTime[$eTroopCount] = [ _
 		20, 24, 120, 28, 60, 120, 120, 480, 720, 720, 360, 120, _
@@ -1225,7 +1225,7 @@ Global $g_aiCurrentLootBB[$eLootCountBB] = [0, 0, 0] ; current stats on builders
 ; Army camps
 Global $g_iArmyCapacity = 0 ; Calculated percentage of troops currently in camp / total camp space, expressed as an integer from 0 to 100
 Global $g_iTotalTrainSpaceSpell = 0
-Global $g_iCurrentSpells = 0, $g_iTotalSpells = 0 ; Current Spells / Total Spells
+Global $g_iCurrentSpells = 0 ; Current Spells
 Global $g_iCurrentCCSpells = 0, $g_iTotalCCSpells = 0
 Global $g_bFullArmySpells = False ; true when $g_iTotalTrainSpaceSpell = $iTotalSpellSpace in getArmySpellCount
 Global $g_CurrentCampUtilization = 0, $g_iTotalCampSpace = 0

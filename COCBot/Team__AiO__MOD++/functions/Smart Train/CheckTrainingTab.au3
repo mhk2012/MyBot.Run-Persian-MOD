@@ -31,7 +31,7 @@ Func CheckTrainingTab($sText = "troop")
 	EndIf
 
 	If _Sleep(1000) Then Return
-	If ISArmyWindow(False, $Tab) = False Then Return
+	If Not ISArmyWindow(False, $Tab) Then Return
 
 	Local $ArmyCamp = GetOCRCurrent(43, 160)
 
@@ -141,7 +141,7 @@ EndFunc   ;==>TopUpCamp
 
 Func ForceBrewSpells($iRemainQueue)
 	For $i = 0 To ($eSpellCount - 1)
-		If $g_bRunState = False Then Return
+		If Not $g_bRunState Then Return
 		If $g_aiArmyCompSpells[$i] > 0 And $iRemainQueue - $g_aiSpellSpace[$i] >= 0 Then
 			Local $iBrewedCount = 0
 			While $iRemainQueue - $g_aiSpellSpace[$i] >= 0

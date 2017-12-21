@@ -21,9 +21,7 @@ Func CheckQueue($sText = "troop")
 		For $i = 0 To $eTroopCount - 1
 			$g_aiQueueTroops[$i] = 0
 		Next
-	EndIf
-
-	If $sText = "spell" Then
+	ElseIf $sText = "spell" Then
 		For $i = 0 To $eSpellCount - 1
 			$g_aiQueueSpells[$i] = 0
 		Next
@@ -32,10 +30,10 @@ Func CheckQueue($sText = "troop")
 	Setlog("  » Checking queue " & $sText)
 
 	; Delete slot 11 anyway
-	If _ColorCheck(_GetPixelColor($CheckTroop[0] - 11 * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) = False Then ; Pink bkground found
+	If Not _ColorCheck(_GetPixelColor($CheckTroop[0] - 11 * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) Then ; Pink bkground found
 		Setlog("  » So many troops queued, removing queues at the last slot")
 		Local $x = 0
-		While _ColorCheck(_GetPixelColor($CheckTroop[0] - 11 * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) = False
+		While Not _ColorCheck(_GetPixelColor($CheckTroop[0] - 11 * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3])
 			If _Sleep(20) Then Return
 			If $g_bRunState = False Then Return
 			PureClick($CheckTroop[0] - 11 * 70, 202, 2, 50)
@@ -46,7 +44,7 @@ Func CheckQueue($sText = "troop")
 
 	; Check queue troops/spells & quantity
 	For $i = 0 To 10
-		If _ColorCheck(_GetPixelColor($CheckTroop[0] - $i * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) = False Then ; Pink bkground found
+		If Not _ColorCheck(_GetPixelColor($CheckTroop[0] - $i * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) Then ; Pink bkground found
 			_CaptureRegion2(Int(795 - 70.5 * $i), 210, Int(815 - 70.5 * $i), 230)
 			Local $Res = DllCall($g_hLibMyBot, "str", "SearchMultipleTilesBetweenLevels", "handle", $g_hHBitmap2, "str", $directory, "str", "FV", "Int", 0, "str", "FV", "Int", 0, "Int", 1000)
 			If $Res[0] = "" Or $Res[0] = "0" Then
@@ -132,11 +130,11 @@ Func DeleteQueue($sText = "troop")
 	Local $CheckTroop[4] = [810, 186, 0xCFCFC8, 15] ; the gray background
 	Setlog("  » Removing all queue " & $sText)
 	For $i = 0 To 11
-		If _ColorCheck(_GetPixelColor($CheckTroop[0] - $i * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) = False Then
+		If Not _ColorCheck(_GetPixelColor($CheckTroop[0] - $i * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) Then
 			Local $x = 0
-			While _ColorCheck(_GetPixelColor($CheckTroop[0] - $i * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3]) = False
+			While Not _ColorCheck(_GetPixelColor($CheckTroop[0] - $i * 70, $CheckTroop[1], True), Hex($CheckTroop[2], 6), $CheckTroop[3])
 				If _Sleep(20) Then Return
-				If $g_bRunState = False Then Return
+				If Not $g_bRunState Then Return
 				PureClick($CheckTroop[0] - $i * 70, 202, 2, 50)
 				$x += 1
 				If $sText = "troop" Then

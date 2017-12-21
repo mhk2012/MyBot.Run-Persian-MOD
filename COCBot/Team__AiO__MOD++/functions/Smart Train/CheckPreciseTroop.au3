@@ -57,13 +57,13 @@ Func CheckWrongTroops($Troop = True, $Spell = False, $CheckExistentArmy = True)
 	$g_abRCheckWrongTroops[1] = False
 	Local $toRemove[1][2] = [["Arch", 0]] ; Wrong Troops & Spells to be removed
 
-	If ISArmyWindow(False, $ArmyTAB) = False Then OpenArmyTab()
+	If Not ISArmyWindow(False, $ArmyTAB) Then OpenArmyTab()
 	If _Sleep(500) Then Return
 
 	If $Troop = True Then
 		If $CheckExistentArmy Then getArmyTroops(False, False, False, True)
 		For $i = 0 To ($eTroopCount - 1)
-			If $g_bRunState = False Then Return
+			If Not $g_bRunState Then Return
 			If $g_aiCurrentTroops[$i] - $g_aiArmyCompTroops[$i] > 0 Then
 				$toRemove[UBound($toRemove) - 1][0] = $g_asTroopShortNames[$i]
 				$toRemove[UBound($toRemove) - 1][1] = $g_aiCurrentTroops[$i] - $g_aiArmyCompTroops[$i]
@@ -72,10 +72,10 @@ Func CheckWrongTroops($Troop = True, $Spell = False, $CheckExistentArmy = True)
 		Next
 	EndIf
 
-	If $Spell = True Then
+	If $Spell Then
 		If $CheckExistentArmy Then getArmySpells(False, False, False, True)
 		For $i = 0 To ($eSpellCount - 1)
-			If $g_bRunState = False Then Return
+			If Not $g_bRunState Then Return
 			If $g_aiCurrentSpells[$i] - $g_aiArmyCompSpells[$i] > 0 Then
 				$toRemove[UBound($toRemove) - 1][0] = $g_asSpellShortNames[$i]
 				$toRemove[UBound($toRemove) - 1][1] = $g_aiCurrentSpells[$i] - $g_aiArmyCompSpells[$i]
@@ -112,8 +112,8 @@ EndFunc   ;==>CheckWrongTroops
 
 Func RemoveWrongTroops($Troop, $Spell, $toRemove)
 
-	If $Troop = False And $Spell = False Then Return
-	If IsArray($toRemove) = False Then $toRemove = CheckWrongTroops($Troop, $Spell, True)
+	If Not $Troop And Not $Spell Then Return
+	If Not IsArray($toRemove) Then $toRemove = CheckWrongTroops($Troop, $Spell, True)
 
 	If UBound($toRemove) = 1 And $toRemove[0][0] = "Arch" And $toRemove[0][1] = 0 Then Return ; If was default Wrong Troops
 
@@ -121,12 +121,12 @@ Func RemoveWrongTroops($Troop, $Spell, $toRemove)
 		Local $rGetSlotNumber = GetSlotNumber() ; Get all available Slot numbers with troops assigned on them
 		Local $rGetSlotNumberSpells = GetSlotNumber(True) ; Get all available Slot numbers with Spells assigned on them
 
-		If _ColorCheck(_GetPixelColor(806, 472, True), Hex(0xD0E878, 6), 25) = False Then ; If no 'Edit Army' Button found in army tab to edit troops
+		If Not _ColorCheck(_GetPixelColor(806, 516, True), Hex(0xCEEF76, 6), 25) Then ; If no 'Edit Army' Button found in army tab to edit troops
 			SetLog("Cannot find/verify 'Edit Army' Button in Army tab", $COLOR_ORANGE)
 			Return ; Exit function
 		EndIf
 
-		Click(Random(723, 812, 1), Random(469, 513, 1)) ; Click on Edit Army Button
+		Click(Random(715, 825, 1), Random(507, 543, 1)) ; Click on Edit Army Button
 
 		; Loop through troops needed to get removed
 		Local $CounterToRemove = 0
@@ -154,23 +154,23 @@ Func RemoveWrongTroops($Troop, $Spell, $toRemove)
 
 		If _Sleep(500) Then Return
 
-		If _ColorCheck(_GetPixelColor(806, 561, True), Hex(0xD0E878, 6), 25) = False Then ; If no 'Okay' button found in army tab to save changes
+		If Not _ColorCheck(_GetPixelColor(806, 567, True), Hex(0xCDEF76, 6), 25) Then ; If no 'Okay' button found in army tab to save changes
 			SetLog("Cannot find/verify 'Okay' Button in Army tab", $COLOR_ORANGE)
 			Return ; Exit Function
 		EndIf
 
 		If _Sleep(700) Then Return
-		If $g_bRunState = False Then Return
+		If Not $g_bRunState Then Return
 		Click(Random(720, 815, 1), Random(558, 589, 1)) ; Click on 'Okay' button to save changes
 
 		If _Sleep(1200) Then Return
 
-		If _ColorCheck(_GetPixelColor(508, 428, True), Hex(0xFFFFFF, 6), 30) = False Then ; If no 'Okay' button found to verify that we accept the changes
+		If Not _ColorCheck(_GetPixelColor(508, 428, True), Hex(0xFFFFFF, 6), 30) Then ; If no 'Okay' button found to verify that we accept the changes
 			SetLog("Cannot find/verify 'Okay #2' Button in Army tab", $COLOR_ORANGE)
 			Return ; Exit function
 		EndIf
 
-		Click(Random(445, 585, 1), Random(400, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
+		Click(Random(445, 583, 1), Random(402, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
 
 		SetLog("    All wrong troops removed")
 		If _Sleep(200) Then Return
