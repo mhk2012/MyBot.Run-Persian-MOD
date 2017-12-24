@@ -20,8 +20,8 @@ Func ChatbotReadMessages()
 	If IniRead($chatIni, "ChatGlobal", "Enable", "False") = "True" Then $g_iGlobalChat = True
 	If IniRead($chatIni, "ChatGlobal", "Scramble", "False") = "True" Then $g_iGlobalScramble = True
 	If IniRead($chatIni, "ChatGlobal", "SwitchLang", "False") = "True" Then $g_iSwitchLang = True
-    $g_iRusLang = IniRead($chatIni, "Lang", "RusLang", "0")
-    $g_iCmbLang = IniRead($chatIni, "Lang", "cmbLang", "8")
+	$g_iRusLang = IniRead($chatIni, "Lang", "RusLang", "0")
+	$g_iCmbLang = IniRead($chatIni, "Lang", "cmbLang", "8")
 	If IniRead($chatIni, "ChatClan", "Enable", "False") = "True" Then $g_iClanChat = True
 	If IniRead($chatIni, "ChatClan", "Responses", "False") = "True" Then $g_iUseResponses = True
 	If IniRead($chatIni, "ChatClan", "Generic", "False") = "True" Then $g_iUseGeneric = True
@@ -63,7 +63,7 @@ Func ChatbotGUICheckbox()
 	$g_iUseGeneric = GUICtrlRead($g_hChkUseGeneric) = $GUI_CHECKED
 	$g_iChatPushbullet = GUICtrlRead($g_hChkChatPushbullet) = $GUI_CHECKED
 	$g_iPbSendNewChats = GUICtrlRead($g_hChkPbSendNewChats) = $GUI_CHECKED
-    If GUICtrlRead($g_hChkRusLang) = $GUI_CHECKED Then
+	If GUICtrlRead($g_hChkRusLang) = $GUI_CHECKED Then
 		$g_iRusLang = 1
 	Else
 		$g_iRusLang = 0
@@ -80,7 +80,7 @@ Func ChatbotGUICheckbox()
 	IniWrite($chatIni, "ChatClan", "Generic", $g_iUseGeneric)
 	IniWrite($chatIni, "ChatClan", "ChatPushbullet", $g_iChatPushbullet)
 	IniWrite($chatIni, "ChatClan", "PbSendNewChats", $g_iPbSendNewChats)
-    IniWrite($chatIni, "Lang", "RusLang", $g_iRusLang)
+	IniWrite($chatIni, "Lang", "RusLang", $g_iRusLang)
 	ChatbotGUICheckboxControl()
 
 EndFunc   ;==>ChatbotGUICheckbox
@@ -97,7 +97,7 @@ Func ChatbotGUICheckboxControl()
 	Else
 		GUICtrlSetState($g_hChkGlobalScramble, $GUI_DISABLE)
 		GUICtrlSetState($g_hChkSwitchLang, $GUI_DISABLE)
-	    GUICtrlSetState($g_hCmbLang, $GUI_INDETERMINATE)
+		GUICtrlSetState($g_hCmbLang, $GUI_INDETERMINATE)
 		GUICtrlSetState($g_hEditGlobalMessages1, $GUI_DISABLE)
 		GUICtrlSetState($g_hEditGlobalMessages2, $GUI_DISABLE)
 		GUICtrlSetState($g_hEditGlobalMessages3, $GUI_DISABLE)
@@ -118,10 +118,10 @@ Func ChatbotGUICheckboxControl()
 		GUICtrlSetState($g_hEditResponses, $GUI_DISABLE)
 		GUICtrlSetState($g_hEditGeneric, $GUI_DISABLE)
 	EndIf
-	If  GUICtrlRead($g_hChkGlobalChat) = $GUI_CHECKED And GUICtrlRead($g_hChkSwitchLang) = $GUI_CHECKED Then
-	    GUICtrlSetState($g_hCmbLang, $GUI_ENABLE)
+	If GUICtrlRead($g_hChkGlobalChat) = $GUI_CHECKED And GUICtrlRead($g_hChkSwitchLang) = $GUI_CHECKED Then
+		GUICtrlSetState($g_hCmbLang, $GUI_ENABLE)
 	Else
-     	GUICtrlSetState($g_hCmbLang, $GUI_DISABLE)
+		GUICtrlSetState($g_hCmbLang, $GUI_DISABLE)
 	EndIf
 
 	If $g_iRusLang = 1 Then
@@ -148,13 +148,13 @@ Func ChatbotGUICheckboxEnable()
 EndFunc   ;==>ChatbotGUICheckboxEnable
 
 Func ChatbotGUIEditMessages()
-Global $glb1 = GUICtrlRead($g_hEditGlobalMessages1)
-Global $glb2 = GUICtrlRead($g_hEditGlobalMessages2)
-Global $glb3 = GUICtrlRead($g_hEditGlobalMessages3)
-Global $glb4 = GUICtrlRead($g_hEditGlobalMessages4)
+	Global $glb1 = GUICtrlRead($g_hEditGlobalMessages1)
+	Global $glb2 = GUICtrlRead($g_hEditGlobalMessages2)
+	Global $glb3 = GUICtrlRead($g_hEditGlobalMessages3)
+	Global $glb4 = GUICtrlRead($g_hEditGlobalMessages4)
 
-Global $cResp = GUICtrlRead($g_hEditResponses)
-Global $cGeneric = GUICtrlRead($g_hEditGeneric)
+	Global $cResp = GUICtrlRead($g_hEditResponses)
+	Global $cGeneric = GUICtrlRead($g_hEditGeneric)
 
 
 	$glb1 = StringReplace($glb1, @CRLF, "|")
@@ -247,20 +247,20 @@ Func ChatbotChatInput($message)
 		If _Sleep(1000) Then Return
 	EndIf
 	If $g_iRusLang = 1 Then
-	  SetLog("Chat send in russia", $COLOR_BLUE)
-	 AutoItWinSetTitle('MyAutoItTitle')
-    _WinAPI_SetKeyboardLayout(WinGetHandle(AutoItWinGetTitle()), 0x0419)
+		SetLog("Chat send in russia", $COLOR_BLUE)
+		AutoItWinSetTitle('MyAutoItTitle')
+		_WinAPI_SetKeyboardLayout(WinGetHandle(AutoItWinGetTitle()), 0x0419)
 		Sleep(500)
 		ControlFocus($g_hAndroidWindow, "", "")
 		SendKeepActive($g_hAndroidWindow)
 		Sleep(500)
-	;Opt("SendKeyDelay", 1000)
-	AutoItSetOption("SendKeyDelay", 50)
-	  _SendExEx($message)
-	   SendKeepActive("")
-    Else
-	  Sleep(500)
- 	 SendText($message)
+		;Opt("SendKeyDelay", 1000)
+		AutoItSetOption("SendKeyDelay", 50)
+		_SendExEx($message)
+		SendKeepActive("")
+	Else
+		Sleep(500)
+		SendText($message)
 	EndIf
 	Return True
 EndFunc   ;==>ChatbotChatInput
@@ -288,7 +288,7 @@ Func ChatbotStartTimer()
 EndFunc   ;==>ChatbotStartTimer
 
 Func ChatbotIsInterval()
-Local $Time_Difference = TimerDiff($ChatbotStartTime)
+	Local $Time_Difference = TimerDiff($ChatbotStartTime)
 	If $Time_Difference > $ChatbotReadInterval * 1000 Then
 		Return True
 	Else
@@ -305,46 +305,46 @@ Func ChatbotIsLastChatNew() ; returns true if the last chat was not by you, fals
 EndFunc   ;==>ChatbotIsLastChatNew
 
 Func ChatbotPushbulletSendChat()
-   If Not $g_iChatPushbullet Then Return
-   _CaptureRegion(0, 0, 320, 675)
-   Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
-   Local $Time = @HOUR & "." & @MIN & "." & @SEC
+	If Not $g_iChatPushbullet Then Return
+	_CaptureRegion(0, 0, 320, 675)
+	Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
+	Local $Time = @HOUR & "." & @MIN & "." & @SEC
 
-   Local $ChatFile = $Date & "__" & $Time & ".jpg" ; separator __ is need  to not have conflict with saving other files if $TakeSS = 1 and $chkScreenshotLootInfo = 0
-   $g_sProfileLootsPath = ""
-   _GDIPlus_ImageSaveToFile($g_hBitmap, $g_sProfileLootsPath & $ChatFile)
-   _GDIPlus_ImageDispose($g_hBitmap)
-   ;push the file
-   SetLog("Chatbot: Sent chat image", $COLOR_GREEN)
-   NotifyPushFileToBoth($ChatFile, "Loots", "image/jpeg", $g_sNotifyOrigin & " | Last Clan Chats" & "\n" & $ChatFile)
-   ;wait a second and then delete the file
-   _Sleep(500)
-   Local $iDelete = FileDelete($g_sProfileLootsPath & $ChatFile)
-   If Not ($iDelete) Then SetLog("Chatbot: Failed to delete temp file", $COLOR_RED)
-EndFunc
+	Local $ChatFile = $Date & "__" & $Time & ".jpg" ; separator __ is need  to not have conflict with saving other files if $TakeSS = 1 and $chkScreenshotLootInfo = 0
+	$g_sProfileLootsPath = ""
+	_GDIPlus_ImageSaveToFile($g_hBitmap, $g_sProfileLootsPath & $ChatFile)
+	_GDIPlus_ImageDispose($g_hBitmap)
+	;push the file
+	SetLog("Chatbot: Sent chat image", $COLOR_GREEN)
+	NotifyPushFileToBoth($ChatFile, "Loots", "image/jpeg", $g_sNotifyOrigin & " | Last Clan Chats" & "\n" & $ChatFile)
+	;wait a second and then delete the file
+	_Sleep(500)
+	Local $iDelete = FileDelete($g_sProfileLootsPath & $ChatFile)
+	If Not ($iDelete) Then SetLog("Chatbot: Failed to delete temp file", $COLOR_RED)
+EndFunc   ;==>ChatbotPushbulletSendChat
 
 Func ChatbotPushbulletQueueChat($Chat)
-   If Not $g_iChatPushbullet Then Return
-   _ArrayAdd($ChatbotQueuedChats, $Chat)
-EndFunc
+	If Not $g_iChatPushbullet Then Return
+	_ArrayAdd($ChatbotQueuedChats, $Chat)
+EndFunc   ;==>ChatbotPushbulletQueueChat
 
 Func ChatbotPushbulletQueueChatRead()
-   If Not $g_iChatPushbullet Then Return
-   $ChatbotReadQueued = True
-EndFunc
+	If Not $g_iChatPushbullet Then Return
+	$ChatbotReadQueued = True
+EndFunc   ;==>ChatbotPushbulletQueueChatRead
 
 Func ChatbotPushbulletStopChatRead()
-   If Not $g_iChatPushbullet Then Return
-   $ChatbotReadInterval = 0
-   $ChatbotIsOnInterval = False
-EndFunc
+	If Not $g_iChatPushbullet Then Return
+	$ChatbotReadInterval = 0
+	$ChatbotIsOnInterval = False
+EndFunc   ;==>ChatbotPushbulletStopChatRead
 
 Func ChatbotPushbulletIntervalChatRead($Interval)
-   If Not $g_iChatPushbullet Then Return
-   $ChatbotReadInterval = $Interval
-   $ChatbotIsOnInterval = True
-   ChatbotStartTimer()
-EndFunc
+	If Not $g_iChatPushbullet Then Return
+	$ChatbotReadInterval = $Interval
+	$ChatbotIsOnInterval = True
+	ChatbotStartTimer()
+EndFunc   ;==>ChatbotPushbulletIntervalChatRead
 
 Func ChangeLanguageToEN()
 	Click(820, 585, 1) ;settings
@@ -374,7 +374,7 @@ Func ChangeLanguageToFRA()
 	SetLog("Chatbot: Switching language FRA", $COLOR_GREEN)
 	Click(513, 426, 1) ;language
 	If _Sleep(1000) Then Return
-EndFunc   ;==>ChangeLanguageToFra
+EndFunc   ;==>ChangeLanguageToFRA
 
 Func ChangeLanguageToRU()
 	Click(820, 585, 1) ;settings
@@ -496,26 +496,26 @@ Func ChatbotMessage() ; run the chatbot
 	EndIf
 	If $g_iGlobalChat Then
 		If $g_iSwitchLang = 1 Then
-		Switch GUICtrlRead($g_hCmbLang)
-		        Case "FR"
-			ChangeLanguageToFRA()
-		        Case "DE"
-		    ChangeLanguageToDE()
-		        Case "ES"
-		    ChangeLanguageToES()
-		        Case "IT"
-		    ChangeLanguageToITA()
-		        Case "NL"
-		    ChangeLanguageToNL()
-		        Case "NO"
-		    ChangeLanguageToNO()
-		        Case "PR"
-		    ChangeLanguageToPR()
-		        Case "TR"
-		    ChangeLanguageToTR()
-		        Case "RU"
-		    ChangeLanguageToRU()
-              EndSwitch
+			Switch GUICtrlRead($g_hCmbLang)
+				Case "FR"
+					ChangeLanguageToFRA()
+				Case "DE"
+					ChangeLanguageToDE()
+				Case "ES"
+					ChangeLanguageToES()
+				Case "IT"
+					ChangeLanguageToITA()
+				Case "NL"
+					ChangeLanguageToNL()
+				Case "NO"
+					ChangeLanguageToNO()
+				Case "PR"
+					ChangeLanguageToPR()
+				Case "TR"
+					ChangeLanguageToTR()
+				Case "RU"
+					ChangeLanguageToRU()
+			EndSwitch
 			waitMainScreen()
 		EndIf
 		If Not ChatbotChatOpen() Then Return
@@ -543,7 +543,7 @@ Func ChatbotMessage() ; run the chatbot
 
 	If $g_iClanChat Then
 		If Not ChatbotChatOpen() Then Return
-			SetLog("Chatbot: Sending chats to clan", $COLOR_GREEN)
+		SetLog("Chatbot: Sending chats to clan", $COLOR_GREEN)
 		If Not ChatbotSelectClanChat() Then Return
 
 		Local $SentClanChat = False
@@ -564,7 +564,7 @@ Func ChatbotMessage() ; run the chatbot
 			SetLog("Chatbot: Sending pushbullet chats", $COLOR_GREEN)
 
 			For $a = 0 To UBound($ChatbotQueuedChats) - 1
-			Local $ChatToSend = $ChatbotQueuedChats[$a]
+				Local $ChatToSend = $ChatbotQueuedChats[$a]
 				If Not ChatbotChatClanInput() Then Return
 				If Not ChatbotChatInput(_Encoding_JavaUnicodeDecode($ChatToSend)) Then Return
 				If Not ChatbotChatSendClan() Then Return
@@ -671,4 +671,4 @@ Func _Encoding_JavaUnicodeDecode($sString)
 	Opt('ExpandEnvStrings', $iOld_Opt_EES)
 
 	Return $sOut
-EndFunc ;==>_Encoding_JavaUnicodeDecode
+EndFunc   ;==>_Encoding_JavaUnicodeDecode

@@ -23,7 +23,7 @@ Func getArmySpellCapacity($bOpenArmyWindow = False, $bCloseArmyWindow = False, $
 			SetError(1)
 			Return ; not open, not requested to be open - error.
 		ElseIf $bOpenArmyWindow Then
-			If Not OpenArmyOverview() Then
+			If Not OpenArmyOverview(True, "getArmySpellCapacity()") Then
 				SetError(2)
 				Return ; not open, requested to be open - error.
 			EndIf
@@ -61,7 +61,7 @@ Func getArmySpellCapacity($bOpenArmyWindow = False, $bCloseArmyWindow = False, $
 				$g_iTotalSpells = $g_iTotalSpellValue
 			EndIf
 		Else
-			Setlog("SError in getArmySpellCapacity: $aGetCCSpell is not an Array", $COLOR_ERROR) ; log if there is read error
+			Setlog("Error in getArmySpellCapacity: $aGetCCSpell is not an Array", $COLOR_ERROR) ; log if there is read error
 			$g_iCurrentSpells = 0
 			$g_iTotalSpells = $g_iTotalSpellValue
 		EndIf

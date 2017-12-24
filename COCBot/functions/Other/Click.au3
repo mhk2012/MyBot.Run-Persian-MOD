@@ -430,11 +430,11 @@ EndFunc   ;==>_DecodeDebug
 Func SendText($sText)
 	Local $result = 1
 	Local $error = 0
-	If $g_bAndroidAdbInput = True Then
+	If $g_bAndroidAdbInpu Then
 		AndroidSendText($sText)
 		$error = @error
 	EndIf
-	If $g_bAndroidAdbInput = False Or $error <> 0 Then
+	If Not $g_bAndroidAdbInput Or $error <> 0 Then
 		Local $SuspendMode = ResumeAndroid()
 		;$Result = ControlSend($g_hAndroidWindow, "", "", $sText, 0)
 		Local $ascText = ""

@@ -819,6 +819,9 @@ Func runBot() ;Bot that runs everything in order
 				EndIf
 			EndIf
 			MainSuperXPHandler() ; Goblin XP - Team AiO MOD++ (#-19)
+			If ($g_iCommandStop = 3 Or $g_iCommandStop = 0) Then ; Train Donate only - force a donate cc everytime, Ignore any SkipDonate Near Full Values
+				If BalanceDonRec(True) Then DonateCC()
+			EndIf
 			Local $aRndFuncList = ['Laboratory', 'UpgradeHeroes', 'UpgradeBuilding', 'BuilderBase']
 			While 1
 				If $g_bRunState = False Then Return
@@ -933,11 +936,9 @@ Func _Idle() ;Sequence that runs until Full Army
 
 		Local $hTimer = __TimerInit()
 		Local $iReHere = 0
-		;PrepareDonateCC()
 
 		If $g_ichkUseBotHumanization = 1 Then BotHumanization() ; Bot Humanization - Team AiO MOD++ (#-15)
 
-		;If $g_bDonateSkipNearFullEnable = True Then getArmyCapacity(true,true)
 		If $g_iActiveDonate And $g_bChkDonate Then
 			Local $aHeroResult = CheckArmyCamp(True, True, True, False)
 			While $iReHere < 7
@@ -1065,7 +1066,7 @@ Func AttackMain() ;Main control for attack functions
 		Return
 	EndIf
 	If checkForecastPause($currentForecast) = True Then Return
-	getArmyCapacity(True, True)
+	getArmyTroopCapacity(True, True)
 	If IsSearchAttackEnabled() Then
 		If (IsSearchModeActive($DB) And checkCollectors(True, False)) Or IsSearchModeActive($LB) Or IsSearchModeActive($TS) Then
 
@@ -1149,7 +1150,7 @@ Func QuickAttack()
 	Local $quicklymilking = 0
 	Local $quicklythsnipe = 0
 
-	getArmyCapacity(True, True)
+	getArmyTroopCapacity(True, True)
 
 	If ($g_aiAttackAlgorithm[$DB] = 2 And IsSearchModeActive($DB)) Or (IsSearchModeActive($TS)) Then
 		VillageReport()
@@ -1211,7 +1212,6 @@ Func _RunFunction($action)
 			; ClanHop - Team AiO MOD++ (#-20)
 			If $g_bChkClanHop Then Return
 			If $g_iActiveDonate And $g_bChkDonate Then
-				;If $g_bDonateSkipNearFullEnable = True and $g_bFirstStart = False Then getArmyCapacity(True, True)
 				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()
 				If _Sleep($DELAYRUNBOT1) = False Then checkMainScreen(False)
 			EndIf
@@ -1220,7 +1220,7 @@ Func _RunFunction($action)
 			If $g_bChkClanHop Then Return
 			If $g_iActiveDonate And $g_bChkDonate Then
 				If $g_bFirstStart Then
-					getArmyCapacity(True, False)
+					getArmyTroopCapacity(True, False)
 					getArmySpellCapacity(False, True)
 				EndIf
 				If SkipDonateNearFullTroops(True) = False And BalanceDonRec(True) Then DonateCC()

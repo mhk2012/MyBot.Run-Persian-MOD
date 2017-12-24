@@ -12,7 +12,7 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-;
+
 Func getArmyCCStatus($bOpenArmyWindow = False, $bCloseArmyWindow = False, $CheckWindow = True, $bSetLog = True, $bNeedCapture = True)
 
 	If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then Setlog("Begin getArmyCCStatus:", $COLOR_DEBUG1)
@@ -24,7 +24,7 @@ Func getArmyCCStatus($bOpenArmyWindow = False, $bCloseArmyWindow = False, $Check
 			SetError(1)
 			Return ; not open, not requested to be open - error.
 		ElseIf $bOpenArmyWindow Then
-			If Not OpenArmyOverview() Then
+			If Not OpenArmyOverview(True, "getArmyCCStatus()") Then
 				SetError(2)
 				Return ; not open, requested to be open - error.
 			EndIf

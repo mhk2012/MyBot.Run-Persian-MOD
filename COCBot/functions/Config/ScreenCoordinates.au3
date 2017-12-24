@@ -122,12 +122,11 @@ Global $aQueenHealth = [-1, 569 + $g_iBottomOffsetY, 0x00D500, 15] ; Attack Scre
 ; Warden hair ; background pixel not at green bar
 Global $aWardenHealth = [-1, 569 + $g_iBottomOffsetY, 0x00D500, 15] ; Attack Screen, Check Warden's Health, X coordinate is dynamic, not used from array  ;  -> with slot compensation 0xe08227
 
-
-;attack report... stars won
+; attack report... stars won
 Global $aWonOneStarAtkRprt[4] = [325, 180 + $g_iMidOffsetY, 0xC8CaC4, 30] ; Center of 1st Star reached attacked village
 Global $aWonTwoStarAtkRprt[4] = [398, 180 + $g_iMidOffsetY, 0xD0D6D0, 30] ; Center of 2nd Star reached attacked village
 Global $aWonThreeStarAtkRprt[4] = [534, 180 + $g_iMidOffsetY, 0xC8CAC7, 30] ; Center of 3rd Star reached attacked village
-;	pixel color: location information								BS 850MB (Reg GFX), BS 500MB (Med GFX) : location
+; pixel color: location information								BS 850MB (Reg GFX), BS 500MB (Med GFX) : location
 
 Global $NextBtn[4] = [780, 546 + $g_iBottomOffsetY, 0xD34300, 20] ;  Next Button
 ; Someone asking troops : Color 0xD0E978 in x = 121

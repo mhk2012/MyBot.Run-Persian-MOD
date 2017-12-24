@@ -23,7 +23,7 @@ Func InitiateSwitchAcc() ; Checking profiles setup in Mybot, First matching CoC 
 	For $i = 0 To $g_iTotalAcc
 		; listing all accounts
 		Local $sBotType = "Idle"
-		If $g_abAccountNo[$i] = True Then
+		If $g_abAccountNo[$i] Then
 			$sBotType = "Active"
 			If $g_abDonateOnly[$i] = True Then $sBotType = "Donate"
 			If $g_iNextAccount = -1 Then $g_iNextAccount = $i
@@ -152,7 +152,7 @@ Func SwitchCOCAcc($NextAccount)
 
 	Setlog("Switching to Account [" & $NextAccount + 1 & "]")
 
-	If 	$g_bInitiateSwitchAcc = True Then
+	If 	$g_bInitiateSwitchAcc Then
 		$StartOnlineTime = 0
 		$g_bInitiateSwitchAcc = False
 	EndIf
@@ -254,7 +254,7 @@ Func SwitchCOCAcc($NextAccount)
 	WEnd
 
 	If _Sleep(500) Then Return
-	If $bResult = True Then
+	If $bResult Then
 		$iRetry = 0
 		$g_bReMatchAcc = False
 		$g_abNotNeedAllTime[0] = 1
@@ -328,7 +328,7 @@ EndFunc   ;==>CheckWaitHero
 Func CheckTroopTimeAllAccount($bExcludeCurrent = False) ; Return the minimum remain training time
 
 	Local $iMinRemainTrain
-	If $bExcludeCurrent = False Then
+	If Not $bExcludeCurrent Then
 		$g_aiRemainTrainTime[$g_iCurAccount] = _ArrayMax($g_aiTimeTrain) ; remaintraintime of current account - in minutes
 		$g_aiTimerStart[$g_iCurAccount] = TimerInit() ; start counting elapse of training time of current account
 	EndIf
