@@ -75,7 +75,7 @@ Func CreateAttackSearchActiveBaseScripted()
 			GUICtrlSetOnEvent(-1, "CSVDownloader")
 
 		; CSV Deploy Speed - Team AiO MOD++ (#-09)
-		Local $Group = GUICtrlCreateGroup("", $x, $y + 189, 230, 38)
+		Local $Group = GUICtrlCreateGroup("", $x, $y + 164, 230, 38)
 		Local $x = 55, $y = 318
 		GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "CSVSpeed", -1), $x - 5, $y - 4, -1, -1)
 			$cmbCSVSpeed[$LB] = GUICtrlCreateCombo("", $x + 122, $y - 8, 53, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))

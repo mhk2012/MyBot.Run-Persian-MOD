@@ -58,10 +58,7 @@ Func WaitForClouds()
 			Return
 		EndIf
 		If $iCount >= $maxSearchCount Then ; If clouds do not clear in alloted time do something
-			If EnableLongSearch() = False Then ; Check if attacking in Champion 1 or higher league with long search that needs to be continued
-				resetAttackSearch()
-				Return
-			Else
+			If EnableLongSearch() Then ; Check if attacking in Champion 1 or higher league with long search that needs to be continued
 				$bigCount += 1 ; Increment long wait time fail safe timer
 				If $bigCount > $maxLongSearchCount Then ; check maximum wait time
 					$iSearchTime = __TimerDiff($hMinuteTimer) / 60000 ;get time since minute timer start in minutes
@@ -96,7 +93,7 @@ Func WaitForClouds()
 				If $iSearchTime > $g_iSearchTimeout Then
 					$g_bIsSearchTimeout = True
 					ClickP($aReturnHomeOnSearchButton, 1, 0, "RETURN HOME") ;Click Return Home
-					getArmyCapacity(True, True)
+					getArmyTroopCapacity(True, True)
 					$g_bRestart = True ; set force runbot restart flag
 					$g_bIsClientSyncError = True ; set OOS flag for fast restart
 					Return
@@ -195,8 +192,8 @@ Func EnableLongSearch()
 			EndIf
 			$iCount += 1
 			If $iCount > 30 Then ; wait up to 30 * 100ms = 3 seconds for chat window to be found
-				If chkSurrenderBtn() = True Then Return True ; check if clouds are gone.
-				SetLog("Cloud Search Text found, but chat button not found, restart search..", $COLOR_ERROR)
+				If chkSurrenderBtn() Then Return True ; check if clouds are gone.
+				If $g_bDebugSetlog Then SetLog("Cloud Search Text found, but chat button not found, restart search..", $COLOR_ERROR)
 				Return False ; chat tab not found, failed long search keep alive, need to restart
 			EndIf
 		WEnd

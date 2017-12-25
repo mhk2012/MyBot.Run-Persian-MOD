@@ -430,7 +430,7 @@ EndFunc   ;==>_DecodeDebug
 Func SendText($sText)
 	Local $result = 1
 	Local $error = 0
-	If $g_bAndroidAdbInpu Then
+	If $g_bAndroidAdbInput Then
 		AndroidSendText($sText)
 		$error = @error
 	EndIf

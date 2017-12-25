@@ -17,11 +17,11 @@
 #Region
 
 Global $g_aiDonIcons[20] = [$eIcnDonBarbarian, $eIcnDonArcher, $eIcnDonGiant, $eIcnDonGoblin, $eIcnDonWallBreaker, $eIcnDonBalloon, $eIcnDonWizard, $eIcnDonHealer, _
-							$eIcnDonDragon, $eIcnDonPekka, $eIcnDonBabyDragon, $eIcnDonMiner, $eIcnDonMinion, $eIcnDonHogRider, $eIcnDonValkyrie, $eIcnDonGolem, _
-							$eIcnDonWitch, $eIcnDonLavaHound, $eIcnDonBowler, $eIcnDonBlank]
+		$eIcnDonDragon, $eIcnDonPekka, $eIcnDonBabyDragon, $eIcnDonMiner, $eIcnDonMinion, $eIcnDonHogRider, $eIcnDonValkyrie, $eIcnDonGolem, _
+		$eIcnDonWitch, $eIcnDonLavaHound, $eIcnDonBowler, $eIcnDonBlank]
 
 Func btnDonateTroop()
-	For $i = 0 To $eTroopCount-1 + $g_iCustomDonateConfigs
+	For $i = 0 To $eTroopCount - 1 + $g_iCustomDonateConfigs
 		If @GUI_CtrlId = $g_ahBtnDonateTroop[$i] Then
 			If GUICtrlGetState($g_ahGrpDonateTroop[$i]) = BitOR($GUI_HIDE, $GUI_ENABLE) Then
 				_DonateBtn($g_ahGrpDonateTroop[$i], $g_ahTxtBlacklistTroop[$i]) ;Hide/Show controls on Donate tab
@@ -54,7 +54,7 @@ Func btnDonateOptions()
 		_DonateBtn($g_hGrpDonateOptions, $g_hChkClanHop)
 		_DonateBtn($g_hGrpDonateOptions, $g_ahTxtCheckingtrain)
 	EndIf
-EndFunc
+EndFunc   ;==>btnDonateOptions
 ; ClanHop - Persian MOD (#-20)
 Func ChkClanHop()
 	If GUICtrlRead($g_hChkClanHop) = $GUI_CHECKED Then
@@ -62,10 +62,10 @@ Func ChkClanHop()
 	Else
 		GUICtrlSetState($g_ahTxtCheckingtrain, $GUI_DISABLE)
 	EndIf
-EndFunc
+EndFunc   ;==>ChkClanHop
 
 Func chkDonateTroop()
-	For $i = 0 To $eTroopCount-1 + $g_iCustomDonateConfigs
+	For $i = 0 To $eTroopCount - 1 + $g_iCustomDonateConfigs
 		If @GUI_CtrlId = $g_ahChkDonateTroop[$i] Then
 			If GUICtrlRead($g_ahChkDonateTroop[$i]) = $GUI_CHECKED Then
 				_DonateControls($i)
@@ -77,7 +77,7 @@ Func chkDonateTroop()
 EndFunc   ;==>chkDonateTroop
 
 Func chkDonateAllTroop()
-	For $i = 0 To $eTroopCount-1 + $g_iCustomDonateConfigs
+	For $i = 0 To $eTroopCount - 1 + $g_iCustomDonateConfigs
 		If @GUI_CtrlId = $g_ahChkDonateAllTroop[$i] Then
 			_DonateAllControls($i, GUICtrlRead($g_ahChkDonateAllTroop[$i]) = $GUI_CHECKED ? True : False)
 			ExitLoop
@@ -144,7 +144,7 @@ Func cmbDonateCustomD()
 EndFunc   ;==>cmbDonateCustomD
 
 Func _DonateBtn($hFirstControl, $hLastControl)
-    Static $hLastDonateBtn1 = -1, $hLastDonateBtn2 = -1
+	Static $hLastDonateBtn1 = -1, $hLastDonateBtn2 = -1
 
 	; Hide Controls
 	If $hLastDonateBtn1 = -1 Then
@@ -169,7 +169,7 @@ EndFunc   ;==>_DonateBtn
 Func _DonateControls($iTroopIndex)
 	Local $bWasRedraw = SetRedrawBotWindow(False, Default, Default, Default, "_DonateControls")
 
-	For $i = 0 To $eTroopCount-1 + $g_iCustomDonateConfigs
+	For $i = 0 To $eTroopCount - 1 + $g_iCustomDonateConfigs
 		If $i = $iTroopIndex Then
 			GUICtrlSetBkColor($g_ahLblDonateTroop[$i], $COLOR_ORANGE)
 		Else
@@ -187,7 +187,7 @@ Func _DonateAllControls($iTroopIndex, $Set)
 	Local $bWasRedraw = SetRedrawBotWindow(False, Default, Default, Default, "_DonateAllControls")
 
 	If $Set = True Then
-		For $i = 0 To $eTroopCount-1 + $g_iCustomDonateConfigs
+		For $i = 0 To $eTroopCount - 1 + $g_iCustomDonateConfigs
 			GUICtrlSetBkColor($g_ahLblDonateTroop[$i], $i = $iTroopIndex ? $COLOR_NAVY : $GUI_BKCOLOR_TRANSPARENT)
 
 			If $i <> $iTroopIndex Then
@@ -220,13 +220,13 @@ Func _DonateControlsSpell($iSpellIndex)
 			GUICtrlSetBkColor($g_ahLblDonateSpell[$i], $COLOR_ORANGE)
 		Else
 			If GUICtrlGetBkColor($g_ahLblDonateSpell[$i]) = $COLOR_NAVY Then GUICtrlSetBkColor($g_ahLblDonateSpell[$i], $GUI_BKCOLOR_TRANSPARENT)
-	    EndIf
+		EndIf
 
 		GUICtrlSetState($g_ahChkDonateAllSpell[$i], $GUI_UNCHECKED)
 		If BitAND(GUICtrlGetState($g_ahTxtDonateSpell[$i]), $GUI_DISABLE) = $GUI_DISABLE Then GUICtrlSetState($g_ahTxtDonateSpell[$i], $GUI_ENABLE)
 		If BitAND(GUICtrlGetState($g_ahTxtBlacklistSpell[$i]), $GUI_DISABLE) = $GUI_DISABLE Then GUICtrlSetState($g_ahTxtBlacklistSpell[$i], $GUI_ENABLE)
 	Next
- EndFunc   ;==>_DonateControlsSpell
+EndFunc   ;==>_DonateControlsSpell
 
 Func _DonateAllControlsSpell($iSpellIndex, $Set)
 	Local $bWasRedraw = SetRedrawBotWindow(False, Default, Default, Default, "_DonateAllControlsSpell")
@@ -303,32 +303,32 @@ EndFunc   ;==>Doncheck
 
 ; GTFO - Persian MOD (#-31)
 Global $GtfoIdleTime = 0, $bSetTrophies = 0, $aUpdateTrophies = 0, $GtfoDonationCap = 0, $GtfoMassKickMode = 0, $GtfoReceiveCap = 0, $GtfoModStatus = 0, $ChatIdleDelay = 0, $GtfoTrainCount = 0, _
-$GtfoTroopTrainCount = 0, $GtfoSpellBrewCount = 0, $FirstStart = 0,$GtfoSpellType = 0, $FirstStart = 0, $DonateCount = 0, $g_iDonTroopsLimit = 0, $iDonSpellsLimit = 0, $g_iDonTroopsAv = 0, _
-$g_iDonSpellsAv = 0, $g_iDonTroopsQuantityAv = 0, $g_iDonTroopsQuantity = 0, $g_iDonSpellsQuantityAv = 0,$g_bSkipDonTroops = 0, $g_bSkipDonSpells = 0, $g_aiDonatePixel = 0, $g_iTotalDonateCapacity = 0, _
-$g_iTotalDonateSpellCapacity = 0, $g_iDebugSetlog = 0, $DonateCount = 0, $currClanTrophies = 0, $chatString = 0, $DonationWindowY = 0, $g_iDonTroopsQuantityAv = 0, $g_iDonTroopsQuantity = 0, _
-$g_iDonSpellsQuantityAv = 0, $currClanTrophies = 0, $x_start = 0, $y_start = 0, $GemResult = 0
-Global Enum $GtfoIdle, $GtfoStart, $GtfoPause , $GtfoResume , $GtfoStop
+		$GtfoTroopTrainCount = 0, $GtfoSpellBrewCount = 0, $FirstStart = 0, $GtfoSpellType = 0, $FirstStart = 0, $DonateCount = 0, $g_iDonTroopsLimit = 0, $iDonSpellsLimit = 0, $g_iDonTroopsAv = 0, _
+		$g_iDonSpellsAv = 0, $g_iDonTroopsQuantityAv = 0, $g_iDonTroopsQuantity = 0, $g_iDonSpellsQuantityAv = 0, $g_bSkipDonTroops = 0, $g_bSkipDonSpells = 0, $g_aiDonatePixel = 0, $g_iTotalDonateCapacity = 0, _
+		$g_iTotalDonateSpellCapacity = 0, $g_iDebugSetlog = 0, $DonateCount = 0, $currClanTrophies = 0, $chatString = 0, $DonationWindowY = 0, $g_iDonTroopsQuantityAv = 0, $g_iDonTroopsQuantity = 0, _
+		$g_iDonSpellsQuantityAv = 0, $currClanTrophies = 0, $x_start = 0, $y_start = 0, $GemResult = 0
+Global Enum $GtfoIdle, $GtfoStart, $GtfoPause, $GtfoResume, $GtfoStop
 
 ; GTFO - Persian MOD (#-31)
 Func __WinAPI_GetBkColor($hWnd)
-        ; Not Prog@ndy
-        Local $aResult, $hDC, $Res
-        If Not IsHWnd($hWnd) Then $hWnd = ControlGetHandle("", "", $hWnd)
-        $hDC = _WinAPI_GetDC($hWnd)
-        $aResult = DllCall("GDI32.dll", "int", "GetBkColor", "hwnd", $hDC)
+	; Not Prog@ndy
+	Local $aResult, $hDC, $Res
+	If Not IsHWnd($hWnd) Then $hWnd = ControlGetHandle("", "", $hWnd)
+	$hDC = _WinAPI_GetDC($hWnd)
+	$aResult = DllCall("GDI32.dll", "int", "GetBkColor", "hwnd", $hDC)
 ;~         ConsoleWrite("Hex($aResult[0], 6) = " & Hex($aResult[0], 6) & @CRLF)
-        $Res = "0x" & StringRegExpReplace(Hex($aResult[0], 6), "(.{2})(.{2})(.{2})", "\3\2\1")
-        _WinAPI_ReleaseDC($hWnd, $hDC)
-        Return $Res
+	$Res = "0x" & StringRegExpReplace(Hex($aResult[0], 6), "(.{2})(.{2})(.{2})", "\3\2\1")
+	_WinAPI_ReleaseDC($hWnd, $hDC)
+	Return $Res
 EndFunc   ;==>__WinAPI_GetBkColor
 
 Func GtfoHelp()
 	ShellExecute("https://mybot.run/forums/index.php?/profile/43550-mediahub/")
-EndFunc
+EndFunc   ;==>GtfoHelp
 
 Func GtfoAutoChat()
-	if GUICtrlread($chkChatStatus) = $GUI_UNCHECKED then
-		IF GUICtrlRead($chkGtfoChatAuto) = $GUI_CHECKED  THEN
+	If GUICtrlRead($chkChatStatus) = $GUI_UNCHECKED Then
+		If GUICtrlRead($chkGtfoChatAuto) = $GUI_CHECKED Then
 			GUICtrlSetState($chkGtfoChatRandom, $GUI_ENABLE)
 ;~ 			GUICtrlSetState($btnGtfoChatAdd, $GUI_ENABLE)
 ;~ 			GUICtrlSetState($btnGtfoChatRemove, $GUI_ENABLE)
@@ -347,11 +347,11 @@ Func GtfoAutoChat()
 		GUICtrlSetState($chkGtfoChatRandom, $GUI_DISABLE)
 		SetLog("Chat: Previous chat message is in queue.")
 	EndIf
-EndFunc
+EndFunc   ;==>GtfoAutoChat
 
 Func GtfoRandomChat()
 
-	IF GUICtrlRead($chkGtfoChatRandom) = $GUI_CHECKED  THEN
+	If GUICtrlRead($chkGtfoChatRandom) = $GUI_CHECKED Then
 ;~ 		GUICtrlSetState($btnGtfoChatAdd, $GUI_DISABLE)
 ;~ 		GUICtrlSetState($btnGtfoChatRemove, $GUI_DISABLE)
 		GUICtrlSetState($lstGtfoChatTemplates, $GUI_DISABLE)
@@ -362,81 +362,81 @@ Func GtfoRandomChat()
 		GUICtrlSetState($lstGtfoChatTemplates, $GUI_ENABLE)
 		GUICtrlSetState($btnGtfoSendChat, $GUI_ENABLE)
 	EndIf
-EndFunc
+EndFunc   ;==>GtfoRandomChat
 
 Func GtfoTemplate_DoubleClick()
 
-	GUICtrlSetData($txtGtfoChat,GUICtrlRead($lstGtfoChatTemplates))
+	GUICtrlSetData($txtGtfoChat, GUICtrlRead($lstGtfoChatTemplates))
 	Local $CurSel = _GUICtrlListBox_GetCurSel($lstGtfoChatTemplates)
 	Local $aItems = _GUICtrlListBox_GetSelItems($lstGtfoChatTemplates)
-	For $iI = $aItems[0] To 1 step -1
+	For $iI = $aItems[0] To 1 Step -1
 		_GUICtrlListBox_ClickItem($lstGtfoChatTemplates, $aItems[$iI])
 	Next
 	_GUICtrlListBox_ClickItem($lstGtfoChatTemplates, $CurSel)
 
-EndFunc
+EndFunc   ;==>GtfoTemplate_DoubleClick
 
 Func GtfoAddToTemplate()
-	Local $ChatTxt = StringStripWS (GUICtrlRead($txtGtfoChat),7)
-	if $ChatTxt <> "" then
+	Local $ChatTxt = StringStripWS(GUICtrlRead($txtGtfoChat), 7)
+	If $ChatTxt <> "" Then
 		GUICtrlSetData($lstGtfoChatTemplates, $ChatTxt & "|")
 
 		_GUICtrlListBox_UpdateHScroll($lstGtfoChatTemplates)
 	EndIf
 	Local $iCnt = _GUICtrlListBox_GetCount($lstGtfoChatTemplates)
-    Local $sMsg = ""
-    For $n = 0 To $iCnt - 1
-        $sMsg &=  _GUICtrlListBox_GetText($lstGtfoChatTemplates, $n)
-		if $n <> $iCnt - 1 Then $sMsg &= "|"
-    Next
+	Local $sMsg = ""
+	For $n = 0 To $iCnt - 1
+		$sMsg &= _GUICtrlListBox_GetText($lstGtfoChatTemplates, $n)
+		If $n <> $iCnt - 1 Then $sMsg &= "|"
+	Next
 	IniWrite($g_sProfileConfigPath, "GTFO", "ChatTemplates", $sMsg)
-	GUICtrlSetData($txtGtfoChat,"")
+	GUICtrlSetData($txtGtfoChat, "")
 	GUICtrlSetState($txtGtfoChat, $GUI_FOCUS)
 
-EndFunc
+EndFunc   ;==>GtfoAddToTemplate
 
 Func GtfoRemoveFromTemplate()
 
 	Local $SelectionCount = _GUICtrlListBox_GetSelCount($lstGtfoChatTemplates)
-	if $SelectionCount > 0 then
+	If $SelectionCount > 0 Then
 		Local $aItems = _GUICtrlListBox_GetSelItems($lstGtfoChatTemplates)
-		For $iI = $aItems[0] To 1 step -1
+		For $iI = $aItems[0] To 1 Step -1
 			_GUICtrlListBox_DeleteString($lstGtfoChatTemplates, $aItems[$iI])
 		Next
-	Endif
+	EndIf
 
 	Local $iCnt = _GUICtrlListBox_GetCount($lstGtfoChatTemplates)
-    Local $sMsg = ""
-    For $n = 0 To $iCnt - 1
-        $sMsg &=  _GUICtrlListBox_GetText($lstGtfoChatTemplates, $n)
-		if $n <> $iCnt - 1 Then $sMsg &= "|"
-    Next
+	Local $sMsg = ""
+	For $n = 0 To $iCnt - 1
+		$sMsg &= _GUICtrlListBox_GetText($lstGtfoChatTemplates, $n)
+		If $n <> $iCnt - 1 Then $sMsg &= "|"
+	Next
 	IniWrite($g_sProfileConfigPath, "GTFO", "ChatTemplates", $sMsg)
 
 	GUICtrlSetState($txtGtfoChat, $GUI_FOCUS)
 
-EndFunc
+EndFunc   ;==>GtfoRemoveFromTemplate
 
 Func GtfoSetIdleTime()
 
 	GUICtrlSetData($txtGtfoIdleTime, GUICtrlRead($SliderGtfoIdleTime) & " s")
 	$GtfoIdleTime = Number(GUICtrlRead($SliderGtfoIdleTime))
 
-EndFunc
+EndFunc   ;==>GtfoSetIdleTime
 
 Func GtfoSetKickNote()
 
-	IF GUICtrlRead($chkGtfoNote) = $GUI_CHECKED  Then
+	If GUICtrlRead($chkGtfoNote) = $GUI_CHECKED Then
 		GUICtrlSetState($txtGtfoNote, $GUI_ENABLE)
 	Else
 		GUICtrlSetState($txtGtfoNote, $GUI_DISABLE)
 	EndIf
 
-EndFunc
+EndFunc   ;==>GtfoSetKickNote
 
 Func SetTrophies()
 
-	IF GUICtrlRead($chkSetTrophies) = $GUI_CHECKED  Then
+	If GUICtrlRead($chkSetTrophies) = $GUI_CHECKED Then
 		GUICtrlSetState($cmbGtfoTrophies, $GUI_ENABLE)
 		UpdateTrophies()
 		$bSetTrophies = True
@@ -445,70 +445,70 @@ Func SetTrophies()
 		$bSetTrophies = False
 	EndIf
 
-EndFunc
+EndFunc   ;==>SetTrophies
 
 Func UpdateTrophies()
 
 	$aUpdateTrophies = GUICtrlRead($cmbGtfoTrophies)
 
-EndFunc
+EndFunc   ;==>UpdateTrophies
 
 Func GtfoSendChat()
 
-	Local $ChatTxt = StringStripWS (GUICtrlRead($txtGtfoChat),7)
-	GUICtrlSetData($txtGtfoChat,$ChatTxt)
-	if $ChatTxt <> "" then
+	Local $ChatTxt = StringStripWS(GUICtrlRead($txtGtfoChat), 7)
+	GUICtrlSetData($txtGtfoChat, $ChatTxt)
+	If $ChatTxt <> "" Then
 		GUICtrlSetState($chkChatStatus, $GUI_CHECKED)
 		GUICtrlSetState($txtGtfoChat, $GUI_DISABLE)
 		GUICtrlSetState($btnGtfoSendChat, $GUI_DISABLE)
 	EndIf
-	if $g_iBotAction  <> $eBotStart or $g_bRunState <> $eBotSearchMode or $g_bRunState <> $eBotClose  or $g_bRunState <> True Then
+	If $g_iBotAction <> $eBotStart Or $g_bRunState <> $eBotSearchMode Or $g_bRunState <> $eBotClose Or $g_bRunState <> True Then
 		doChat()
 	EndIf
 
-EndFunc
+EndFunc   ;==>GtfoSendChat
 
 Func DonationCap()
 	$GtfoDonationCap = Number(GUICtrlRead($cmbGtfoDonationCap))
-EndFunc
+EndFunc   ;==>DonationCap
 
 Func MassKick()
-	if GUICtrlRead($chkMassKick) = $GUI_CHECKED Then
+	If GUICtrlRead($chkMassKick) = $GUI_CHECKED Then
 		$GtfoMassKickMode = True
 	Else
 		$GtfoMassKickMode = False
 	EndIf
-EndFunc
+EndFunc   ;==>MassKick
 
 Func KickCap()
 	$GtfoReceiveCap = Number(GUICtrlRead($cmbGtfoKickCap))
-EndFunc
+EndFunc   ;==>KickCap
 
 Func GtfoIdle()
-	Local $diTimer =0, $diDiff=0, $dsString=""
+	Local $diTimer = 0, $diDiff = 0, $dsString = ""
 	Local $sPauseMsgCount = 1
-	While ( $GtfoModStatus = $GtfoPause  or $GtfoModStatus = $GtfoResume) AND $GtfoModStatus <> $GtfoStop
-		if $sPauseMsgCount = 1 then
+	While ($GtfoModStatus = $GtfoPause Or $GtfoModStatus = $GtfoResume) And $GtfoModStatus <> $GtfoStop
+		If $sPauseMsgCount = 1 Then
 			$diTimer = TimerInit()
-			SetLog("  >>>>>  GTFO  PAUSED  <<<<<  ",$COLOR_WARNING)
+			SetLog("  >>>>>  GTFO  PAUSED  <<<<<  ", $COLOR_WARNING)
 		EndIf
 		$sPauseMsgCount += 1
 		$diDiff = TimerDiff($diTimer)
-		_TicksToTime($diDiff,$GtfoHours,$GtfoMins,$GtfoSecs)
-		if $GtfoHours = 0 then
-			$dsString =  StringFormat("%02u:%02u", $GtfoMins, $GtfoSecs)
+		_TicksToTime($diDiff, $GtfoHours, $GtfoMins, $GtfoSecs)
+		If $GtfoHours = 0 Then
+			$dsString = StringFormat("%02u:%02u", $GtfoMins, $GtfoSecs)
 		Else
-			$dsString =  StringFormat("%02u:%02u:%02u",$GtfoHours, $GtfoMins, $GtfoSecs)
+			$dsString = StringFormat("%02u:%02u:%02u", $GtfoHours, $GtfoMins, $GtfoSecs)
 		EndIf
 
 		_GUICtrlStatusBar_SetText($g_hStatusBar, "     GTFO Paused Since : " & $dsString)
 		If _Sleep(100) Then Return
 	WEnd
-	if $sPauseMsgCount <> 1  Then
-		SetLog("  >>>>>  GTFO  RESUMED  <<<<<  ",$COLOR_SUCCESS)
+	If $sPauseMsgCount <> 1 Then
+		SetLog("  >>>>>  GTFO  RESUMED  <<<<<  ", $COLOR_SUCCESS)
 	EndIf
 
-EndFunc
+EndFunc   ;==>GtfoIdle
 
 Func IsInGame()
 
@@ -533,7 +533,7 @@ Func IsInGame()
 		EndIf
 	WEnd
 
-EndFunc
+EndFunc   ;==>IsInGame
 
 Func GtfoActions($Action)
 
@@ -550,17 +550,17 @@ Func GtfoActions($Action)
 			GUICtrlSetState($cmbGtfoSpell, $GUI_DISABLE)
 			GUICtrlSetState($btnGtfoPause, $GUI_ENABLE)
 			GUICtrlSetState($btnGtfoStop, $GUI_ENABLE)
-			GtfoEnableDisable($g_hCmbProfile,$g_hBtnRenameProfile,$GUI_DISABLE)
+			GtfoEnableDisable($g_hCmbProfile, $g_hBtnRenameProfile, $GUI_DISABLE)
 
 		Case $GtfoPause
 ;~ 			GUICtrlSetData($btnGtfoPause,"RESUME")
-			GUICtrlSetTip($btnGtfoPause,"RESUME")
+			GUICtrlSetTip($btnGtfoPause, "RESUME")
 			_GUICtrlButton_SetImageList($btnGtfoPause, $bIconResume, 4)
 			$GtfoModStatus = $GtfoResume
 
 		Case $GtfoResume
 ;~ 			GUICtrlSetData($btnGtfoPause,"PAUSE")
-			GUICtrlSetTip($btnGtfoPause,"PAUSE")
+			GUICtrlSetTip($btnGtfoPause, "PAUSE")
 			_GUICtrlButton_SetImageList($btnGtfoPause, $bIconPause, 4)
 			$GtfoModStatus = $GtfoStart
 
@@ -572,132 +572,132 @@ Func GtfoActions($Action)
 			GUICtrlSetState($cmbGtfoSpell, $GUI_ENABLE)
 			GUICtrlSetState($btnGtfoPause, $GUI_DISABLE)
 ;~ 			GUICtrlSetData($btnGtfoPause,"PAUSE")
-			GUICtrlSetTip($btnGtfoPause,"PAUSE")
+			GUICtrlSetTip($btnGtfoPause, "PAUSE")
 			_GUICtrlButton_SetImageList($btnGtfoPause, $bIconPause, 4)
 			GUICtrlSetState($btnGtfoStop, $GUI_DISABLE)
-			GtfoEnableDisable($g_hCmbProfile,$g_hBtnRenameProfile,$GUI_ENABLE)
+			GtfoEnableDisable($g_hCmbProfile, $g_hBtnRenameProfile, $GUI_ENABLE)
 
 	EndSwitch
 
-EndFunc
+EndFunc   ;==>GtfoActions
 
-Func isImageVisible($sName,$sTile,$sPlace)
+Func isImageVisible($sName, $sTile, $sPlace)
 
 	Local $result
 	Local $RetunrCoords = ""
-	$result = FindImageInPlace($sName,$sTile,$sPlace)
-	If $result<>"" Then
+	$result = FindImageInPlace($sName, $sTile, $sPlace)
+	If $result <> "" Then
 		$RetunrCoords = $result
 		Return $RetunrCoords
 	Else
 		Return $RetunrCoords
-	EndIF
+	EndIf
 
-EndFunc
+EndFunc   ;==>isImageVisible
 
 Func GtfoEnableDisable($iFrom, $iTo, $iState)
-    For $i = $iFrom To $iTo
-        GUICtrlSetState($i, $iState)
-    Next
-EndFunc
+	For $i = $iFrom To $iTo
+		GUICtrlSetState($i, $iState)
+	Next
+EndFunc   ;==>GtfoEnableDisable
 
 Func GtfoSetChatIdleTime()
-	$ChatIdleDelay =Number(GUICtrlRead($cmbGtfoChatIdleDelay),0)
-EndFunc
+	$ChatIdleDelay = Number(GUICtrlRead($cmbGtfoChatIdleDelay), 0)
+EndFunc   ;==>GtfoSetChatIdleTime
 
 Func GtfoLoadSettings()
 
-	if IniRead($g_sProfileConfigPath, "GTFO", "GTFOcheck", 0 ) = 0 Then
-		GUICtrlSetState($GTFOcheck ,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "GTFOcheck", 0) = 0 Then
+		GUICtrlSetState($GTFOcheck, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($GTFOcheck ,$GUI_CHECKED)
+		GUICtrlSetState($GTFOcheck, $GUI_CHECKED)
 	EndIf
 	GTFOcheck()
-	GUICtrlSetData($cmbGtfo,IniRead($g_sProfileConfigPath, "GTFO", "Kick", "1"))
-	if IniRead($g_sProfileConfigPath, "GTFO", "MassDonate", 0 ) = 0 Then
-		GUICtrlSetState($chkMassDonate,$GUI_UNCHECKED)
+	GUICtrlSetData($cmbGtfo, IniRead($g_sProfileConfigPath, "GTFO", "Kick", "1"))
+	If IniRead($g_sProfileConfigPath, "GTFO", "MassDonate", 0) = 0 Then
+		GUICtrlSetState($chkMassDonate, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkMassDonate,$GUI_CHECKED)
+		GUICtrlSetState($chkMassDonate, $GUI_CHECKED)
 	EndIf
-	if IniRead($g_sProfileConfigPath, "GTFO", "KickMode", 0 ) = 0 Then
-		GUICtrlSetState($chkKickMode,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "KickMode", 0) = 0 Then
+		GUICtrlSetState($chkKickMode, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkKickMode,$GUI_CHECKED)
+		GUICtrlSetState($chkKickMode, $GUI_CHECKED)
 	EndIf
 ;~ 	if IniRead($g_sProfileConfigPath, "GTFO", "ClanOpen", 0 ) = 0 Then
 ;~ 		GUICtrlSetState($chkClanOpen,$GUI_UNCHECKED)
 ;~ 	Else
 ;~ 		GUICtrlSetState($chkClanOpen,$GUI_CHECKED)
 ;~ 	EndIf
-	if IniRead($g_sProfileConfigPath, "GTFO", "WaitForTroops", 0 ) = 0 Then
-		GUICtrlSetState($chkWaitForTroops,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "WaitForTroops", 0) = 0 Then
+		GUICtrlSetState($chkWaitForTroops, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkWaitForTroops,$GUI_CHECKED)
+		GUICtrlSetState($chkWaitForTroops, $GUI_CHECKED)
 	EndIf
 	SetTroopIdle()
-	if IniRead($g_sProfileConfigPath, "GTFO", "MassKick", 0 ) = 0 Then
-		GUICtrlSetState($chkMassKick,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "MassKick", 0) = 0 Then
+		GUICtrlSetState($chkMassKick, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkMassKick,$GUI_CHECKED)
+		GUICtrlSetState($chkMassKick, $GUI_CHECKED)
 	EndIf
 	MassKick()
-	if IniRead($g_sProfileConfigPath, "GTFO", "SetTrophies", 0 ) = 0 Then
-		GUICtrlSetState($chkSetTrophies,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "SetTrophies", 0) = 0 Then
+		GUICtrlSetState($chkSetTrophies, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkSetTrophies,$GUI_CHECKED)
+		GUICtrlSetState($chkSetTrophies, $GUI_CHECKED)
 	EndIf
 	SetTrophies()
 
 
-	GUICtrlSetData($cmbFriendRequest,IniRead($g_sProfileConfigPath, "GTFO", "FriendRequest", "Reject All"))
-	GUICtrlSetData($cmbGtfoChatIdleDelay,IniRead($g_sProfileConfigPath, "GTFO", "ChatIdleDelay", "15"))
+	GUICtrlSetData($cmbFriendRequest, IniRead($g_sProfileConfigPath, "GTFO", "FriendRequest", "Reject All"))
+	GUICtrlSetData($cmbGtfoChatIdleDelay, IniRead($g_sProfileConfigPath, "GTFO", "ChatIdleDelay", "15"))
 	GtfoSetChatIdleTime()
 
-	GUICtrlSetData($cmbTroopIdleTime,IniRead($g_sProfileConfigPath, "GTFO", "TroopIdleTime", "5"))
-	GUICtrlSetData($cmbGtfoTroop,IniRead($g_sProfileConfigPath, "GTFO", "Troop", "Barbarian"))
-	GUICtrlSetData($cmbGtfoTroopBoost,IniRead($g_sProfileConfigPath, "GTFO", "TroopBoost", "0"))
-	GUICtrlSetData($cmbGtfoSpell,IniRead($g_sProfileConfigPath, "GTFO", "Spell", "None"))
-	GUICtrlSetData($cmbGtfoSpellBoost,IniRead($g_sProfileConfigPath, "GTFO", "SpellBoost", "0"))
-	GUICtrlSetData($SliderGtfoIdleTime,IniRead($g_sProfileConfigPath, "GTFO", "IdleTime", "15"))
-	GUICtrlSetData($cmbGtfoDonationCap,IniRead($g_sProfileConfigPath, "GTFO", "DonationCap", "5"))
-	GUICtrlSetData($cmbGtfoKickCap,IniRead($g_sProfileConfigPath, "GTFO", "KickCap", "20"))
-	GUICtrlSetData($cmbGtfoTrophies,IniRead($g_sProfileConfigPath, "GTFO", "Trophies", "1200"))
+	GUICtrlSetData($cmbTroopIdleTime, IniRead($g_sProfileConfigPath, "GTFO", "TroopIdleTime", "5"))
+	GUICtrlSetData($cmbGtfoTroop, IniRead($g_sProfileConfigPath, "GTFO", "Troop", "Barbarian"))
+	GUICtrlSetData($cmbGtfoTroopBoost, IniRead($g_sProfileConfigPath, "GTFO", "TroopBoost", "0"))
+	GUICtrlSetData($cmbGtfoSpell, IniRead($g_sProfileConfigPath, "GTFO", "Spell", "None"))
+	GUICtrlSetData($cmbGtfoSpellBoost, IniRead($g_sProfileConfigPath, "GTFO", "SpellBoost", "0"))
+	GUICtrlSetData($SliderGtfoIdleTime, IniRead($g_sProfileConfigPath, "GTFO", "IdleTime", "15"))
+	GUICtrlSetData($cmbGtfoDonationCap, IniRead($g_sProfileConfigPath, "GTFO", "DonationCap", "5"))
+	GUICtrlSetData($cmbGtfoKickCap, IniRead($g_sProfileConfigPath, "GTFO", "KickCap", "20"))
+	GUICtrlSetData($cmbGtfoTrophies, IniRead($g_sProfileConfigPath, "GTFO", "Trophies", "1200"))
 
 	GtfoSetIdleTime()
 
-	if IniRead($g_sProfileConfigPath, "GTFO", "Note", 0 ) = 0 Then
-		GUICtrlSetState($chkGtfoNote,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "Note", 0) = 0 Then
+		GUICtrlSetState($chkGtfoNote, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkGtfoNote,$GUI_CHECKED)
+		GUICtrlSetState($chkGtfoNote, $GUI_CHECKED)
 	EndIf
 	GtfoSetKickNote()
 
-	GUICtrlSetData($txtGtfoNote,IniRead($g_sProfileConfigPath, "GTFO", "Notes", "Join back later"))
-	GUICtrlSetData($txtGtfoChat,IniRead($g_sProfileConfigPath, "GTFO", "Chat", "Hello Clan"))
+	GUICtrlSetData($txtGtfoNote, IniRead($g_sProfileConfigPath, "GTFO", "Notes", "Join back later"))
+	GUICtrlSetData($txtGtfoChat, IniRead($g_sProfileConfigPath, "GTFO", "Chat", "Hello Clan"))
 
 	_GUICtrlListBox_ResetContent($lstGtfoChatTemplates)
-	Local $sMsg = IniRead($g_sProfileConfigPath, "GTFO", "ChatTemplates", "Hello Clan|Members Don"&Chr(39)&"t Donate|Request and leave")
-	if $sMsg = "" then
-		$sMsg = "Hello Clan|Members Don"&Chr(39)&"t Donate|Request and leave"
+	Local $sMsg = IniRead($g_sProfileConfigPath, "GTFO", "ChatTemplates", "Hello Clan|Members Don" & Chr(39) & "t Donate|Request and leave")
+	If $sMsg = "" Then
+		$sMsg = "Hello Clan|Members Don" & Chr(39) & "t Donate|Request and leave"
 		IniWrite($g_sProfileConfigPath, "GTFO", "ChatTemplates", $sMsg)
 	EndIf
 	GUICtrlSetData($lstGtfoChatTemplates, $sMsg & "|")
 
 
-	if IniRead($g_sProfileConfigPath, "GTFO", "ChatAuto", 0 ) = 0 Then
-		GUICtrlSetState($chkGtfoChatAuto,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "ChatAuto", 0) = 0 Then
+		GUICtrlSetState($chkGtfoChatAuto, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkGtfoChatAuto,$GUI_CHECKED)
+		GUICtrlSetState($chkGtfoChatAuto, $GUI_CHECKED)
 	EndIf
 	GtfoAutoChat()
-	if IniRead($g_sProfileConfigPath, "GTFO", "ChatRandom", 0 ) = 0 Then
-		GUICtrlSetState($chkGtfoChatRandom,$GUI_UNCHECKED)
+	If IniRead($g_sProfileConfigPath, "GTFO", "ChatRandom", 0) = 0 Then
+		GUICtrlSetState($chkGtfoChatRandom, $GUI_UNCHECKED)
 	Else
-		GUICtrlSetState($chkGtfoChatRandom,$GUI_CHECKED)
+		GUICtrlSetState($chkGtfoChatRandom, $GUI_CHECKED)
 	EndIf
 
 
-EndFunc
+EndFunc   ;==>GtfoLoadSettings
 
 Func GtfoSaveSettings()
 
@@ -739,36 +739,36 @@ Func GtfoSaveSettings()
 	Else
 		IniWrite($g_sProfileConfigPath, "GTFO", "SetTrophies", 0)
 	EndIf
-	IniWrite($g_sProfileConfigPath, "GTFO", "TroopIdleTime",  GUICtrlRead($cmbTroopIdleTime))
+	IniWrite($g_sProfileConfigPath, "GTFO", "TroopIdleTime", GUICtrlRead($cmbTroopIdleTime))
 	SetTroopIdle()
 
-	IniWrite($g_sProfileConfigPath, "GTFO", "FriendRequest",  GUICtrlRead($cmbFriendRequest))
-	IniWrite($g_sProfileConfigPath, "GTFO", "ChatIdleDelay",  GUICtrlRead($cmbGtfoChatIdleDelay))
+	IniWrite($g_sProfileConfigPath, "GTFO", "FriendRequest", GUICtrlRead($cmbFriendRequest))
+	IniWrite($g_sProfileConfigPath, "GTFO", "ChatIdleDelay", GUICtrlRead($cmbGtfoChatIdleDelay))
 
-	IniWrite($g_sProfileConfigPath, "GTFO", "Troop",  GUICtrlRead($cmbGtfoTroop))
-	IniWrite($g_sProfileConfigPath, "GTFO", "TroopBoost",  GUICtrlRead($cmbGtfoTroopBoost))
-	IniWrite($g_sProfileConfigPath, "GTFO", "Spell",  GUICtrlRead($cmbGtfoSpell))
-	IniWrite($g_sProfileConfigPath, "GTFO", "SpellBoost",  GUICtrlRead($cmbGtfoSpellBoost))
-	IniWrite($g_sProfileConfigPath, "GTFO", "DonationCap",  GUICtrlRead($cmbGtfoDonationCap))
-	IniWrite($g_sProfileConfigPath, "GTFO", "KickCap",  GUICtrlRead($cmbGtfoKickCap))
-	IniWrite($g_sProfileConfigPath, "GTFO", "Trophies",  GUICtrlRead($cmbGtfoTrophies))
+	IniWrite($g_sProfileConfigPath, "GTFO", "Troop", GUICtrlRead($cmbGtfoTroop))
+	IniWrite($g_sProfileConfigPath, "GTFO", "TroopBoost", GUICtrlRead($cmbGtfoTroopBoost))
+	IniWrite($g_sProfileConfigPath, "GTFO", "Spell", GUICtrlRead($cmbGtfoSpell))
+	IniWrite($g_sProfileConfigPath, "GTFO", "SpellBoost", GUICtrlRead($cmbGtfoSpellBoost))
+	IniWrite($g_sProfileConfigPath, "GTFO", "DonationCap", GUICtrlRead($cmbGtfoDonationCap))
+	IniWrite($g_sProfileConfigPath, "GTFO", "KickCap", GUICtrlRead($cmbGtfoKickCap))
+	IniWrite($g_sProfileConfigPath, "GTFO", "Trophies", GUICtrlRead($cmbGtfoTrophies))
 
-	IniWrite($g_sProfileConfigPath, "GTFO", "IdleTime",  GUICtrlRead($SliderGtfoIdleTime))
+	IniWrite($g_sProfileConfigPath, "GTFO", "IdleTime", GUICtrlRead($SliderGtfoIdleTime))
 
 	If GUICtrlRead($chkGtfoNote) = $GUI_CHECKED Then
 		IniWrite($g_sProfileConfigPath, "GTFO", "Note", 1)
 	Else
 		IniWrite($g_sProfileConfigPath, "GTFO", "Note", 0)
 	EndIf
-	IniWrite($g_sProfileConfigPath, "GTFO", "Notes",  GUICtrlRead($txtGtfoNote))
-	IniWrite($g_sProfileConfigPath, "GTFO", "Chat",  GUICtrlRead($txtGtfoChat))
+	IniWrite($g_sProfileConfigPath, "GTFO", "Notes", GUICtrlRead($txtGtfoNote))
+	IniWrite($g_sProfileConfigPath, "GTFO", "Chat", GUICtrlRead($txtGtfoChat))
 
 	Local $iCnt = _GUICtrlListBox_GetCount($lstGtfoChatTemplates)
-    Local $sMsg = ""
-    For $n = 0 To $iCnt - 1
-        $sMsg &=  _GUICtrlListBox_GetText($lstGtfoChatTemplates, $n)
-		if $n <> $iCnt - 1 Then $sMsg &= "|"
-    Next
+	Local $sMsg = ""
+	For $n = 0 To $iCnt - 1
+		$sMsg &= _GUICtrlListBox_GetText($lstGtfoChatTemplates, $n)
+		If $n <> $iCnt - 1 Then $sMsg &= "|"
+	Next
 	IniWrite($g_sProfileConfigPath, "GTFO", "ChatTemplates", $sMsg)
 
 	If GUICtrlRead($chkGtfoChatAuto) = $GUI_CHECKED Then
@@ -782,7 +782,7 @@ Func GtfoSaveSettings()
 		IniWrite($g_sProfileConfigPath, "GTFO", "ChatRandom", 0)
 	EndIf
 
-EndFunc
+EndFunc   ;==>GtfoSaveSettings
 
 Func GTFOPause()
 
@@ -792,22 +792,22 @@ Func GTFOPause()
 		GtfoActions($GtfoResume)
 	EndIf
 
-EndFunc
+EndFunc   ;==>GTFOPause
 
 Func GTFOStop()
-	FileDelete ($g_sProfilePath & "\" & $g_sProfileCurrentName   & "\gtfo.log")
-	GUICtrlSetState($GTFOcheck,$GUI_ENABLE)
+	FileDelete($g_sProfilePath & "\" & $g_sProfileCurrentName & "\gtfo.log")
+	GUICtrlSetState($GTFOcheck, $GUI_ENABLE)
 	$GtfoTrainCount = 0
 	$GtfoTroopTrainCount = 0
 	$GtfoSpellBrewCount = 0
 	GtfoActions($GtfoStop)
-	$g_iBotAction  = $eBotNoAction
+	$g_iBotAction = $eBotNoAction
 	$g_bRunState = False
-	_GUICtrlComboBox_SetCurSel($g_hCmbLogDividerOption,0)
+	_GUICtrlComboBox_SetCurSel($g_hCmbLogDividerOption, 0)
 	cmbLog()
-	SetLog("  >>>>>  GTFO  STOPPED  <<<<<  ",$COLOR_WARNING)
+	SetLog("  >>>>>  GTFO  STOPPED  <<<<<  ", $COLOR_WARNING)
 	GtfoSaveSettings()
-EndFunc
+EndFunc   ;==>GTFOStop
 
 Func doChat()
 
@@ -819,7 +819,7 @@ Func doChat()
 	If GUICtrlRead($chkChatStatus) = $GUI_CHECKED Then
 		AndroidBotStartEvent()
 		$chatString = GUICtrlRead($txtGtfoChat)
-		If  $chatString = "" then
+		If $chatString = "" Then
 			GUICtrlSetData($txtGtfoChat, "")
 			GUICtrlSetState($chkChatStatus, $GUI_UNCHECKED)
 			GUICtrlSetState($btnGtfoSendChat, $GUI_ENABLE)
@@ -830,7 +830,7 @@ Func doChat()
 		ForceCaptureRegion()
 		If Not _CheckPixel($aChatTab, $g_bCapturePixel) Then ClickP($aOpenChat, 1, 0, "#0168")
 		If _Sleep(1000) Then Return
-		Local $icount = 0
+		Local $iCount = 0
 		While 1
 			If _ColorCheck(_GetPixelColor(189, 24, True), Hex(0x706C50, 6), 20) Then
 				ExitLoop
@@ -840,40 +840,40 @@ Func doChat()
 				ClickP($aClanTab, 1, 0, "#0169")
 				ExitLoop
 			EndIf
-			$icount += 1
-			If $icount >= 25 Then
+			$iCount += 1
+			If $iCount >= 25 Then
 				ExitLoop
 			EndIf
 			If _Sleep(150) Then Return
 		WEnd
 
 		_Sleep(150)
-		Click(275,700, 1, 0, "#0173")
+		Click(275, 700, 1, 0, "#0173")
 		_Sleep(150)
-		Local $icount = 0
+		Local $iCount = 0
 		While Not ( _ColorCheck(_GetPixelColor(840, 720, True), Hex(0xFFFFFF, 6), 20))
 			If _Sleep(150) Then ExitLoop
-			$icount += 1
-			If $icount > 25 Then
+			$iCount += 1
+			If $iCount > 25 Then
 				SetLog("  Failed to send Chat Skipping chat Event. Will send Soon.", $COLOR_DEBUG)
-				return
+				Return
 			EndIf
 		WEnd
 
 		_Sleep(150)
-		Click(275,700, 1, 0, "0336")
+		Click(275, 700, 1, 0, "0336")
 
 		Local $tClip = ClipGet()
 		ClipPut($chatString)
 		_Sleep(150)
 ;~ 		ControlSend($g_hAndroidWindow, "", "", "{CTRLDOWN}a{CTRLUP}{CTRLDOWN}v{CTRLUP}",0)
-		ControlSend($g_hAndroidWindow, "", "", $chatString,0)
+		ControlSend($g_hAndroidWindow, "", "", $chatString, 0)
 		_Sleep(150)
 		ClipPut($tClip)
 
 		ForceCaptureRegion()
-		if _ColorCheck(_GetPixelColor(840, 720, True), Hex(0xFFFFFF, 6), 20) Then
-			Click(840,720, 1, 0, "#0173")
+		If _ColorCheck(_GetPixelColor(840, 720, True), Hex(0xFFFFFF, 6), 20) Then
+			Click(840, 720, 1, 0, "#0173")
 		EndIf
 
 		GUICtrlSetData($txtGtfoChat, "")
@@ -883,31 +883,31 @@ Func doChat()
 		Return
 	Else
 		AndroidBotStartEvent()
-		If $GtfoModStatus = $GtfoPause or $GtfoModStatus = $GtfoResume Then
+		If $GtfoModStatus = $GtfoPause Or $GtfoModStatus = $GtfoResume Then
 			Return
 		EndIf
 		Local $iI
-		$iI = Random(1,$ChatIdleDelay,1)
+		$iI = Random(1, $ChatIdleDelay, 1)
 ;~ 		$iI = 1
 ;~ 		Setlog("Random Chat number : " & $iI)
-		if $iI = 1 Then
+		If $iI = 1 Then
 			If GUICtrlRead($chkGtfoChatAuto) = $GUI_CHECKED Then
-				Local $iCount =  _GUICtrlListBox_GetCount($lstGtfoChatTemplates)
-				if $GtfoChatCount >= $iCount Then
+				Local $iCount = _GUICtrlListBox_GetCount($lstGtfoChatTemplates)
+				If $GtfoChatCount >= $iCount Then
 					$GtfoChatCount = 0
 				EndIf
 				If GUICtrlRead($chkGtfoChatRandom) = $GUI_CHECKED Then
-					$iI = Random(1,$iCount,1) - 1
+					$iI = Random(1, $iCount, 1) - 1
 				Else
 					$iI = $GtfoChatCount
 					$GtfoChatCount += 1
 				EndIf
-				$chatString = _GUICtrlListBox_GetText ($lstGtfoChatTemplates,$iI)
+				$chatString = _GUICtrlListBox_GetText($lstGtfoChatTemplates, $iI)
 
 				ForceCaptureRegion()
 				If Not _CheckPixel($aChatTab, $g_bCapturePixel) Then ClickP($aOpenChat, 1, 0, "#0168")
 				If _Sleep(1000) Then Return
-				Local $icount = 0
+				Local $iCount = 0
 				While 1
 					If _ColorCheck(_GetPixelColor(189, 24, True), Hex(0x706C50, 6), 20) Then
 						ExitLoop
@@ -917,40 +917,40 @@ Func doChat()
 						ClickP($aClanTab, 1, 0, "#0169")
 						ExitLoop
 					EndIf
-					$icount += 1
-					If $icount >= 15 Then
+					$iCount += 1
+					If $iCount >= 15 Then
 						ExitLoop
 					EndIf
 					If _Sleep(150) Then Return
 				WEnd
 
 				_Sleep(150)
-				Click(275,700, 1, 0, "#0173")
+				Click(275, 700, 1, 0, "#0173")
 				_Sleep(150)
-				Local $icount = 0
+				Local $iCount = 0
 				While Not ( _ColorCheck(_GetPixelColor(840, 720, True), Hex(0xFFFFFF, 6), 20))
 					If _Sleep(150) Then ExitLoop
-					$icount += 1
-					If $icount > 15 Then
+					$iCount += 1
+					If $iCount > 15 Then
 						SetLog("  Failed to send Chat Skipping chat Event.", $COLOR_DEBUG)
-						return
+						Return
 					EndIf
 				WEnd
 
 				_Sleep(150)
-				Click(275,700, 1, 0, "0336")
+				Click(275, 700, 1, 0, "0336")
 
 				Local $tClip = ClipGet()
 				ClipPut($chatString)
 				_Sleep(150)
 ;~ 				ControlSend($g_hAndroidWindow, "", "", "{CTRLDOWN}a{CTRLUP}{CTRLDOWN}v{CTRLUP}",0)
-				ControlSend($g_hAndroidWindow, "", "", $chatString,0)
+				ControlSend($g_hAndroidWindow, "", "", $chatString, 0)
 				_Sleep(150)
 				ClipPut($tClip)
 
 				ForceCaptureRegion()
-				if _ColorCheck(_GetPixelColor(840, 720, True), Hex(0xFFFFFF, 6), 20) Then
-					Click(840,720, 1, 0, "#0173")
+				If _ColorCheck(_GetPixelColor(840, 720, True), Hex(0xFFFFFF, 6), 20) Then
+					Click(840, 720, 1, 0, "#0173")
 				EndIf
 
 				GUICtrlSetData($txtGtfoChat, "")
@@ -961,17 +961,17 @@ Func doChat()
 
 			EndIf
 		EndIf
-   EndIf
+	EndIf
 
-EndFunc
+EndFunc   ;==>doChat
 
 Func GTFOStart()
 
 	WinGetAndroidHandle()
-	_FileCreate($g_sProfilePath & "\" & $g_sProfileCurrentName   & "\gtfo.log")
+	_FileCreate($g_sProfilePath & "\" & $g_sProfileCurrentName & "\gtfo.log")
 	GtfoSaveSettings()
-	SetLog("  >>>>>  GTFO  STARTED  <<<<<  ",$COLOR_WARNING)
-	_GUICtrlComboBox_SetCurSel($g_hCmbLogDividerOption,4)
+	SetLog("  >>>>>  GTFO  STARTED  <<<<<  ", $COLOR_WARNING)
+	_GUICtrlComboBox_SetCurSel($g_hCmbLogDividerOption, 4)
 	cmbLog()
 ;~ 	$sTimer = TimerInit()
 	saveConfig()
@@ -985,7 +985,7 @@ Func GTFOStart()
 	GUICtrlSetData($g_hLblResultRuntimeNow, "00:00:00")
 
 	GtfoActions($GtfoStart)
-	if $g_iBotAction  = $eBotStart or $g_bRunState = $eBotSearchMode or $g_bRunState = $eBotClose  or $g_bRunState Then
+	If $g_iBotAction = $eBotStart Or $g_bRunState = $eBotSearchMode Or $g_bRunState = $eBotClose Or $g_bRunState Then
 		SetLog("To Start GTFO - Free Man Style Stop / Restart the MyBot and try again")
 		GTFOStop()
 		Return
@@ -1026,7 +1026,7 @@ Func GTFOStart()
 	$FirstStart = True
 	$g_bRunState = True
 
-	_guictrltab_clicktab($g_hTabMain, 0)
+	_GUICtrlTab_ClickTab($g_hTabMain, 0)
 	setredrawbotwindow(True)
 	AndroidBotStartEvent()
 
@@ -1052,7 +1052,7 @@ Func GTFOStart()
 
 	checkMainScreen()
 	chkShieldStatus(True, True)
-	If Not $g_bSearchMode  Then
+	If Not $g_bSearchMode Then
 		BotDetectFirstTime()
 	EndIf
 	Collect()
@@ -1072,10 +1072,10 @@ Func GTFOStart()
 	RequestCC()
 	ReArm()
 	VillageReport(True, True)
-	if Not GtfoTrain() Then Return
+	If Not GtfoTrain() Then Return
 	Sleep(250)
 
-	Local $cycleCount ,$dTimer, $dDiff, $GtfoTopEnd = 0
+	Local $cycleCount, $dTimer, $dDiff, $GtfoTopEnd = 0
 	$cycleCount = 0
 	$DonateCount = 0
 
@@ -1092,14 +1092,14 @@ Func GTFOStart()
 		$g_iActiveDonate = True
 		$g_iDonTroopsLimit = $GtfoDonationCap
 		$iDonSpellsLimit = 1
-		$g_iDonTroopsAv  = 0
-		$g_iDonSpellsAv  = 0
-		$g_iDonTroopsQuantityAv  = 0
-		$g_iDonTroopsQuantity  = 0
-		$g_iDonSpellsQuantityAv  = 0
-		$g_iDonSpellsQuantityAv  = 0
-		$g_bSkipDonTroops  = False
-		$g_bSkipDonSpells  = False
+		$g_iDonTroopsAv = 0
+		$g_iDonSpellsAv = 0
+		$g_iDonTroopsQuantityAv = 0
+		$g_iDonTroopsQuantity = 0
+		$g_iDonSpellsQuantityAv = 0
+		$g_iDonSpellsQuantityAv = 0
+		$g_bSkipDonTroops = False
+		$g_bSkipDonSpells = False
 
 
 		If $DonateCount >= 25 Then
@@ -1109,8 +1109,8 @@ Func GTFOStart()
 			ClickP($aAway, 1, 0, "#0167")
 			checkMainScreen()
 			checkAttackDisable($g_iTaBChkIdle)
-			if Not GtfoTrain() Then Return
-			chkShieldStatus(True,True)
+			If Not GtfoTrain() Then Return
+			chkShieldStatus(True, True)
 			ClickP($aOpenChat, 1, 0, "#0168")
 			If _Sleep(1000) Then Return
 			GTFOKICK()
@@ -1136,15 +1136,15 @@ Func GTFOStart()
 			ClickP($aOpenChat, 1, 0, "#0168")
 			If _Sleep(200) Then Return
 		EndIf
-		if $cycleCount = 0 then
+		If $cycleCount = 0 Then
 			$dTimer = TimerInit()
 		EndIf
-		$cycleCount =  $cycleCount  + 1
+		$cycleCount = $cycleCount + 1
 
 		;Opens clan tab and verbose in log
 		ClickP($aAway, 1, 0, "#0167")
 
-		if $GtfoTopEnd = 0 Then
+		If $GtfoTopEnd = 0 Then
 			$yPos = 90
 			$GtfoTopEnd = -1
 		EndIf
@@ -1155,7 +1155,7 @@ Func GTFOStart()
 			If _Sleep(500) Then Return
 		EndIf
 
-		Local $icount = 0
+		Local $iCount = 0
 		While 1
 			If _ColorCheck(_GetPixelColor(189, 24, True), Hex(0x706C50, 6), 20) Then
 				ExitLoop
@@ -1165,8 +1165,8 @@ Func GTFOStart()
 				ClickP($aClanTab, 1, 0, "#0169")
 				ExitLoop
 			EndIf
-			$icount += 1
-			If $icount >= 10 Then
+			$iCount += 1
+			If $iCount >= 10 Then
 				ContinueLoop 2
 			EndIf
 			If _Sleep(150) Then Return
@@ -1176,57 +1176,57 @@ Func GTFOStart()
 
 		checkAttackDisable($g_iTaBChkIdle)
 
-		While ($g_iActiveDonate and $DonateCount < 25) and (Not $GtfoMassKickMode)
+		While ($g_iActiveDonate And $DonateCount < 25) And (Not $GtfoMassKickMode)
 			If $GtfoModStatus = $GtfoStop Then Return
 			IsInGame()
 			GtfoIdle()
 			If _Sleep(100) Then ExitLoop
 			ForceCaptureRegion()
 
-			$g_aiDonatePixel  = _MultiPixelSearch(202, $yPos, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 15)
-			If IsArray($g_aiDonatePixel ) Then
+			$g_aiDonatePixel = _MultiPixelSearch(202, $yPos, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 15)
+			If IsArray($g_aiDonatePixel) Then
 ;~ 				If $g_bDebugSetlog Then SetLog("$g_aiDonatePixel : (" & $g_aiDonatePixel [0] & "," & $g_aiDonatePixel [1] & ") $yPos: " & $yPos, $COLOR_DEBUG)
 				$g_iActiveDonate = False
-				$g_bSkipDonTroops  = False
-				$g_bSkipDonSpells  = False
+				$g_bSkipDonTroops = False
+				$g_bSkipDonSpells = False
 				RemainingCCcapacity()
 
 				If $g_iTotalDonateCapacity <= 0 Then
 					SetLog("Clan Castle troops are full, skip troop donation...", $COLOR_ORANGE)
-					$g_bSkipDonTroops  = True
+					$g_bSkipDonTroops = True
 				EndIf
 				If $g_iTotalDonateSpellCapacity = 0 Then
 					SetLog("Clan Castle spells are full, skip spell donation...", $COLOR_ORANGE)
-					$g_bSkipDonSpells  = True
+					$g_bSkipDonSpells = True
 				ElseIf $g_iTotalDonateSpellCapacity = -1 Then
 					If $g_bDebugSetlog Then SetLog("This CC cannot accept spells, skip spell donation...", $COLOR_DEBUG)
-					$g_bSkipDonSpells  = True
+					$g_bSkipDonSpells = True
 				EndIf
 
-				If $g_bSkipDonTroops And $g_bSkipDonSpells  Then
+				If $g_bSkipDonTroops And $g_bSkipDonSpells Then
 					$g_iActiveDonate = True
-					$yPos = $g_aiDonatePixel [1] + 50
+					$yPos = $g_aiDonatePixel[1] + 50
 					$GtfoTopEnd = -1
 					ContinueLoop
 				EndIf
-				if Not iDonateWindow($bOpen) Then
+				If Not iDonateWindow($bOpen) Then
 					$g_iActiveDonate = True
-					$yPos = $g_aiDonatePixel [1] + 50
+					$yPos = $g_aiDonatePixel[1] + 50
 					$GtfoTopEnd = -1
 					ContinueLoop
 				EndIf
 
 				$DonateCount = $DonateCount + 1
-				if $GtfoSpellType <> -1 and Not $g_bSkipDonSpells then
-					GtfoDonateTroopType($GtfoSpellType, 1, False, True,False)
+				If $GtfoSpellType <> -1 And Not $g_bSkipDonSpells Then
+					GtfoDonateTroopType($GtfoSpellType, 1, False, True, False)
 				EndIf
-				If $GtfoTroopType <> -1 and Not $g_bSkipDonTroops Then
-					GtfoDonateTroopType($GtfoTroopType, $g_iDonTroopsLimit, False, True,True)
+				If $GtfoTroopType <> -1 And Not $g_bSkipDonTroops Then
+					GtfoDonateTroopType($GtfoTroopType, $g_iDonTroopsLimit, False, True, True)
 				EndIf
 				$dTimer = TimerInit()
-				Click(700,5, 1, 50)
+				Click(700, 5, 1, 50)
 				$g_iActiveDonate = True
-				$yPos = $g_aiDonatePixel [1] + 50
+				$yPos = $g_aiDonatePixel[1] + 50
 				$GtfoTopEnd = -1
 ;~ 				ClickP($aAway, 1, 0, "#0171")
 ;~ 				If _Sleep($iDelayDonateCC2) Then ExitLoop
@@ -1236,15 +1236,15 @@ Func GTFOStart()
 			GtfoIdle()
 
 			ForceCaptureRegion()
-			$g_aiDonatePixel  = _MultiPixelSearch(202, $yPos, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 15)
-			If IsArray($g_aiDonatePixel ) Then
+			$g_aiDonatePixel = _MultiPixelSearch(202, $yPos, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 15)
+			If IsArray($g_aiDonatePixel) Then
 ;~ 				If $g_bDebugSetlog Then SetLog("More Donate buttons found, new $g_aiDonatePixel : (" & $g_aiDonatePixel [0] & "," & $g_aiDonatePixel [1] & ")", $COLOR_DEBUG)
 				ContinueLoop
 			EndIf
 
-			If $GtfoModStatus = $GtfoPause or $GtfoModStatus = $GtfoResume Then
+			If $GtfoModStatus = $GtfoPause Or $GtfoModStatus = $GtfoResume Then
 				$dTimer = TimerInit()
-			else
+			Else
 				$dDiff = TimerDiff($dTimer)
 
 ;~ 				$GtfoMins = Int($dDiff / (60 * 1000))
@@ -1253,8 +1253,8 @@ Func GTFOStart()
 ;~ 				_TicksToTime($dDiff,$GtfoHours,$GtfoMins,$GtfoSecs)
 ;~ 				$sString =  StringFormat("%02u" & ":" & "%02u", $GtfoMins, $GtfoSecs)
 ;~ 				_GUICtrlStatusBar_SetText($statlog, "     GTFO Idle Since : " & $sString)
-				$dDiff = Number($dDiff,2)
-				if $dDiff >= ($GtfoIdleTime * 1000) Then
+				$dDiff = Number($dDiff, 2)
+				If $dDiff >= ($GtfoIdleTime * 1000) Then
 ;~ 					$DonateCount = 25
 ;~ 					ContinueLoop 2
 					ClickP($aClanTab, 1, 0, "#0169")
@@ -1278,31 +1278,31 @@ Func GTFOStart()
 			$g_iActiveDonate = False
 		WEnd
 
-		if $GtfoMassKickMode Then
+		If $GtfoMassKickMode Then
 			GTFOKICK()
 			$DonateCount += 1
 		EndIf
 
 		ClickP($aAway, 1, 0, "#0176")
-		Click(700,5, 1, 50)
+		Click(700, 5, 1, 50)
 		If _Sleep(150) Then Return
 
-   WEnd
+	WEnd
 	Click(1, 40, 1, 50)
 	If _Sleep(50) Then Return
-   GTFOStop()
+	GTFOStop()
 
-EndFunc
+EndFunc   ;==>GTFOStart
 
 Func SetTroopIdle()
 
 	If GUICtrlRead($chkWaitForTroops) = $GUI_CHECKED Then
-		GUICtrlSetState($cmbTroopIdleTime,$GUI_ENABLE)
+		GUICtrlSetState($cmbTroopIdleTime, $GUI_ENABLE)
 	Else
-		GUICtrlSetState($cmbTroopIdleTime,$GUI_DISABLE)
+		GUICtrlSetState($cmbTroopIdleTime, $GUI_DISABLE)
 	EndIf
 
-EndFunc
+EndFunc   ;==>SetTroopIdle
 ; GTFO - Persian MOD (#-31)
 Func GtfoCheckTrainingTab($sText = "troop")
 	Local $Tab
@@ -1320,13 +1320,13 @@ Func GtfoCheckTrainingTab($sText = "troop")
 
 	Return GetOCRCurrent(43, 160)
 
-EndFunc
+EndFunc   ;==>GtfoCheckTrainingTab
 
 Func GtfoTrain($ClanMode = False)
 
-	if $GtfoMassKickMode Then Return True
-	GUICtrlSetState($GTFOcheck,$GUI_DISABLE)
-    Local $aGetArmySize[3] = ["", "", ""]
+	If $GtfoMassKickMode Then Return True
+	GUICtrlSetState($GTFOcheck, $GUI_DISABLE)
+	Local $aGetArmySize[3] = ["", "", ""]
 
 	Local $timer, $aRemainTrainTroopTimer = 0
 	Local $tempElixir = ""
@@ -1354,15 +1354,15 @@ Func GtfoTrain($ClanMode = False)
 	Local $GtfoTempTroopBoost = GUICtrlRead($cmbGtfoTroopBoost)
 	Local $GtfoTempSpellBoost = GUICtrlRead($cmbGtfoSpellBoost)
 
-	if ( int($g_iTxtRestartElixir) >= int($g_aiCurrentLoot[$eLootElixir]) ) or ( int($g_aiCurrentLoot[$eLootElixir]) <1000 ) Then
+	If (Int($g_iTxtRestartElixir) >= Int($g_aiCurrentLoot[$eLootElixir])) Or (Int($g_aiCurrentLoot[$eLootElixir]) < 1000) Then
 		SetLog("Running Out of Elixir. GTFO Stopped. Elixir Halt Limit Reached.", $COLOR_RED)
 		GTFOStop()
 		Return False
 	EndIf
 
-	If (Int($g_iTxtRestartDark) >= Int($g_aiCurrentLoot[$eLootDarkElixir]) or ( int($g_aiCurrentLoot[$eLootDarkElixir]) < 200 )) and $GtfoTempSpell <> "None" Then
-		SetLog("Disabled Spell Donations. Dark Elixir Halt Limit Reached.",$COLOR_RED )
-		_GUICtrlComboBox_SetCurSel($cmbGtfoSpell,0)
+	If (Int($g_iTxtRestartDark) >= Int($g_aiCurrentLoot[$eLootDarkElixir]) Or (Int($g_aiCurrentLoot[$eLootDarkElixir]) < 200)) And $GtfoTempSpell <> "None" Then
+		SetLog("Disabled Spell Donations. Dark Elixir Halt Limit Reached.", $COLOR_RED)
+		_GUICtrlComboBox_SetCurSel($cmbGtfoSpell, 0)
 		$GtfoTempSpell = GUICtrlRead($cmbGtfoSpell)
 	EndIf
 
@@ -1379,8 +1379,8 @@ Func GtfoTrain($ClanMode = False)
 	EndIf
 	_Sleep(500)
 
-	Local $getArmyCampCap = 0, $aGetArmySize=0, $CurCamp=0,$TotalCamp=0,$CurCampPer=0, $ArmyCapacity=0
-	If WaitforPixel(815, 120 , 820, 125 , Hex(0xFD797D, 6), 10, 10) Then
+	Local $getArmyCampCap = 0, $aGetArmySize = 0, $CurCamp = 0, $TotalCamp = 0, $CurCampPer = 0, $ArmyCapacity = 0
+	If WaitforPixel(815, 120, 820, 125, Hex(0xFD797D, 6), 10, 10) Then
 		If $g_bDebugSetlogTrain Then SetLog("Wait for ArmyOverView Window", $COLOR_DEBUG)
 		_Sleep(500)
 		$getArmyCampCap = getOcrAndCapture("coc-ms", 110, 166, 82, 16, True)
@@ -1388,11 +1388,11 @@ Func GtfoTrain($ClanMode = False)
 		$aGetArmySize = StringSplit($getArmyCampCap, "#")
 		If IsArray($aGetArmySize) Then
 			If $aGetArmySize[0] > 1 Then ; check if the OCR was valid and returned both values
-			   $CurCamp = Number($aGetArmySize[1])
-			   $TotalCamp = Number($aGetArmySize[2])
-			   $CurCampPer = Int($CurCamp / $TotalCamp * 100)
-			   SetLog("Total Army Camp capacity: " & $CurCamp & "/" & $TotalCamp & " (" & $CurCampPer & "%)", $COLOR_GREEN)
-			   $ArmyCapacity = Int($CurCamp / $TotalCamp * 100)
+				$CurCamp = Number($aGetArmySize[1])
+				$TotalCamp = Number($aGetArmySize[2])
+				$CurCampPer = Int($CurCamp / $TotalCamp * 100)
+				SetLog("Total Army Camp capacity: " & $CurCamp & "/" & $TotalCamp & " (" & $CurCampPer & "%)", $COLOR_GREEN)
+				$ArmyCapacity = Int($CurCamp / $TotalCamp * 100)
 			EndIf
 		Else
 			SetLog("OCR Error while reading Army Overview Window", $COLOR_DEBUG)
@@ -1404,10 +1404,10 @@ Func GtfoTrain($ClanMode = False)
 		Local $aGetSpellSize = StringSplit($getSpellCap, "#")
 		If IsArray($aGetSpellSize) Then
 			If $aGetSpellSize[0] > 1 Then ; check if the OCR was valid and returned both values
-			   Local $CurSpell = Number($aGetSpellSize[1])
-			   Local $TotalSpell = Number($aGetSpellSize[2])
-			   SetLog("Total Spell capacity: " & $CurSpell & "/" & $TotalSpell , $COLOR_GREEN)
-			   Local $SpellCapacity = Int($CurSpell / $TotalSpell * 100)
+				Local $CurSpell = Number($aGetSpellSize[1])
+				Local $TotalSpell = Number($aGetSpellSize[2])
+				SetLog("Total Spell capacity: " & $CurSpell & "/" & $TotalSpell, $COLOR_GREEN)
+				Local $SpellCapacity = Int($CurSpell / $TotalSpell * 100)
 			EndIf
 		Else
 			SetLog("OCR Error while reading Army Overview Window", $COLOR_DEBUG)
@@ -1415,18 +1415,18 @@ Func GtfoTrain($ClanMode = False)
 
 		Click(230, 140, 1, 0, "#0293")
 	EndIf
-   _Sleep(250)
+	_Sleep(250)
 
-	If WaitforPixel(230, 140 , 240, 145 , Hex(0xE8ECE0, 6), 10, 10) Then
+	If WaitforPixel(230, 140, 240, 145, Hex(0xE8ECE0, 6), 10, 10) Then
 
 		If $g_bDebugSetlogTrain Then SetLog("Wait for Troops Window", $COLOR_GREEN)
 		_Sleep(500)
 		Local $getArmyCampCap = getOcrAndCapture("coc-train-quant1", 45, 160, 70, 18, True)
 		Local $ArmyCampTroop = GtfoCheckTrainingTab("troop") ; MHK2012  Perisan MOD
-		If $g_bDebugSetlogTrain Then SetLog("OCR $sArmyInfo = " & StringLeft($getArmyCampCap, StringLen($getArmyCampCap)-3), $COLOR_DEBUG)
-		Local $iTroopTrain = ($TotalCamp*2) - Number($ArmyCampTroop[0])
+		If $g_bDebugSetlogTrain Then SetLog("OCR $sArmyInfo = " & StringLeft($getArmyCampCap, StringLen($getArmyCampCap) - 3), $COLOR_DEBUG)
+		Local $iTroopTrain = ($TotalCamp * 2) - Number($ArmyCampTroop[0])
 		Local $iTroopHousing = 1
-		if $iTroopTrain <= 0 then
+		If $iTroopTrain <= 0 Then
 			$iTroopTrain = 0
 		Else
 			Local $eGtfoTempTroop = -1
@@ -1451,11 +1451,11 @@ Func GtfoTrain($ClanMode = False)
 					$iTroopHousing = 2
 			EndSwitch
 			$GtfoTroopType = $eGtfoTempTroop
-			$iTroopTrain = Round($iTroopTrain / $iTroopHousing,0)
-			SetLog("Troops to Train ("& $GtfoTempTroop &"): " & $iTroopTrain, $COLOR_GREEN)
+			$iTroopTrain = Round($iTroopTrain / $iTroopHousing, 0)
+			SetLog("Troops to Train (" & $GtfoTempTroop & "): " & $iTroopTrain, $COLOR_GREEN)
 			TrainIt($eGtfoTempTroop, $iTroopTrain, 10)
 		EndIf
-		if $GtfoTroopTrainCount > 0 Then
+		If $GtfoTroopTrainCount > 0 Then
 ;~ 			DonatedTroop($GtfoTroopType, $iTroopTrain)
 			$g_aiDonateStatsTroops[$GtfoTroopType][0] += $iTroopTrain
 		Else
@@ -1464,14 +1464,20 @@ Func GtfoTrain($ClanMode = False)
 		EndIf
 		$GtfoTroopTrainCount += 1
 
-		if $GtfoTempTroopBoost > 0 Then
-			$ClickResult = ClickOnBoostArmyWindow()
-			If $ClickResult Then
-				$GemResult = IsGemWindowOpen(True)
-				If $GemResult Then
-					If $GtfoTempTroopBoost >= 1 Then $GtfoTempTroopBoost -= 1
-					SetLog(" Total remain cycles to boost Barracks:" & $GtfoTempTroopBoost, $COLOR_GREEN)
-					GUICtrlSetData($cmbGtfoTroopBoost, $GtfoTempTroopBoost)
+		If $GtfoTempTroopBoost > 0 Then
+			$ClickResult = findButton("BoostBarrack")
+			If IsArray($ClickResult) Then
+				ClickP($ClickResult)
+				_Sleep($DELAYBOOSTBARRACKS1)
+				$GemResult = findButton("GEM")
+				If IsArray($GemResult) Then
+					ClickP($GemResult)
+					_Sleep($DELAYBOOSTBARRACKS2)
+					If Not IsArray(findButton("EnterShop")) Then
+						If $GtfoTempTroopBoost >= 1 Then $GtfoTempTroopBoost -= 1
+						SetLog(" Total remain cycles to boost Barracks:" & $GtfoTempTroopBoost, $COLOR_GREEN)
+						GUICtrlSetData($cmbGtfoTroopBoost, $GtfoTempTroopBoost)
+					EndIf
 				EndIf
 			EndIf
 		EndIf
@@ -1480,19 +1486,19 @@ Func GtfoTrain($ClanMode = False)
 	EndIf
 	_Sleep(500)
 
-	If WaitforPixel(430, 140 , 440, 145 , Hex(0xE8ECE0, 6), 10, 10) Then
+	If WaitforPixel(430, 140, 440, 145, Hex(0xE8ECE0, 6), 10, 10) Then
 		If $g_bDebugSetlogTrain Then SetLog("Wait for Spells Window", $COLOR_DEBUG)
 		_Sleep(500)
 		Local $iSplAdj = 1
-		if $TotalSpell >= 10 then $iSplAdj = 2
+		If $TotalSpell >= 10 Then $iSplAdj = 2
 		$getSpellCap = getOcrAndCapture("coc-train-quant1", 48, 160, 40, 18, True)
 		Local $ArmyCampSpell = GtfoCheckTrainingTab("spell") ; GTFO - Persian MOD (#-31)
-		If $g_bDebugSetlogTrain Then SetLog("OCR $sArmyInfo = " & StringLeft($getSpellCap, StringLen($getSpellCap)-$iSplAdj), $COLOR_DEBUG)
+		If $g_bDebugSetlogTrain Then SetLog("OCR $sArmyInfo = " & StringLeft($getSpellCap, StringLen($getSpellCap) - $iSplAdj), $COLOR_DEBUG)
 
-		Local $iSpellBrew = ($TotalSpell*2) - Number($ArmyCampSpell[0])
+		Local $iSpellBrew = ($TotalSpell * 2) - Number($ArmyCampSpell[0])
 		Local $eGtfoTempSpell = -1
 
-		if $iSpellBrew <= 0 or $GtfoTempSpell = "None" then
+		If $iSpellBrew <= 0 Or $GtfoTempSpell = "None" Then
 			$iSpellBrew = 0
 		Else
 			Switch $GtfoTempSpell
@@ -1505,40 +1511,46 @@ Func GtfoTrain($ClanMode = False)
 				Case "Skeleton"
 					$eGtfoTempSpell = 32
 			EndSwitch
-			$GtfoSpellType =  $eGtfoTempSpell
+			$GtfoSpellType = $eGtfoTempSpell
 			;CheckForSantaSpell()
-			SetLog("Spell to Brew (" & $GtfoTempSpell  &"): " & $iSpellBrew, $COLOR_GREEN)
+			SetLog("Spell to Brew (" & $GtfoTempSpell & "): " & $iSpellBrew, $COLOR_GREEN)
 			TrainIt($eGtfoTempSpell, $iSpellBrew, 10)
 		EndIf
-		if $GtfoSpellBrewCount = 0 Then ResetVariables("donated")
-		if $eGtfoTempSpell <> -1 Then
-			if $GtfoSpellBrewCount > 0 Then
-	;~ 			DonatedSpell($GtfoSpellType, $iSpellBrew)
-				$g_aiDonateStatsSpells[$eGtfoTempSpell-24][0] += $iSpellBrew
+		If $GtfoSpellBrewCount = 0 Then ResetVariables("donated")
+		If $eGtfoTempSpell <> -1 Then
+			If $GtfoSpellBrewCount > 0 Then
+;~ 			DonatedSpell($GtfoSpellType, $iSpellBrew)
+				$g_aiDonateStatsSpells[$eGtfoTempSpell - 24][0] += $iSpellBrew
 			Else
-				$g_aiDonateStatsSpells[$eGtfoTempSpell-24][0] = 0
-				$g_aiDonateStatsSpells[$eGtfoTempSpell-24][1] = 0
+				$g_aiDonateStatsSpells[$eGtfoTempSpell - 24][0] = 0
+				$g_aiDonateStatsSpells[$eGtfoTempSpell - 24][1] = 0
 			EndIf
 		EndIf
 		$GtfoSpellBrewCount += 1
 
-		if $GtfoTempSpell <> "None" then
-			if $GtfoTempSpellBoost > 0 Then
-				$ClickResult = ClickOnBoostArmyWindow()
-				If $ClickResult Then
-					$GemResult = IsGemWindowOpen(True)
-					If $GemResult Then
-						If $GtfoTempSpellBoost >= 1 Then $GtfoTempSpellBoost -= 1
-						SetLog(" Total remain cycles to boost Barracks:" & $GtfoTempSpellBoost, $COLOR_GREEN)
-						GUICtrlSetData($cmbGtfoSpellBoost, $GtfoTempSpellBoost)
+		If $GtfoTempSpell <> "None" Then
+			If $GtfoTempSpellBoost > 0 Then
+				$ClickResult = findButton("BoostBarrack")
+				If IsArray($ClickResult) Then
+					ClickP($ClickResult)
+					_Sleep($DELAYBOOSTBARRACKS1)
+					$GemResult = findButton("GEM")
+					If IsArray($GemResult) Then
+						ClickP($GemResult)
+						_Sleep($DELAYBOOSTBARRACKS2)
+						If Not IsArray(findButton("EnterShop")) Then
+							If $GtfoTempSpellBoost >= 1 Then $GtfoTempSpellBoost -= 1
+							SetLog(" Total remain cycles to boost Barracks:" & $GtfoTempSpellBoost, $COLOR_GREEN)
+							GUICtrlSetData($cmbGtfoSpellBoost, $GtfoTempSpellBoost)
+						EndIf
 					EndIf
 				EndIf
 			EndIf
 		EndIf
 
-		if $CurCampPer < 5 Then
+		If $CurCampPer < 5 Then
 			Click(30, 140, 1, 0, "#0293")
-			If WaitforPixel(30, 140 , 240, 145 , Hex(0xE8ECE0, 6), 10, 10) Then
+			If WaitforPixel(30, 140, 240, 145, Hex(0xE8ECE0, 6), 10, 10) Then
 				Local $TimeRemainTroops = getRemainTrainTimer(756, 169)
 				Local $ResultTroopsHour, $ResultTroopsMinutes, $ResultTroopsSeconds
 
@@ -1560,7 +1572,7 @@ Func GtfoTrain($ClanMode = False)
 				EndIf
 			EndIf
 			;;$aRemainTrainTroopTimer
-		else
+		Else
 			Click(815, 245, 1, 0, "#0293")
 		EndIf
 
@@ -1588,7 +1600,7 @@ Func GtfoTrain($ClanMode = False)
 		$tempDElixirSpent = ($tempDElixir - $g_aiCurrentLoot[$eLootDarkElixir])
 		$g_aiCurrentLoot[$eLootDarkElixir] += $tempDElixirSpent
 ;~ 		$iDarkTotal -= $tempDElixirSpent
-		$g_aiCurrentLoot[$eLootDarkElixir]  -= $tempDElixirSpent
+		$g_aiCurrentLoot[$eLootDarkElixir] -= $tempDElixirSpent
 	EndIf
 
 	If Not $g_bRunState Then Return
@@ -1596,11 +1608,11 @@ Func GtfoTrain($ClanMode = False)
 
 	checkAttackDisable($g_iTaBChkIdle)
 
-	iF $ClanMode Then Return True
+	If $ClanMode Then Return True
 
 ;~ 	If GUICtrlRead($chkWaitForTroops) = $GUI_CHECKED and $GtfoTempTroopBoost = 0 Then
 	If GUICtrlRead($chkWaitForTroops) = $GUI_CHECKED Then
-		if $CurCampPer < 5 Then
+		If $CurCampPer < 5 Then
 			GTFOKICK(5)
 			If GUICtrlRead($cmbTroopIdleTime) <> "Auto" Then
 				$aRemainTrainTroopTimer = Number(GUICtrlRead($cmbTroopIdleTime))
@@ -1614,24 +1626,24 @@ Func GtfoTrain($ClanMode = False)
 			_GUICtrlRichEdit_SetFont($g_hTxtLog, 6, "Lucida Console")
 			_GUICtrlRichEdit_AppendTextColor($g_hTxtLog, "" & @CRLF, _ColorConvert($Color_Black))
 			SendAdbCommand("shell am start -n " & $g_sAndroidGamePackage & "/" & $g_sAndroidGameClass)
-			_GuiCtrlStatusBar_SetText($g_hStatusBar, "")
+			_GUICtrlStatusBar_SetText($g_hStatusBar, "")
 			AndroidBotStartEvent()
 			CheckMainScreen()
 			CheckAttackDisable($g_iTaBChkIdle)
-			ChkShieldStatus(True,True)
+			ChkShieldStatus(True, True)
 			RequestCC()
 			ReArm()
 		EndIf
 	EndIf
 
 	Return True
-EndFunc
+EndFunc   ;==>GtfoTrain
 
 Func GTFOKICK($limit = 0)
 
 ;~     Click(1, 40, 1, 500)
-    Local  $Scroll,$len, $kick_y, $kicked = 0,$kicklimit, $mDonated, $mReceived, $Count = 1, $loopcount, $new, $p1, $p2,$lastNum, $lastNumCheck, $cp, $sNum, $sresultTrophies
-    $len = 0
+	Local $Scroll, $len, $kick_y, $kicked = 0, $kicklimit, $mDonated, $mReceived, $Count = 1, $loopcount, $new, $p1, $p2, $lastNum, $lastNumCheck, $cp, $sNum, $sresultTrophies
+	$len = 0
 	$kicked = 0
 
 	If GUICtrlRead($GTFOcheck) = 1 Then
@@ -1640,15 +1652,15 @@ Func GTFOKICK($limit = 0)
 		Return
 	EndIf
 
-	if $limit = 0 then
-		$kicklimit =  GUICtrlRead($cmbGtfo)
-		if $kicklimit = 0 Then
+	If $limit = 0 Then
+		$kicklimit = GUICtrlRead($cmbGtfo)
+		If $kicklimit = 0 Then
 			$kicklimit = 1
 ;~ 			Return
 		EndIf
-    Else
-	   $kicklimit = $limit
-    EndIf
+	Else
+		$kicklimit = $limit
+	EndIf
 
 
 	Click(1, 40, 1, 250)
@@ -1656,7 +1668,7 @@ Func GTFOKICK($limit = 0)
 	If Not _CheckPixel($aChatTab, $g_bCapturePixel) Then ClickP($aOpenChat, 1, 0, "#0168") ; Clicks chat tab
 	If _Sleep(1000) Then Return
 
-	Local $icount = 0
+	Local $iCount = 0
 	While 1
 		If _ColorCheck(_GetPixelColor(189, 24, True), Hex(0x706C50, 6), 20) Then
 			ExitLoop
@@ -1666,8 +1678,8 @@ Func GTFOKICK($limit = 0)
 			ClickP($aClanTab, 1, 0, "#0169")
 			ExitLoop
 		EndIf
-		$icount += 1
-		If $icount >= 15 Then
+		$iCount += 1
+		If $iCount >= 15 Then
 			$DonateCount = 100
 			ExitLoop
 		EndIf
@@ -1678,7 +1690,7 @@ Func GTFOKICK($limit = 0)
 		IsInGame()
 		GtfoIdle()
 		If $GtfoModStatus = $GtfoStop Then Return
-		if _Sleep(250) then ExitLoop
+		If _Sleep(250) Then ExitLoop
 		Click(150, 60)
 		If _Sleep(250) Then ExitLoop
 		$loopcount = 0
@@ -1702,42 +1714,42 @@ Func GTFOKICK($limit = 0)
 ;~ 			Setlog("Trophies: " & $currClanTrophies)
 		EndIf
 
-		Local $res = "", $res1 = "", $ClanMode="", $bsUpdateTrophies = False,$posPoint,$posPoint1
+		Local $Res = "", $res1 = "", $ClanMode = "", $bsUpdateTrophies = False, $posPoint, $posPoint1
 ;~ 		If GUICtrlRead($chkClanOpen) = $GUI_CHECKED Then
-			_captureregion()
-			$res  = isImageVisible("ClanClosed",@ScriptDir & "\images\closed_0_0_85.bmp","500,270,560,295")
-			$res1  = isImageVisible("AnyOneCanJoin",@ScriptDir & "\images\AnyOneCanJoin_0_0_85.bmp","520,270,560,295")
-			If $res1 <> "" Then
-				$posPoint = StringSplit($res1,",")
-				If $posPoint[0] = "0" or $posPoint[0] = "" Then
-					$ClanMode = ""
-				Else
-					$ClanMode = "Open"
-				EndIf
-			ElseIf $res <> "" Then
-				$posPoint1 = StringSplit($res,",")
-				If $posPoint1[0] = "0" or $posPoint1[0] = "" Then
-					$ClanMode = ""
-				Else
-					$ClanMode = "Closed"
-				EndIf
+		_captureregion()
+		$Res = isImageVisible("ClanClosed", @ScriptDir & "\images\closed_0_0_85.bmp", "500,270,560,295")
+		$res1 = isImageVisible("AnyOneCanJoin", @ScriptDir & "\images\AnyOneCanJoin_0_0_85.bmp", "520,270,560,295")
+		If $res1 <> "" Then
+			$posPoint = StringSplit($res1, ",")
+			If $posPoint[0] = "0" Or $posPoint[0] = "" Then
+				$ClanMode = ""
 			Else
-				$ClanMode = "Invite"
+				$ClanMode = "Open"
 			EndIf
+		ElseIf $Res <> "" Then
+			$posPoint1 = StringSplit($Res, ",")
+			If $posPoint1[0] = "0" Or $posPoint1[0] = "" Then
+				$ClanMode = ""
+			Else
+				$ClanMode = "Closed"
+			EndIf
+		Else
+			$ClanMode = "Invite"
+		EndIf
 ;~ 		EndIf
 ;~ 		Setlog("Clan Mode : " & $ClanMode,$COLOR_DEBUG)
-		if $bSetTrophies Then
-			if $aUpdateTrophies <> $currClanTrophies Then
-				Local $CurrentTrophiesIndex= _ArrayFindAll($aGtfoCanTrophies, $currClanTrophies)
+		If $bSetTrophies Then
+			If $aUpdateTrophies <> $currClanTrophies Then
+				Local $CurrentTrophiesIndex = _ArrayFindAll($aGtfoCanTrophies, $currClanTrophies)
 				Local $SetTrophieIndex = _ArrayFindAll($aGtfoCanTrophies, $aUpdateTrophies)
-				Local $diffIndexLevel = $SetTrophieIndex[0]  - $CurrentTrophiesIndex[0]
+				Local $diffIndexLevel = $SetTrophieIndex[0] - $CurrentTrophiesIndex[0]
 				$bsUpdateTrophies = True
 			EndIf
 		EndIf
 
-		If (($ClanMode <> "") and ($ClanMode <> "Open")) or $bsUpdateTrophies then
+		If (($ClanMode <> "") And ($ClanMode <> "Open")) Or $bsUpdateTrophies Then
 			Click(540, 385, 1, 500)
-		    _Sleep(500)
+			_Sleep(500)
 			Switch $ClanMode
 				Case "Invite"
 					ClanInviteIdleMode()
@@ -1752,9 +1764,9 @@ Func GTFOKICK($limit = 0)
 			EndSwitch
 			_Sleep(500)
 
-			if $bsUpdateTrophies Then
-				if $diffIndexLevel < 0 Then
-					$diffIndexLevel =  (-1 * $diffIndexLevel)
+			If $bsUpdateTrophies Then
+				If $diffIndexLevel < 0 Then
+					$diffIndexLevel = (-1 * $diffIndexLevel)
 					Click(545, 395, $diffIndexLevel, 500)
 ;~ 					SetLog("Reduce trophies")
 				Else
@@ -1775,33 +1787,33 @@ Func GTFOKICK($limit = 0)
 				$loopcount += 1
 				If $loopcount >= 20 Then
 					$loopcount = 0
-					Click(700,5, 1, 500)
+					Click(700, 5, 1, 500)
 					SetLog("    Unable to Load Clan Page After Clan Settings", $COLOR_RED)
 					Return
 				EndIf
 			WEnd
 		EndIf
 
-		Local $KickPosX = -1,$KickPosY=0
+		Local $KickPosX = -1, $KickPosY = 0
 		$Scroll = 0
 		$cp = 117
 		$len = 0
 		While 1
 			If $GtfoModStatus = $GtfoStop Then Return
-			If $g_bDebugSetlog Then SetLog("Capture. cp: " & $cp , $COLOR_ORANGE)
+			If $g_bDebugSetlog Then SetLog("Capture. cp: " & $cp, $COLOR_ORANGE)
 			_CaptureRegion(199, $cp, 211, 671)
-			$new = _PixelSearch(200, $cp, 210, 671, Hex(0xE73838, 6),20)
+			$new = _PixelSearch(200, $cp, 210, 671, Hex(0xE73838, 6), 20)
 			If IsArray($new) Then
 				$KickPosX = $new[0]
 				$KickPosY = $new[1]
 
-				$mDonated = Int(Number(getOcrAndCapture("coc-army",$new[0]+280,$new[1]-10, 70, 14, True)))
+				$mDonated = Int(Number(getOcrAndCapture("coc-army", $new[0] + 280, $new[1] - 10, 70, 14, True)))
 
-				if $mDonated > 0  Then
+				If $mDonated > 0 Then
 					$mReceived = 999999
 				Else
-					if( GUICtrlRead($chkKickMode) <> 1 ) Then
-						$mReceived = getOcrAndCapture("coc-army",$new[0]+400,$new[1]-10, 70, 14, True)
+					If (GUICtrlRead($chkKickMode) <> 1) Then
+						$mReceived = getOcrAndCapture("coc-army", $new[0] + 400, $new[1] - 10, 70, 14, True)
 					Else
 						$mReceived = 0
 					EndIf
@@ -1829,10 +1841,10 @@ Func GTFOKICK($limit = 0)
 ;~ 				EndIf
 
 				If $g_bDebugSetlog Then SetLog("Check For To Kick Members", $COLOR_RED)
-				If $g_bDebugSetlog Then SetLog($sNum & " # x:" & $new[0] & " y:"  & $new[1], $COLOR_RED)
+				If $g_bDebugSetlog Then SetLog($sNum & " # x:" & $new[0] & " y:" & $new[1], $COLOR_RED)
 
-				If $mDonated > 0 or $mReceived >= $GtfoReceiveCap then
-					$sNum = getTrophyVillageSearch($new[0]-180,$new[1]-18)
+				If $mDonated > 0 Or $mReceived >= $GtfoReceiveCap Then
+					$sNum = getTrophyVillageSearch($new[0] - 180, $new[1] - 18)
 					Click($new[0], $new[1])
 					If _Sleep(250) Then ExitLoop
 					If $new[1] > 620 Then
@@ -1856,7 +1868,7 @@ Func GTFOKICK($limit = 0)
 						$chatString = GUICtrlRead($txtGtfoNote)
 						ClipPut($chatString)
 						_Sleep(350)
-						ControlSend($g_hAndroidWindow, "", "", "{CTRLDOWN}a{CTRLUP}{CTRLDOWN}v{CTRLUP}",0)
+						ControlSend($g_hAndroidWindow, "", "", "{CTRLDOWN}a{CTRLUP}{CTRLDOWN}v{CTRLUP}", 0)
 						_Sleep(200)
 						ClipPut($tClip)
 					EndIf
@@ -1864,26 +1876,26 @@ Func GTFOKICK($limit = 0)
 					Click(520, 240)
 ;~ 					If _Sleep(250) Then ExitLoop
 					$kicked += 1
-					if $mReceived = 999999 Then
+					If $mReceived = 999999 Then
 						SetLog("Player #" & $sNum & "  Donated : " & $mDonated & " has been kicked out", $COLOR_RED)
 					Else
-						SetLog("Player #" & $sNum & "  Donated : " & $mDonated &  " - Received : " & $mReceived & " has been kicked out", $COLOR_RED)
+						SetLog("Player #" & $sNum & "  Donated : " & $mDonated & " - Received : " & $mReceived & " has been kicked out", $COLOR_RED)
 					EndIf
 
 					ExitLoop
 				Else
-					$cp = $new[1]  + 20
+					$cp = $new[1] + 20
 ;~ 					ExitLoop
 				EndIf
 
 			Else
-				if $Scroll > 3 then
+				If $Scroll > 3 Then
 					If $g_bDebugSetlog Then SetLog("Kicking bottom members", $COLOR_RED)
 					If $KickPosX > 0 Then
-						If $g_bDebugSetlog Then SetLog($sNum & " # x:" & $KickPosX & " y:"  & $KickPosY, $COLOR_RED)
+						If $g_bDebugSetlog Then SetLog($sNum & " # x:" & $KickPosX & " y:" & $KickPosY, $COLOR_RED)
 						Click($KickPosX, $KickPosY)
 						If _Sleep(250) Then ExitLoop
-						If $KickPosY  > 615 Then
+						If $KickPosY > 615 Then
 							$kick_y = 700
 						Else
 							$kick_y = $KickPosY + 70
@@ -1892,13 +1904,13 @@ Func GTFOKICK($limit = 0)
 						If _Sleep(250) Then ExitLoop
 						Click(520, 240)
 						$kicked += 1
-						SetLog("Player #" & $sNum & "  Donated : " & $mDonated &  " - Received : " & $mReceived & " has been kicked out", $COLOR_RED)
+						SetLog("Player #" & $sNum & "  Donated : " & $mDonated & " - Received : " & $mReceived & " has been kicked out", $COLOR_RED)
 					Else
 						If $g_bDebugSetlog Then SetLog("no members to kick", $COLOR_RED)
 					EndIf
 					ExitLoop 2
 				Else
-					ClickDrag(430,665,430,115)
+					ClickDrag(430, 665, 430, 115)
 					$cp = 110
 					If $g_bDebugSetlog Then SetLog("Page Scroll : " & $Scroll, $COLOR_RED)
 					$Scroll = $Scroll + 1
@@ -1907,12 +1919,12 @@ Func GTFOKICK($limit = 0)
 		WEnd
 
 		Click(1, 40, 1, 250)
-   WEnd
+	WEnd
 
 ;~    SetLog("Finished Kicking", $COLOR_RED)
 ;~    Click(1, 40, 1, 500)
 
-   EndFunc
+EndFunc   ;==>GTFOKICK
 
 Func iDonateWindow($Open = True)
 
@@ -1941,15 +1953,15 @@ Func iDonateWindow($Open = True)
 	Else
 		Return False
 	EndIf
-  If _Sleep($DELAYDONATEWINDOW1) Then Return
+	If _Sleep($DELAYDONATEWINDOW1) Then Return
 
 	;_CaptureRegion(0, 0, 320 + $midOffsetY, $g_aiDonatePixel[1] + 30 + $YComp)
-	Local $icount = 0
+	Local $iCount = 0
 	While Not (_ColorCheck(_GetPixelColor(331, $g_aiDonatePixel[1], True, "DonateWindow"), Hex(0xffffff, 6), 0))
 		If _Sleep($DELAYDONATEWINDOW2) Then Return
 		;_CaptureRegion(0, 0, 320 + $midOffsetY, $g_aiDonatePixel[1] + 30 + $YComp)
-		$icount += 1
-		If $icount = 20 Then ExitLoop
+		$iCount += 1
+		If $iCount = 20 Then ExitLoop
 	WEnd
 
 	$DonationWindowY = 0
@@ -1964,14 +1976,14 @@ Func iDonateWindow($Open = True)
 		If $g_bDebugSetlog Then Setlog("$DonationWindowY: " & $DonationWindowY, $COLOR_DEBUG)
 	Else
 		SetLog("Could not find the Donate Window!", $COLOR_ERROR)
-		Click(700,5, 2, 50)
+		Click(700, 5, 2, 50)
 		Return False
 	EndIf
 
 	Return True
-EndFunc
+EndFunc   ;==>iDonateWindow
 
-Func GtfoDonateTroopType($Type, $Quant = 0, $Custom = False, $g_iActiveDonateAll = False,$isTrool=True)
+Func GtfoDonateTroopType($Type, $Quant = 0, $Custom = False, $g_iActiveDonateAll = False, $isTrool = True)
 	If $g_bDebugSetlog Then SetLog("$DonateTroopType Start: " & NameOfTroop($Type), $COLOR_DEBUG) ;Debug
 
 	Local $Slot = -1, $YComp = 0, $sTextToAll = ""
@@ -1982,39 +1994,39 @@ Func GtfoDonateTroopType($Type, $Quant = 0, $Custom = False, $g_iActiveDonateAll
 	If $g_iTotalDonateCapacity = 0 And $g_iTotalDonateSpellCapacity = 0 Then Return
 
 	If $Type >= 0 And $Type <= 18 Then
-		$g_iDonTroopsQuantityAv  = $g_iTotalDonateCapacity
-		If $g_iDonTroopsQuantityAv  < 1 Then
+		$g_iDonTroopsQuantityAv = $g_iTotalDonateCapacity
+		If $g_iDonTroopsQuantityAv < 1 Then
 			SetLog("Sorry Chief! " & NameOfTroop($Type, 1) & " don't fit in the remaining space!")
 			Return
 		EndIf
-		If $g_iDonTroopsQuantityAv  >= $g_iDonTroopsLimit Then
-			$g_iDonTroopsQuantity  = $g_iDonTroopsLimit
+		If $g_iDonTroopsQuantityAv >= $g_iDonTroopsLimit Then
+			$g_iDonTroopsQuantity = $g_iDonTroopsLimit
 		Else
-			$g_iDonTroopsQuantity  = $g_iDonTroopsQuantityAv
+			$g_iDonTroopsQuantity = $g_iDonTroopsQuantityAv
 		EndIf
 	EndIf
 
 	If $Type >= 29 And $Type <= 32 Then
-		$g_iDonSpellsQuantityAv  = $g_iTotalDonateSpellCapacity
-		If $g_iDonSpellsQuantityAv  < 1 Then
+		$g_iDonSpellsQuantityAv = $g_iTotalDonateSpellCapacity
+		If $g_iDonSpellsQuantityAv < 1 Then
 			SetLog("Sorry Chief! " & NameOfTroop($Type, 1) & " don't fit in the remaining space!")
 			Return
 		EndIf
-		If $g_iDonSpellsQuantityAv  >= $iDonSpellsLimit Then
-			 $g_iDonSpellsQuantityAv  = $iDonSpellsLimit
+		If $g_iDonSpellsQuantityAv >= $iDonSpellsLimit Then
+			$g_iDonSpellsQuantityAv = $iDonSpellsLimit
 		Else
-			 $g_iDonSpellsQuantityAv  = $g_iDonSpellsQuantityAv
+			$g_iDonSpellsQuantityAv = $g_iDonSpellsQuantityAv
 		EndIf
 	EndIf
 
-	If $g_bDebugOCRdonate  = 1 Then
+	If $g_bDebugOCRdonate = 1 Then
 		Local $oldDebugOcr = $debugOcr
 		$debugOcr = 1
 	EndIf
 	$Slot = GtfoDetectSlotTroop($Type)
 	$detectedSlot = $Slot
 	If $g_bDebugSetlog Then SetLog("Slot Found = " & $Slot, $COLOR_DEBUG)
-	If $g_bDebugOCRdonate  = 1 Then $debugOcr = $oldDebugOcr
+	If $g_bDebugOCRdonate = 1 Then $debugOcr = $oldDebugOcr
 
 	If $Slot = -1 Then Return
 
@@ -2041,12 +2053,12 @@ Func GtfoDonateTroopType($Type, $Quant = 0, $Custom = False, $g_iActiveDonateAll
 				_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $DonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then
 			Local $plural = 0
 
-			If $g_iDonTroopsQuantity  > 1 Then $plural = 1
+			If $g_iDonTroopsQuantity > 1 Then $plural = 1
 
 			If _ColorCheck(_GetPixelColor(350 + ($Slot * 68), $DonationWindowY + 105 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
-			   _ColorCheck(_GetPixelColor(355 + ($Slot * 68), $DonationWindowY + 106 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
-			   _ColorCheck(_GetPixelColor(360 + ($Slot * 68), $DonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then
-				Click(365 + ($Slot * 68), $DonationWindowY + 100 + $YComp, $g_iDonTroopsQuantity , 25, "#0175")
+					_ColorCheck(_GetPixelColor(355 + ($Slot * 68), $DonationWindowY + 106 + $YComp, True), Hex(0x306ca8, 6), 20) Or _
+					_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $DonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then
+				Click(365 + ($Slot * 68), $DonationWindowY + 100 + $YComp, $g_iDonTroopsQuantity, 25, "#0175")
 			EndIf
 
 			;SetLog("Donating " & $g_iDonTroopsQuantity  & " " & NameOfTroop($Type, $plural) , $COLOR_GREEN)
@@ -2054,7 +2066,7 @@ Func GtfoDonateTroopType($Type, $Quant = 0, $Custom = False, $g_iActiveDonateAll
 
 		ElseIf $g_aiDonatePixel[1] - 5 + $YComp > 675 Then
 			SetLog("Unable to donate " & NameOfTroop($Type) & ". Donate screen not visible, will retry next run.", $COLOR_RED)
-		;Else
+			;Else
 			;SetLog("No " & NameOfTroop($Type) & " available to donate..", $COLOR_RED)
 		EndIf
 
@@ -2065,7 +2077,7 @@ Func GtfoDonateTroopType($Type, $Quant = 0, $Custom = False, $g_iActiveDonateAll
 				_ColorCheck(_GetPixelColor(355 + ($Slot * 68), $DonationWindowY + 106 + $YComp, True), Hex(0x6038B0, 6), 20) Or _
 				_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $DonationWindowY + 107 + $YComp, True), Hex(0x6038B0, 6), 20) Then
 
-			Click(365 + ($Slot * 68), $DonationWindowY + 100 + $YComp,  $g_iDonSpellsQuantityAv , 25, "#0600")
+			Click(365 + ($Slot * 68), $DonationWindowY + 100 + $YComp, $g_iDonSpellsQuantityAv, 25, "#0600")
 ;~ 			$bFullArmySpells = False
 ;~ 			$fullArmy = False
 			;SetLog("Donating " &  $g_iDonSpellsQuantityAv  & " " & NameOfTroop($Type) , $COLOR_GREEN)
@@ -2073,16 +2085,16 @@ Func GtfoDonateTroopType($Type, $Quant = 0, $Custom = False, $g_iActiveDonateAll
 
 		ElseIf $g_aiDonatePixel[1] - 5 + $YComp > 675 Then
 			SetLog("Unable to donate " & NameOfTroop($Type) & ". Donate screen not visible, will retry next run.", $COLOR_RED)
-		;Else
+			;Else
 			;SetLog("No " & NameOfTroop($Type) & " available to donate..", $COLOR_RED)
 		EndIf
 	EndIf
 	$g_bDebugSetlog = 0
-EndFunc   ;==>DonateTroopType
+EndFunc   ;==>GtfoDonateTroopType
 
 Func ClanInviteIdleMode()
 
-	Click(700,5, 1, 50)
+	Click(700, 5, 1, 50)
 	If _Sleep(150) Then Return
 	Setlog("       Clan is in Invite Mode.")
 
@@ -2091,19 +2103,19 @@ Func ClanInviteIdleMode()
 	ClickP($aAway, 1, 0, "#0167")
 	checkMainScreen()
 	checkAttackDisable($g_iTaBChkIdle)
-	if Not GtfoTrain() Then Return
-	chkShieldStatus(True,True)
+	If Not GtfoTrain() Then Return
+	chkShieldStatus(True, True)
 
 	WinGetAndroidHandle()
 	AndroidHomeButton()
-	If _SleepStatus(3* 1000 * 60) Then Return
+	If _SleepStatus(3 * 1000 * 60) Then Return
 
 	SendAdbCommand("shell am start -n " & $g_sAndroidGamePackage & "/" & $g_sAndroidGameClass)
-	_GuiCtrlStatusBar_SetText($g_hTxtLog, "")
+	_GUICtrlStatusBar_SetText($g_hTxtLog, "")
 	AndroidBotStartEvent()
 	CheckMainScreen()
 	CheckAttackDisable($g_iTaBChkIdle)
-	ChkShieldStatus(True,True)
+	ChkShieldStatus(True, True)
 	RequestCC()
 	ReArm()
 
@@ -2112,7 +2124,7 @@ Func ClanInviteIdleMode()
 
 	CheckClanSettings()
 
-EndFunc
+EndFunc   ;==>ClanInviteIdleMode
 
 Func CheckClanSettings()
 
@@ -2140,45 +2152,45 @@ Func CheckClanSettings()
 	Local $sresultTrophies = ""
 	If $bSetTrophies Then
 		_captureregion()
-			$sresultTrophies = getOcrAndCapture("coc-pbttime", 525, 292, 40, 16, True)
+		$sresultTrophies = getOcrAndCapture("coc-pbttime", 525, 292, 40, 16, True)
 		$currClanTrophies = Number($sresultTrophies)
 	EndIf
 
-		Local $res = "", $res1 = "", $ClanMode="", $bsUpdateTrophies = False,$posPoint,$posPoint1
+	Local $Res = "", $res1 = "", $ClanMode = "", $bsUpdateTrophies = False, $posPoint, $posPoint1
 ;~ 		If GUICtrlRead($chkClanOpen) = $GUI_CHECKED Then
-		_captureregion()
-			$res  = isImageVisible("ClanClosed",@ScriptDir & "\images\closed_0_0_85.bmp","500,270,560,295")
-			$res1  = isImageVisible("AnyOneCanJoin",@ScriptDir & "\images\AnyOneCanJoin_0_0_85.bmp","520,270,560,295")
-		If $res1 <> "" Then
-			$posPoint = StringSplit($res1,",")
-			If $posPoint[0] = "0" or $posPoint[0] = "" Then
-				$ClanMode = ""
-			Else
-				$ClanMode = "Open"
-			EndIf
-		ElseIf $res <> "" Then
-			$posPoint1 = StringSplit($res,",")
-			If $posPoint1[0] = "0" or $posPoint1[0] = "" Then
-				$ClanMode = ""
-			Else
-				$ClanMode = "Closed"
-			EndIf
+	_captureregion()
+	$Res = isImageVisible("ClanClosed", @ScriptDir & "\images\closed_0_0_85.bmp", "500,270,560,295")
+	$res1 = isImageVisible("AnyOneCanJoin", @ScriptDir & "\images\AnyOneCanJoin_0_0_85.bmp", "520,270,560,295")
+	If $res1 <> "" Then
+		$posPoint = StringSplit($res1, ",")
+		If $posPoint[0] = "0" Or $posPoint[0] = "" Then
+			$ClanMode = ""
 		Else
-			$ClanMode = "Invite"
+			$ClanMode = "Open"
 		EndIf
+	ElseIf $Res <> "" Then
+		$posPoint1 = StringSplit($Res, ",")
+		If $posPoint1[0] = "0" Or $posPoint1[0] = "" Then
+			$ClanMode = ""
+		Else
+			$ClanMode = "Closed"
+		EndIf
+	Else
+		$ClanMode = "Invite"
+	EndIf
 ;~ 		EndIf
 
-	if $bSetTrophies Then
-		if $aUpdateTrophies <> $currClanTrophies Then
-			Local $CurrentTrophiesIndex= _ArrayFindAll($aGtfoCanTrophies, $currClanTrophies)
+	If $bSetTrophies Then
+		If $aUpdateTrophies <> $currClanTrophies Then
+			Local $CurrentTrophiesIndex = _ArrayFindAll($aGtfoCanTrophies, $currClanTrophies)
 			Local $SetTrophieIndex = _ArrayFindAll($aGtfoCanTrophies, $aUpdateTrophies)
-			Local $diffIndexLevel = $SetTrophieIndex[0]  - $CurrentTrophiesIndex[0]
+			Local $diffIndexLevel = $SetTrophieIndex[0] - $CurrentTrophiesIndex[0]
 			$bsUpdateTrophies = True
 		EndIf
 	EndIf
 
-	If (($ClanMode <> "") and ($ClanMode <> "Open")) or $bsUpdateTrophies then
-			Click(540, 385, 1, 500)
+	If (($ClanMode <> "") And ($ClanMode <> "Open")) Or $bsUpdateTrophies Then
+		Click(540, 385, 1, 500)
 		_Sleep(500)
 		Switch $ClanMode
 			Case "Invite"
@@ -2192,9 +2204,9 @@ Func CheckClanSettings()
 		EndSwitch
 		_Sleep(500)
 
-		if $bsUpdateTrophies Then
-			if $diffIndexLevel < 0 Then
-				$diffIndexLevel =  (-1 * $diffIndexLevel)
+		If $bsUpdateTrophies Then
+			If $diffIndexLevel < 0 Then
+				$diffIndexLevel = (-1 * $diffIndexLevel)
 				Click(545, 395, $diffIndexLevel, 500)
 			Else
 				Click(680, 395, $diffIndexLevel, 500)
@@ -2210,7 +2222,7 @@ Func CheckClanSettings()
 		ProcessFriendRequests()
 
 	EndIf
-EndFunc
+EndFunc   ;==>CheckClanSettings
 
 Func ProcessFriendRequests()
 
@@ -2234,9 +2246,9 @@ Func ProcessFriendRequests()
 		EndIf
 	WEnd
 
-	if _ColorCheck( _GetPixelColor(775, 73, True), Hex(0xFFFFFF, 6), 20) == False Then
-		Setlog("No Friend Request Found",$color_info)
-		Click(700,5, 1, 50)
+	If _ColorCheck( _GetPixelColor(775, 73, True), Hex(0xFFFFFF, 6), 20) == False Then
+		Setlog("No Friend Request Found", $color_info)
+		Click(700, 5, 1, 50)
 		If _Sleep(250) Then Return
 		Return
 	EndIf
@@ -2278,32 +2290,32 @@ Func ProcessFriendRequests()
 ;~ 	Setlog("Required Level " & $RequiredLevel )
 
 	_captureregion()
-	Local $res = "", $res1 = "",$posPoint,$posPoint1
-	 $res  = isImageVisible("FriendAdd",@ScriptDir & "\images\friendNo_0_0_85.bmp","450,480,630,510")
-	if $res <> "" Then
-		Setlog("No Friend Request Found",$color_info)
-		Click(700,5, 1, 50)
+	Local $Res = "", $res1 = "", $posPoint, $posPoint1
+	$Res = isImageVisible("FriendAdd", @ScriptDir & "\images\friendNo_0_0_85.bmp", "450,480,630,510")
+	If $Res <> "" Then
+		Setlog("No Friend Request Found", $color_info)
+		Click(700, 5, 1, 50)
 		If _Sleep(250) Then Return
 		Return
 	EndIf
 
 	_captureregion()
 	Local $sCount = 0
-	$res  = isImageVisible("FriendAdd",@ScriptDir & "\images\friendAdd_0_0_85.bmp","730,170,770,600")
-	While $res <> "" or $sCount < 10
+	$Res = isImageVisible("FriendAdd", @ScriptDir & "\images\friendAdd_0_0_85.bmp", "730,170,770,600")
+	While $Res <> "" Or $sCount < 10
 		$sCount += 1
-		$posPoint1 = StringSplit($res,",")
-		If $posPoint1[0] = "0" or $posPoint1[0] = "" Then
-			Click(700,5, 1, 50)
+		$posPoint1 = StringSplit($Res, ",")
+		If $posPoint1[0] = "0" Or $posPoint1[0] = "" Then
+			Click(700, 5, 1, 50)
 			If _Sleep(250) Then Return
 			Return
 		Else
-			if $RequiredLevel = -1 Then
-				Click($posPoint1[1]+60,$posPoint1[2], 1, 50)
+			If $RequiredLevel = -1 Then
+				Click($posPoint1[1] + 60, $posPoint1[2], 1, 50)
 				If _Sleep(3000) Then Return
-				Click(510,420, 1, 50)
+				Click(510, 420, 1, 50)
 				If _Sleep(3000) Then Return
-				Setlog("Friend Request Rejected",$COLOR_RED)
+				Setlog("Friend Request Rejected", $COLOR_RED)
 			Else
 				$x_start = 176
 				$y_start = $posPoint1[2] - 15
@@ -2312,17 +2324,17 @@ Func ProcessFriendRequests()
 ;~ 				SetLog("Player Level: " & getOcrAndCapture("coc-t-t", $x_start, $y_start, 30, 20, True))
 ;~ 				SetLog("Player Level: " & getOcrAndCapture("coc-qqtroop", $x_start, $y_start, 30, 20, True))
 				If $CurrentReqPlayerLvl >= $RequiredLevel Then
-					Click($posPoint1[1],$posPoint1[2], 1, 50)
+					Click($posPoint1[1], $posPoint1[2], 1, 50)
 					If _Sleep(3000) Then Return
-					Click(510,420, 1, 50)
+					Click(510, 420, 1, 50)
 					If _Sleep(3000) Then Return
-					Setlog("Friend Request Accepted",$COLOR_GREEN)
+					Setlog("Friend Request Accepted", $COLOR_GREEN)
 				Else
-					Click($posPoint1[1]+60,$posPoint1[2], 1, 50)
+					Click($posPoint1[1] + 60, $posPoint1[2], 1, 50)
 					If _Sleep(3000) Then Return
-					Click(510,420, 1, 50)
+					Click(510, 420, 1, 50)
 					If _Sleep(3000) Then Return
-					Setlog("Level: "  & $CurrentReqPlayerLvl & " - Friend Request Rejected",$COLOR_RED)
+					Setlog("Level: " & $CurrentReqPlayerLvl & " - Friend Request Rejected", $COLOR_RED)
 				EndIf
 
 			EndIf
@@ -2330,30 +2342,30 @@ Func ProcessFriendRequests()
 		EndIf
 
 		_captureregion()
-		$res  = isImageVisible("FriendAdd",@ScriptDir & "\images\friendNo_0_0_85.bmp","450,480,630,510")
-		if $res <> "" Then
-			Setlog("No Friend Request Found",$color_info)
-			Click(700,5, 1, 50)
+		$Res = isImageVisible("FriendAdd", @ScriptDir & "\images\friendNo_0_0_85.bmp", "450,480,630,510")
+		If $Res <> "" Then
+			Setlog("No Friend Request Found", $color_info)
+			Click(700, 5, 1, 50)
 			If _Sleep(250) Then Return
 			Return
 		EndIf
 
 		_captureregion()
-		$res  = isImageVisible("FriendAdd",@ScriptDir & "\images\friendAdd_0_0_85.bmp","730,170,770,600")
+		$Res = isImageVisible("FriendAdd", @ScriptDir & "\images\friendAdd_0_0_85.bmp", "730,170,770,600")
 		If _Sleep(5000) Then Return
 	WEnd
 
 
 
-	Click(700,5, 1, 50)
+	Click(700, 5, 1, 50)
 	If _Sleep(250) Then Return
 
 
-EndFunc
+EndFunc   ;==>ProcessFriendRequests
 
 Func GtfoDetectSlotTroop($Type)
 
-	Local $FullTemp,$sTmp
+	Local $FullTemp, $sTmp
 
 	Local $directory = @ScriptDir & "\imgxml\DonateCC\Troops"
 	Local $directorySpells = @ScriptDir & "\imgxml\DonateCC\Spells"
@@ -2366,7 +2378,7 @@ Func GtfoDetectSlotTroop($Type)
 			Local $x1 = $x + 75
 			Local $y1 = $y + 43
 
-			$FullTemp = SearchImgloc($directory,$x,$y,$x1,$y1)
+			$FullTemp = SearchImgloc($directory, $x, $y, $x1, $y1)
 			;$FullTemp = getOcrDonationTroopsDetection(343 + (68 * $Slot), $DonationWindowY + 37)
 
 			If $g_bDebugSetlog Then Setlog("Slot: " & $Slot & " SearchImgloc returned >>" & $FullTemp[0] & "<<", $COLOR_DEBUG)
@@ -2392,7 +2404,7 @@ Func GtfoDetectSlotTroop($Type)
 			Local $x1 = $x + 75
 			Local $y1 = $y + 43
 
-			$FullTemp = SearchImgloc($directory,$x,$y,$x1,$y1)
+			$FullTemp = SearchImgloc($directory, $x, $y, $x1, $y1)
 			;$FullTemp = getOcrDonationTroopsDetection(343 + (68 * ($Slot - 6)), $DonationWindowY + 124)
 
 			If $g_bDebugSetlog Then Setlog("Slot: " & $Slot & " SearchImgloc returned >>" & $FullTemp[0] & "<<", $COLOR_DEBUG)
@@ -2420,7 +2432,7 @@ Func GtfoDetectSlotTroop($Type)
 			Local $x1 = $x + 75
 			Local $y1 = $y + 43
 
-			$FullTemp = SearchImgloc($directorySpells,$x,$y,$x1,$y1)
+			$FullTemp = SearchImgloc($directorySpells, $x, $y, $x1, $y1)
 			;$FullTemp = getOcrDonationTroopsDetection(343 + (68 * ($Slot - 12)), $DonationWindowY + 241)
 
 			If $g_bDebugSetlog Then Setlog("Slot: " & $Slot & " SearchImgloc returned >>" & $FullTemp[0] & "<<", $COLOR_DEBUG)
@@ -2445,3 +2457,4 @@ Func GtfoDetectSlotTroop($Type)
 	Return -1
 
 EndFunc   ;==>GtfoDetectSlotTroop
+
