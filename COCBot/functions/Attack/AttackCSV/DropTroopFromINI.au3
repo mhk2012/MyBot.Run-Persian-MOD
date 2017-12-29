@@ -246,6 +246,20 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 							Else
 								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
 							EndIf
+						; samm0d ===================
+						Case 51 To 52
+							If $debug Then
+								Setlog("Event Troop AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
+							Else
+								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0666")
+							EndIf
+						Case 61 To 62
+							If $debug Then
+								Setlog("Event Spell AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
+							Else
+								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
+							EndIf
+						; ==========================
 						Case Else
 							Setlog("Error parsing line")
 					EndSwitch

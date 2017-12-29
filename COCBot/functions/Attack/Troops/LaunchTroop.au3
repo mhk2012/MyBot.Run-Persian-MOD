@@ -53,7 +53,7 @@ Func LaunchTroop2($listInfoDeploy, $iCC, $iKing, $iQueen, $iWarden)
 	Local $pixelRandomDrop[2]
 	Local $pixelRandomDropcc[2]
 
-	If ($g_abAttackStdSmartAttack[$g_iMatchMode]) And ($g_aiAttackStdDropSides[$g_iMatchMode] <> 4) Then ; ! FourFinger
+	If ($g_abAttackStdSmartAttack[$g_iMatchMode]) Then
 		For $i = 0 To UBound($listInfoDeploy) - 1
 			Local $troop = -1
 			Local $troopNb = 0
@@ -195,7 +195,7 @@ Func LaunchTroop2($listInfoDeploy, $iCC, $iKing, $iQueen, $iWarden)
 									If ($g_bIsCCDropped = False And $infoTroopListArrPixel[0] = "CC") Then
 										dropCC($pixelRandomDropcc[0], $pixelRandomDropcc[1], $iCC)
 										$g_bIsCCDropped = True
-									ElseIf ($g_bIsHeroesDropped = False And $infoTroopListArrPixel[0] = "HEROES") Then
+									ElseIf ($g_bIsHeroesDropped = False And $infoTroopListArrPixel[0] = "HEROES" And $i = $numberSidesDropTroop - 1) Then
 										dropHeroes($pixelRandomDrop[0], $pixelRandomDrop[1], $iKing, $iQueen, $iWarden)
 										$g_bIsHeroesDropped = True
 									EndIf
