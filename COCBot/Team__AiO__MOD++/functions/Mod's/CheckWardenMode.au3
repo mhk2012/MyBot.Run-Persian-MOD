@@ -21,7 +21,7 @@ Func CheckWardenMode($bOpenArmyWindow = False, $bCloseArmyWindow = False)
 		EndIf
 	EndIf
 
-	Local $sTile = "WardenAirMode_0_89.png", $sRegionToSearch = "795,400,825,425", $bGroundMode = False
+	Local $sTile = "\WardenAirMode_0_89.png", $sRegionToSearch = "795,400,825,425", $bGroundMode = False
 
 	If Not IsTrainPage() Then
 		If Not openArmyOverview() Then
@@ -30,7 +30,7 @@ Func CheckWardenMode($bOpenArmyWindow = False, $bCloseArmyWindow = False)
 		EndIf
 	EndIf
 
-	If FindImageInPlace($sTile, @ScriptDir & "\imgxml\imglocbuttons\" & $sTile, $sRegionToSearch) = "" Then
+	If FindImageInPlace($sTile, $g_sImgImgLocButtons & $sTile, $sRegionToSearch) = "" Then
 		SetLog("Found Grand Warden in Ground Mode!")
 		If $g_iCheckWardenMode = 1 Then
 			SetLog("Switching Wardens Mode to Air", $COLOR_INFO)

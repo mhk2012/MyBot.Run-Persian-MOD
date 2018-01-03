@@ -915,6 +915,7 @@ Func OpenAndroid($bRestart = False, $bStartOnlyAndroid = False, $wasRunState = $
 	If $bStartOnlyAndroid = True And $wasRunState = False Then $g_bRunState = False
 	WinGetAndroidHandle()
 	$OpenAndroidActive -= 1
+	AndroidEmbed($g_bAndroidEmbedded)
 	Return $Result
 EndFunc   ;==>OpenAndroid
 

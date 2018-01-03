@@ -1322,7 +1322,7 @@ Func CheckBotRequests()
 		If $g_bBotShrinkExpandToggleRequested Then BotShrinkExpandToggleExecute()
 		If $g_bBotGuiModeToggleRequested Then BotGuiModeToggle()
 	EndIf
-EndFunc   ;==>CheckBotMoveRequests
+EndFunc   ;==>CheckBotRequests
 
 Func BotCloseRequest()
 	If $g_iBotAction = $eBotClose Then

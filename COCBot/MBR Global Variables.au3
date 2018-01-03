@@ -716,6 +716,12 @@ Func TroopIndexLookup(Const $sName, Const $sSource = "")
 	; is the name "castle"?
 	If $sName = "castle" Then Return $eCastle
 
+	; samm0d
+	If $sName = "GiantS" Then Return 51
+	If $sName = "IWiz" Then Return 52
+	If $sName = "EventSpell1" Then Return 61
+	If $sName = "EventSpell2" Then Return 62
+
 	SetDebugLog("TroopIndexLookup() Error: Index for troop name '" & $sName & "' not found" & (($sSource) ? (" (" & $sSource & ").") : (".")))
 	Return -1
 EndFunc   ;==>TroopIndexLookup

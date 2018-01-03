@@ -303,10 +303,9 @@ EndFunc   ;==>Doncheck
 
 ; GTFO - Persian MOD (#-31)
 Global $GtfoIdleTime = 0, $bSetTrophies = 0, $aUpdateTrophies = 0, $GtfoDonationCap = 0, $GtfoMassKickMode = 0, $GtfoReceiveCap = 0, $GtfoModStatus = 0, $ChatIdleDelay = 0, $GtfoTrainCount = 0, _
-		$GtfoTroopTrainCount = 0, $GtfoSpellBrewCount = 0, $FirstStart = 0, $GtfoSpellType = 0, $FirstStart = 0, $DonateCount = 0, $g_iDonTroopsLimit = 0, $iDonSpellsLimit = 0, $g_iDonTroopsAv = 0, _
-		$g_iDonSpellsAv = 0, $g_iDonTroopsQuantityAv = 0, $g_iDonTroopsQuantity = 0, $g_iDonSpellsQuantityAv = 0, $g_bSkipDonTroops = 0, $g_bSkipDonSpells = 0, $g_aiDonatePixel = 0, $g_iTotalDonateCapacity = 0, _
-		$g_iTotalDonateSpellCapacity = 0, $g_iDebugSetlog = 0, $DonateCount = 0, $currClanTrophies = 0, $chatString = 0, $DonationWindowY = 0, $g_iDonTroopsQuantityAv = 0, $g_iDonTroopsQuantity = 0, _
-		$g_iDonSpellsQuantityAv = 0, $currClanTrophies = 0, $x_start = 0, $y_start = 0, $GemResult = 0
+		$GtfoTroopTrainCount = 0, $GtfoSpellBrewCount = 0, $GtfoSpellType = 0, $FirstStart = 0, $g_iDonTroopsLimit = 0, $iDonSpellsLimit = 0, $g_iDonTroopsAv = 0, $g_iDonSpellsAv = 0, _
+		$g_iDonTroopsQuantityAv = 0, $g_bSkipDonTroops = 0, $g_bSkipDonSpells = 0, $g_aiDonatePixel = 0, $g_iTotalDonateCapacity = 0, $g_iTotalDonateSpellCapacity = 0, $g_iDebugSetlog = 0, _
+		$DonateCount = 0, $chatString = 0, $DonationWindowY = 0, $g_iDonTroopsQuantity = 0, $g_iDonSpellsQuantityAv = 0, $currClanTrophies = 0, $x_start = 0, $y_start = 0, $GemResult = 0, $GTFO = False
 Global Enum $GtfoIdle, $GtfoStart, $GtfoPause, $GtfoResume, $GtfoStop
 
 ; GTFO - Persian MOD (#-31)
@@ -806,6 +805,7 @@ Func GTFOStop()
 	_GUICtrlComboBox_SetCurSel($g_hCmbLogDividerOption, 0)
 	cmbLog()
 	SetLog("  >>>>>  GTFO  STOPPED  <<<<<  ", $COLOR_WARNING)
+	$GTFO = False
 	GtfoSaveSettings()
 EndFunc   ;==>GTFOStop
 
@@ -971,6 +971,7 @@ Func GTFOStart()
 	_FileCreate($g_sProfilePath & "\" & $g_sProfileCurrentName & "\gtfo.log")
 	GtfoSaveSettings()
 	SetLog("  >>>>>  GTFO  STARTED  <<<<<  ", $COLOR_WARNING)
+	$GTFO = True
 	_GUICtrlComboBox_SetCurSel($g_hCmbLogDividerOption, 4)
 	cmbLog()
 ;~ 	$sTimer = TimerInit()
@@ -1640,6 +1641,8 @@ Func GtfoTrain($ClanMode = False)
 EndFunc   ;==>GtfoTrain
 
 Func GTFOKICK($limit = 0)
+
+	If GUICtrlRead($chkMassDonate) = $GUI_CHECKED Then Return
 
 ;~     Click(1, 40, 1, 500)
 	Local $Scroll, $len, $kick_y, $kicked = 0, $kicklimit, $mDonated, $mReceived, $Count = 1, $loopcount, $new, $p1, $p2, $lastNum, $lastNumCheck, $cp, $sNum, $sresultTrophies

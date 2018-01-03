@@ -45,7 +45,7 @@ Func CheckAndroidRebootCondition($bRebootAndroid = True, $bLogOnly = False)
 		_TicksToDay($g_iAndroidRebootHours * 60 * 60 * 1000 - $iLaunched, $day, $hour, $min, $sec)
 		;$sTime = $day > 0 ? StringFormat("%2u Day(s) %02i:%02i:%02i", $day, $hour, $min, $sec) : StringFormat("%02i:%02i:%02i", $hour, $min, $sec)
 		$sTime = StringFormat("%id %ih %im", $day, $hour, $min)
-		SetLog($g_sAndroidEmulator & " (" & $g_sAndroidInstance & ") will be automatically rebooted in " & $sTime)
+		If Not $GTFO Then SetLog($g_sAndroidEmulator & " (" & $g_sAndroidInstance & ") will be automatically rebooted in " & $sTime)
 		Return True
 
 	EndIf

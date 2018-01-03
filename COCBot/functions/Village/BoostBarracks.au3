@@ -33,14 +33,16 @@ Func BoostTrainBuilding($sName, $iCmbBoost, $iCmbBoostCtrl)
 	SetLog("Boosting " & $sName, $COLOR_INFO)
 
 	If $sName = "Barracks" Then
-		If $g_bChkForecastBoost And $currentForecast > Number($g_iTxtForecastBoost, 3) Then
-			Local $hour = StringSplit(_NowTime(4), ":", $STR_NOCOUNT)
-			If $g_abBoostBarracksHours[$hour[0]] = False Then
-				SetLog("No planned boosting for this hour.", $COLOR_RED)
-				Return ; exit func if no planned Boost Barracks checkmarks
+		If $g_bChkForecastBoost Then
+			If $currentForecast > Number($g_iTxtForecastBoost, 3) Then
+				Local $hour = StringSplit(_NowTime(4), ":", $STR_NOCOUNT)
+				If Not $g_abBoostBarracksHours[$hour[0]] Then
+					SetLog("No planned boosting for this hour.", $COLOR_RED)
+					Return ; exit func if no planned Boost Barracks checkmarks
+				EndIf
+			Else
+				Return
 			EndIf
-		Else
-			Return
 		EndIf
 	Else
 		If $g_bChkForecastBoost And $currentForecast <= Number($g_iTxtForecastBoost, 3) Then Return
