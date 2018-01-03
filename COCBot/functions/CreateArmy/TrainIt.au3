@@ -57,7 +57,7 @@ Func GetTrainPos(Const $iIndex)
 	If $g_bDebugSetlogTrain Then SetLog("Func GetTrainPos $iIndex=" & $iIndex, $COLOR_DEBUG)
 
 	; $eArmyCount is Complete list of all deployable/trainable objects
-	Static $a_AllPositions[$eArmyCount][4] = [ _
+	Static $emptyArmyArray[$eArmyCount][4] = [ _
 			[-1, -1, -1, -1], _ ; $eBarb
 			[-1, -1, -1, -1], _ ; $eArch
 			[-1, -1, -1, -1], _ ; $eGiant
@@ -91,6 +91,8 @@ Func GetTrainPos(Const $iIndex)
 			[-1, -1, -1, -1], _ ; $eESpell
 			[-1, -1, -1, -1], _ ; $eHaSpell
 			[-1, -1, -1, -1]]   ; $eSkSpell
+	Static $a_AllPositions = $emptyArmyArray
+	If $reFindTroops = True Then $a_AllPositions = $emptyArmyArray
 
 	; Get the Image path to search
 	If $iIndex >= $eBarb And $iIndex <= $eBowl Then
