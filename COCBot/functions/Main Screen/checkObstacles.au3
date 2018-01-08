@@ -164,6 +164,9 @@ Func _checkObstacles($bBuilderBase = False) ;Checks if something is in the way f
 						SetLog("Error reading Maintenance Break time?", $COLOR_ERROR)
 				EndSelect
 				SetLog("Maintenance Break, waiting: " & $iMaintenanceWaitTime / 60000 & " minutes....", $COLOR_ERROR)
+				$g_bFirstStart = True
+				$g_iFirstRun = 1
+				$reFindTroops = True
 				If ($g_bNotifyPBEnable = True Or $g_bNotifyTGEnable = True) And $g_bNotifyAlertMaintenance = True Then NotifyPushToBoth("Maintenance Break, waiting: " & $iMaintenanceWaitTime / 60000 & " minutes....")
 				If $g_bForceSinglePBLogoff Then $g_bGForcePBTUpdate = True
 				If _SleepStatus($iMaintenanceWaitTime) Then Return

@@ -142,7 +142,10 @@ Func BotStart($bAutostartDelay = 0)
 			Initiate() ; Initiate and run bot
 		Else
 			SetLog("Cannot use " & $g_sAndroidEmulator & ", please check log", $COLOR_ERROR)
+			btnHide()
+			$g_bIsHidden = True
 			btnStop()
+			btnStart()
 		EndIf
 	Else
 		SetLog("Cannot start " & $g_sAndroidEmulator & ", please check log", $COLOR_ERROR)
