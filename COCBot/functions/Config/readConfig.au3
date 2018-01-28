@@ -5,8 +5,8 @@
 ; Parameters ....: NA
 ; Return values .: NA
 ; Author ........:
-; Modified ......: CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Modified ......: CodeSlinger69 (01-2018)
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -15,6 +15,11 @@
 
 Func readConfig($inputfile = $g_sProfileConfigPath) ;Reads config and sets it to the variables
 	Static $iReadConfigCount = 0
+	If $g_bReadConfigIsActive Then
+		SetDebugLog("readConfig(), already running, exit")
+		Return
+	EndIf
+	$g_bReadConfigIsActive = True
 	$iReadConfigCount += 1
 	SetDebugLog("readConfig(), call number " & $iReadConfigCount)
 
@@ -24,6 +29,8 @@ Func readConfig($inputfile = $g_sProfileConfigPath) ;Reads config and sets it to
 	ReadProfileConfig()
 	If FileExists($g_sProfileBuildingPath) Then ReadBuildingConfig()
 	If FileExists($g_sProfileConfigPath) Then ReadRegularConfig()
+
+	$g_bReadConfigIsActive = False
 EndFunc   ;==>readConfig
 
 Func ReadProfileConfig($sIniFile = $g_sProfilePath & "\profile.ini")
@@ -104,6 +111,9 @@ Func ReadBuildingConfig()
 		IniReadS($g_aiLaboratoryPos[0], $g_sProfileBuildingPath, "upgrade", "LabPosX", -1, "int")
 		IniReadS($g_aiLaboratoryPos[1], $g_sProfileBuildingPath, "upgrade", "LabPosY", -1, "int")
 	EndIf
+
+	IniReadS($g_aiLastGoodWallPos[0], $g_sProfileBuildingPath, "upgrade", "xLastGoodWallPos", -1, "int")
+	IniReadS($g_aiLastGoodWallPos[1], $g_sProfileBuildingPath, "upgrade", "yLastGoodWallPos", -1, "int")
 
 	IniReadS($g_iTotalCampSpace, $g_sProfileBuildingPath, "other", "totalcamp", 0, "int")
 
@@ -242,7 +252,7 @@ Func ReadRegularConfig()
 	; <><><> Attack Plan / Train Army / Options <><><>
 	ReadConfig_641_1()
 
-	;  <><><> Team AiO MOD++ (2017) <><><>
+	;  <><><> Persian MOD (2018) <><><>
 	ReadConfig_MOD()
 
 	; <><><><> Attack Plan / Strategies <><><><>
@@ -263,9 +273,13 @@ EndFunc   ;==>ReadRegularConfig
 
 Func ReadConfig_Debug()
 	; Debug settings
+	$g_bDebugSetlog = IniRead($g_sProfileConfigPath, "debug", "debugsetlog", 0) = 1 ? True : False
+	$g_bDebugAndroid = IniRead($g_sProfileConfigPath, "debug", "debugAndroid", 0) = 1 ? True : False
 	$g_bDebugClick = IniRead($g_sProfileConfigPath, "debug", "debugsetclick", 0) = 1 ? True : False
 	If $g_bDevMode Then
-		$g_bDebugSetlog = IniRead($g_sProfileConfigPath, "debug", "debugsetlog", 0) = 1 ? True : False
+		Local $bDebugFunc = IniRead($g_sProfileConfigPath, "debug", "debugFunc", 0) = 1 ? True : False
+		$g_bDebugFuncTime = $bDebugFunc
+		$g_bDebugFuncCall = $bDebugFunc
 		$g_bDebugDisableZoomout = IniRead($g_sProfileConfigPath, "debug", "disablezoomout", 0) = 1 ? True : False
 		$g_bDebugDisableVillageCentering = IniRead($g_sProfileConfigPath, "debug", "disablevillagecentering", 0) = 1 ? True : False
 		$g_bDebugDeadBaseImage = IniRead($g_sProfileConfigPath, "debug", "debugdeadbaseimage", 0) = 1 ? True : False
@@ -312,6 +326,7 @@ Func ReadConfig_Android()
 	$g_iAndroidSuspendModeFlags = Int(IniRead($g_sProfileConfigPath, "android", "suspend.mode", $g_iAndroidSuspendModeFlags))
 	$g_iAndroidRebootHours = Int(IniRead($g_sProfileConfigPath, "android", "reboot.hours", $g_iAndroidRebootHours))
 	$g_bAndroidCloseWithBot = Int(IniRead($g_sProfileConfigPath, "android", "close", $g_bAndroidCloseWithBot ? 1 : 0)) = 1
+	$g_iAndroidProcessAffinityMask = Int(IniRead($g_sProfileConfigPath, "android", "process.affinity.mask", $g_iAndroidProcessAffinityMask))
 
 	If $g_bBotLaunchOption_Restart = True Or $g_asCmdLine[0] < 2 Then
 		; for now only read when bot crashed and restarted through watchdog or nofify event
@@ -423,7 +438,7 @@ Func ReadConfig_600_12()
 			$sIniName = "CustomA"
 		ElseIf $i = $eCustomB Then
 			$sIniName = "CustomB"
-		; Additional Custom Donate - Team AiO MOD++ (#-28)
+		; Additional Custom Donate - Persian MOD (#-28)
 		ElseIf $i = $eCustomC Then
 			$sIniName = "CustomC"
 		ElseIf $i = $eCustomD Then
@@ -497,7 +512,7 @@ Func ReadConfig_600_12()
 	$g_asTxtDonateTroop[$eCustomB] = StringReplace(IniRead($g_sProfileConfigPath, "donate", "txtDonateCustomB", "air support|any air"), "|", @CRLF)
 	$g_asTxtBlacklistTroop[$eCustomB] = StringReplace(IniRead($g_sProfileConfigPath, "donate", "txtBlacklistCustomB", "no air|air no|only|just"), "|", @CRLF)
 
-	; Additional Custom Donate - Team AiO MOD++ (#-28)
+	; Additional Custom Donate - Persian MOD (#-28)
 	$g_asTxtDonateTroop[$eCustomC] = StringReplace(IniRead($g_sProfileConfigPath, "donate", "txtDonateCustomC", "ground support|ground"), "|", @CRLF)
 	$g_asTxtBlacklistTroop[$eCustomC] = StringReplace(IniRead($g_sProfileConfigPath, "donate", "txtBlacklistCustomC", "no ground|ground no|nonly"), "|", @CRLF)
 
@@ -553,7 +568,7 @@ Func ReadConfig_600_12()
 	$g_aiDonateCustomTrpNumB[1][1] = Int(IniRead($g_sProfileConfigPath, "donate", "txtDonateCustomB2", 13))
 	$g_aiDonateCustomTrpNumB[2][1] = Int(IniRead($g_sProfileConfigPath, "donate", "txtDonateCustomB3", 5))
 
-	; Additional Custom Donate - Team AiO MOD++ (#-28)
+	; Additional Custom Donate - Persian MOD (#-28)
 	$g_aiDonateCustomTrpNumC[0][0] = Int(IniRead($g_sProfileConfigPath, "donate", "cmbDonateCustomC1", 6))
 	$g_aiDonateCustomTrpNumC[1][0] = Int(IniRead($g_sProfileConfigPath, "donate", "cmbDonateCustomC2", 1))
 	$g_aiDonateCustomTrpNumC[2][0] = Int(IniRead($g_sProfileConfigPath, "donate", "cmbDonateCustomC3", 0))

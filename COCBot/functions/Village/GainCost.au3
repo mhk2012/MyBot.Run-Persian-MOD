@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: Boju (11-2016)
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -64,8 +64,8 @@ Func EndGainCost($Type)
 				$g_iStatsTotalGain[$eLootDarkElixir] += $tempDElixirCollected
 			EndIf
 
-			; Switch Accounts - Team AiO MOD++ (#-12)
-			If $g_bChkSwitchAcc Then
+			; Switch Accounts - Persian MOD (#-12)
+			If ProfileSwitchAccountEnabled() Then
 				$g_aiGoldTotalAcc[$g_iCurAccount] += $tempGoldCollected
 				$g_aiElixirTotalAcc[$g_iCurAccount] += $tempElixirCollected
 				$g_aiDarkTotalAcc[$g_iCurAccount] += $tempDElixirCollected
@@ -86,12 +86,10 @@ Func EndGainCost($Type)
 				$g_iStatsTotalGain[$eLootDarkElixir] -= $tempDElixirSpent
 			EndIf
 
-			; Switch Accounts - Team AiO MOD++ (#-12)
-			If $g_bChkSwitchAcc Then
+			If ProfileSwitchAccountEnabled() Then
 				$g_aiElixirTotalAcc[$g_iCurAccount] -= $tempElixirSpent
 				$g_aiDarkTotalAcc[$g_iCurAccount] -= $tempDElixirSpent
 			EndIf
-
 	EndSwitch
 
 	UpdateStats()

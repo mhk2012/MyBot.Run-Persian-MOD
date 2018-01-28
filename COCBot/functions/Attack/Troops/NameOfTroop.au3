@@ -7,7 +7,7 @@
 ; Return values .: $sTroopname
 ; Author ........: Unknown (2015)
 ; Modified ......: ZengZeng (01-2016), Hervidero (01-2016)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -87,11 +87,11 @@ Func NameOfTroop($iKind, $iPlural = 0)
 			$sTroopname = "Haste Spell"
 		Case $eSkSpell
 			$sTroopname = "Skeleton Spell"
-		; samm0d
+		; Use Event Troop - Persian MOD (#-35)
 		Case 51
-			$sTroopname = "Giant Skeleton"
+			$sTroopname = "Event Troop 1"
 		Case 52
-			$sTroopname = "Ice Wizard"
+			$sTroopname = "Event Troop 2"
 		Case 61
 			$sTroopname = "Event Spell 1"
 		Case 62

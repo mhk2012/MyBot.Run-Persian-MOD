@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -68,13 +68,18 @@ Func CreateAttackSearchDeadBaseScripted()
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "IconCopy_Info_01", "Copy current Attack Script to a new name"))
 			GUICtrlSetOnEvent(-1, "DuplicateScriptDB")
 
+	$y += 25
+		_GUICtrlCreateIcon($g_sLibIconPath, $eIcnTrain, $x + 210, $y + 2, 16, 16)
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "IconApply_Info_01", "Apply Settings of troop, spell, redline, dropline, and request"))
+			GUICtrlSetOnEvent(-1, "ApplyScriptDB")
+
 	; CSV Downloder - Persian MOD (-#32)
 	$y +=25
 		_GUICtrlCreateIcon($g_sLibIconPath, $eIcnCSVDownloader, $x + 210, $y + 2, 16, 16)
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "IconCSVDownloader_Info_01", "Download Scripts From url"))
 			GUICtrlSetOnEvent(-1, "CSVDownloader")
 
-		; CSV Deploy Speed - Team AiO MOD++ (#-09)
+		; CSV Deploy Speed - Persian MOD (#-09)
 		Local $Group = GUICtrlCreateGroup("", $x, $y + 164, 230, 38)
 		Local $x = 55, $y = 318
 		GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Scripted", "CSVSpeed", "CSV Deployment Speed"), $x - 5, $y - 4, -1, -1)

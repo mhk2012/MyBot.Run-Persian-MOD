@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: MonkeyHunter (07-2016), CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -25,7 +25,7 @@ GLobal $g_hLblRequestCChours[12] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 ; Donate
 Global $g_hChkExtraAlphabets = 0, $g_hChkExtraChinese = 0, $g_hChkExtraKorean = 0, $g_hChkExtraPersian = 0
-; Additional Custom Donate - Team AiO MOD++ (#-28)
+; Additional Custom Donate - Persian MOD (#-28)
 Global $g_ahChkDonateTroop[$eTroopCount+$g_iCustomDonateConfigs] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahChkDonateAllTroop[$eTroopCount+$g_iCustomDonateConfigs] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahTxtDonateTroop[$eTroopCount+$g_iCustomDonateConfigs] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -44,7 +44,7 @@ Global $g_ahBtnDonateSpell[$eSpellCount] = [0, 0, 0, 0, 0, -1, 0, 0, 0, 0] ; ele
 
 Global $g_ahCmbDonateCustomA[3] = [0, 0, 0], $g_ahTxtDonateCustomA[3] = [0, 0, 0], $g_ahPicDonateCustomA[3] = [0, 0, 0]
 Global $g_ahCmbDonateCustomB[3] = [0, 0, 0], $g_ahTxtDonateCustomB[3] = [0, 0, 0], $g_ahPicDonateCustomB[3] = [0, 0, 0]
-; Additional Custom Donate - Team AiO MOD++ (#-28)
+; Additional Custom Donate - Persian MOD (#-28)
 Global $g_ahCmbDonateCustomC[3] = [0, 0, 0], $g_ahTxtDonateCustomC[3] = [0, 0, 0], $g_ahPicDonateCustomC[3] = [0, 0, 0]
 Global $g_ahCmbDonateCustomD[3] = [0, 0, 0], $g_ahTxtDonateCustomD[3] = [0, 0, 0], $g_ahPicDonateCustomD[3] = [0, 0, 0]
 
@@ -53,7 +53,7 @@ Global $g_hLblDonateTroopTBD1 = 0, $g_hLblDonateTroopTBD2 = 0, $g_hLblDonateTroo
 	   $g_hLblDonateTroopCustomI = 0, $g_hLblDonateTroopCustomJ = 0, $g_hLblDonateSpellTBD1 = 0
 
 Global $g_hGrpDonateGeneralBlacklist = 0, $g_hTxtGeneralBlacklist = 0
-Global $g_hGrpDonateOptions = 0, $g_hChkClanHop = 0, $g_ahTxtCheckingtrain = 0 ; ClanHop - Team AiO MOD++ (#-20)
+Global $g_hGrpDonateOptions = 0, $g_hChkClanHop = 0, $g_ahTxtCheckingtrain = 0 ; ClanHop - Persian MOD (#-20)
 Global $lblBtnCustomE = 0
 
 ; Schedule
@@ -135,7 +135,7 @@ Func CreateRequestSubTab()
      		GUICtrlSetState(-1, $GUI_DISABLE)
 			GUICtrlSetOnEvent(-1, "chkReqCCFirst")
 
-	; CheckCC Troops - Team AiO MOD++ (#-24)
+	; CheckCC Troops - Persian MOD (#-24)
 	CreateGUICheckCC()
 	$y += 180
 
@@ -487,7 +487,7 @@ Func CreateDonateSubTab()
 	Local $sTxtBlacklist1 = GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "TxtBlacklist1", "Blacklist")
 	Local $sDonateTxtCustomA = GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "DonateTxtCustom", "Custom Troops")
 	Local $sDonateTxtCustomB = GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "DonateTxtCustom", -1)
-	; Additional Custom Donate - Team AiO MOD++ (#-28)
+	; Additional Custom Donate - Persian MOD (#-28)
 	Local $sDonateTxtCustomC = GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "DonateTxtCustom", -1)
 	Local $sDonateTxtCustomD = GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "DonateTxtCustom", -1)
 
@@ -873,7 +873,7 @@ Func CreateDonateSubTab()
 			GUICtrlSetBkColor(-1, $GUI_BKCOLOR_TRANSPARENT)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 
-		; ClanHop - Team AiO MOD++ (#-20)
+		; ClanHop - Persian MOD (#-20)
 		GUICtrlCreateButton("", $x + 2, $y, $Offx - 2, $Offx - 2, $BS_ICON)
 			_GUICtrlSetImage(-1, $g_sLibIconPath, $eIcnClanHop, 1)
 			GUICtrlSetOnEvent(-1, "btnDonateOptions")
@@ -2080,7 +2080,7 @@ Func CreateDonateSubTab()
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "TxtGeneralBlacklist_Info_01", "General Blacklist for donation requests"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	; ClanHop - Team AiO MOD++ (#-20)
+	; ClanHop - Persian MOD (#-20)
 	$x = $xStart
 	$y = $Offy
 	$g_hGrpDonateOptions = GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Village - Donate", "GrpDonateOptions", "Donate Options"), $x - 20, $y - 20, $g_iSizeWGrpTab3, 169)

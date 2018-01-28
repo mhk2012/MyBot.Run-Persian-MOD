@@ -6,7 +6,7 @@
 ; Return values .: NA
 ; Author ........:
 ; Modified ......: CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -17,6 +17,11 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 
 	Static $iApplyConfigCount = 0
 	$iApplyConfigCount += 1
+	If $g_bApplyConfigIsActive Then
+		SetDebugLog("applyConfig(), already running, exit")
+		Return
+	EndIf
+	$g_bApplyConfigIsActive = True
 	SetDebugLog("applyConfig(), call number " & $iApplyConfigCount)
 
 	setMaxDegreeOfParallelism($g_iThreads)
@@ -43,6 +48,7 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 			EndSwitch
 		EndIf
 		UpdateBotTitle()
+		$g_bApplyConfigIsActive = False
 		Return
 	EndIf
 
@@ -128,7 +134,7 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 	; <><><> Attack Plan / Train Army / Options <><><>
 	ApplyConfig_641_1($TypeReadSave)
 
-	;  <><><> Team AiO MOD++ (2017) <><><>
+	;  <><><> Persian MOD (2018) <><><>
 	ApplyConfig_MOD($TypeReadSave)
 
 	; <><><><> Attack Plan / Strategies <><><><>
@@ -154,6 +160,8 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 
 	; Reenabling window redraw - Keep this last....
 	If $bRedrawAtExit Then SetRedrawBotWindow($bWasRdraw, Default, Default, Default, "applyConfig")
+
+	$g_bApplyConfigIsActive = False
 EndFunc   ;==>applyConfig
 
 Func ApplyConfig_Profile($TypeReadSave)
@@ -196,8 +204,10 @@ Func ApplyConfig_Debug($TypeReadSave)
 	; <><><><> Bot / Debug <><><><>
 	Switch $TypeReadSave
 		Case "Read"
-			GUICtrlSetState($g_hChkDebugClick, $g_bDebugClick ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkDebugSetlog, $g_bDebugSetlog ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_hChkDebugAndroid, $g_bDebugAndroid ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_hChkDebugClick, $g_bDebugClick ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_hChkDebugFunc, ($g_bDebugFuncTime And $g_bDebugFuncCall) ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkDebugDisableZoomout, $g_bDebugDisableZoomout ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkDebugDisableVillageCentering, $g_bDebugDisableVillageCentering ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkDebugDeadbaseImage, $g_bDebugDeadBaseImage ? $GUI_CHECKED : $GUI_UNCHECKED)
@@ -210,19 +220,27 @@ Func ApplyConfig_Debug($TypeReadSave)
 			GUICtrlSetState($g_hChkMakeIMGCSV, $g_bDebugMakeIMGCSV ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkDebugSmartZap, $g_bDebugSmartZap ? $GUI_CHECKED : $GUI_UNCHECKED)
 			If $g_bDevMode Then
-				GUICtrlSetState($g_hChkDebugSetlog, $GUI_ENABLE)
+				GUICtrlSetState($g_hChkDebugFunc, $GUI_ENABLE)
+				GUICtrlSetState($g_hChkDebugDisableZoomout, $GUI_ENABLE)
+				GUICtrlSetState($g_hChkDebugDisableVillageCentering, $GUI_ENABLE)
+				GUICtrlSetState($g_hChkDebugDeadbaseImage, $GUI_ENABLE)
 				GUICtrlSetState($g_hChkDebugOCR, $GUI_ENABLE)
 				GUICtrlSetState($g_hChkDebugImageSave, $GUI_ENABLE)
 				GUICtrlSetState($g_hChkdebugBuildingPos, $GUI_ENABLE)
 				GUICtrlSetState($g_hChkdebugTrain, $GUI_ENABLE)
-				GUICtrlSetState($g_hChkMakeIMGCSV, $GUI_ENABLE)
+				GUICtrlSetState($g_hChkDebugOCRDonate, $GUI_ENABLE)
 				GUICtrlSetState($g_hChkdebugAttackCSV, $GUI_ENABLE)
+				GUICtrlSetState($g_hChkMakeIMGCSV, $GUI_ENABLE)
 				GUICtrlSetState($g_hChkDebugSmartZap, $GUI_ENABLE)
 			EndIf
 		Case "Save"
+			$g_bDebugSetlog = (GUICtrlRead($g_hChkDebugSetlog) = $GUI_CHECKED)
+			$g_bDebugAndroid = (GUICtrlRead($g_hChkDebugAndroid) = $GUI_CHECKED)
 			$g_bDebugClick = (GUICtrlRead($g_hChkDebugClick) = $GUI_CHECKED)
 			If $g_bDevMode Then
-				$g_bDebugSetlog = (GUICtrlRead($g_hChkDebugSetlog) = $GUI_CHECKED)
+				Local $bDebugFunc = (GUICtrlRead($g_hChkDebugFunc) = $GUI_CHECKED)
+				$g_bDebugFuncTime = $bDebugFunc
+				$g_bDebugFuncCall = $bDebugFunc
 				$g_bDebugDisableZoomout = (GUICtrlRead($g_hChkDebugDisableZoomout) = $GUI_CHECKED)
 				$g_bDebugDisableVillageCentering = (GUICtrlRead($g_hChkDebugDisableVillageCentering) = $GUI_CHECKED)
 				$g_bDebugDeadBaseImage = (GUICtrlRead($g_hChkDebugDeadbaseImage) = $GUI_CHECKED)
@@ -429,7 +447,7 @@ Func ApplyConfig_600_12($TypeReadSave)
 			Next
 			cmbDonateCustomB()
 
-			; Additional Custom Donate - Team AiO MOD++ (#-28)
+			; Additional Custom Donate - Persian MOD (#-28)
 			For $i = 0 To 2
 				_GUICtrlComboBox_SetCurSel($g_ahCmbDonateCustomC[$i], $g_aiDonateCustomTrpNumC[$i][0])
 				GUICtrlSetData($g_ahTxtDonateCustomC[$i], $g_aiDonateCustomTrpNumC[$i][1])
@@ -473,7 +491,7 @@ Func ApplyConfig_600_12($TypeReadSave)
 				$g_aiDonateCustomTrpNumB[$i][0] = _GUICtrlComboBox_GetCurSel($g_ahCmbDonateCustomB[$i])
 				$g_aiDonateCustomTrpNumB[$i][1] = GUICtrlRead($g_ahTxtDonateCustomB[$i])
 
-				; Additional Custom Donate - Team AiO MOD++ (#-28)
+				; Additional Custom Donate - Persian MOD (#-28)
 				$g_aiDonateCustomTrpNumC[$i][0] = _GUICtrlComboBox_GetCurSel($g_ahCmbDonateCustomC[$i])
 				$g_aiDonateCustomTrpNumC[$i][1] = GUICtrlRead($g_ahTxtDonateCustomC[$i])
 				$g_aiDonateCustomTrpNumD[$i][0] = _GUICtrlComboBox_GetCurSel($g_ahCmbDonateCustomD[$i])
@@ -1135,21 +1153,7 @@ Func ApplyConfig_600_29($TypeReadSave)
 	; <><><><> Attack Plan / Search & Attack / Options / Attack <><><><>
 	Switch $TypeReadSave
 		Case "Read"
-			GUICtrlSetState($g_hRadAutoQueenAbility, $g_iActivateQueen = 0 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRadManQueenAbility, $g_iActivateQueen = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRadBothQueenAbility, $g_iActivateQueen = 2 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetData($g_hTxtManQueenAbility, ($g_iDelayActivateQueen / 1000))
-
-			GUICtrlSetState($g_hRadAutoKingAbility, $g_iActivateKing = 0 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRadManKingAbility, $g_iActivateKing = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRadBothKingAbility, $g_iActivateKing = 2 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetData($g_hTxtManKingAbility, ($g_iDelayActivateKing / 1000))
-
-			GUICtrlSetState($g_hRadAutoWardenAbility, $g_iActivateWarden = 0 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRadManWardenAbility, $g_iActivateWarden = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRadBothWardenAbility, $g_iActivateWarden = 2 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetData($g_hTxtManWardenAbility, ($g_iDelayActivateWarden / 1000))
-
+			radHerosApply()
 			GUICtrlSetState($g_hChkAttackPlannerEnable, $g_bAttackPlannerEnable = True ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAttackPlannerCloseCoC, $g_bAttackPlannerCloseCoC = True ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAttackPlannerCloseAll, $g_bAttackPlannerCloseAll = True ? $GUI_CHECKED : $GUI_UNCHECKED)
@@ -1329,8 +1333,8 @@ Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
 			Local $tempindex = _GUICtrlComboBox_FindStringExact($g_hCmbScriptNameDB, $g_sAttackScrScriptName[$DB])
 			If $tempindex = -1 Then
 				$tempindex = 0
-				Setlog("Previous saved Scripted Attack not found (deleted, renamed?)", $COLOR_ERROR)
-				Setlog("Automatically setted a default script, please check your config", $COLOR_ERROR)
+				SetLog("Previous saved Scripted Attack not found (deleted, renamed?)", $COLOR_ERROR)
+				SetLog("Automatically setted a default script, please check your config", $COLOR_ERROR)
 			EndIf
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameDB, $tempindex)
 			cmbScriptNameDB()
@@ -1403,8 +1407,8 @@ Func ApplyConfig_600_29_DB_Milking($TypeReadSave)
 			Local $tempindex = _GUICtrlComboBox_FindStringExact($g_hCmbMilkingCSVScriptName, $g_sMilkAttackCSVscript)
 			If $tempindex = -1 Then
 				$tempindex = 0
-				Setlog("Previous saved Milking Scripted Attack not found (deleted, renamed?)", $COLOR_ERROR)
-				Setlog("Automatically setted a default script, please check your config", $COLOR_ERROR)
+				SetLog("Previous saved Milking Scripted Attack not found (deleted, renamed?)", $COLOR_ERROR)
+				SetLog("Automatically setted a default script, please check your config", $COLOR_ERROR)
 			EndIf
 			_GUICtrlComboBox_SetCurSel($g_hCmbMilkingCSVScriptName, $tempindex)
 			; Advanced
@@ -1574,8 +1578,8 @@ Func ApplyConfig_600_29_LB_Scripted($TypeReadSave)
 			Local $tempindex = _GUICtrlComboBox_FindStringExact($g_hCmbScriptNameAB, $g_sAttackScrScriptName[$LB])
 			If $tempindex = -1 Then
 				$tempindex = 0
-				Setlog("Previous saved Scripted Attack not found (deleted, renamed?)", $COLOR_ERROR)
-				Setlog("Automatically setted a default script, please check your config", $COLOR_ERROR)
+				SetLog("Previous saved Scripted Attack not found (deleted, renamed?)", $COLOR_ERROR)
+				SetLog("Automatically setted a default script, please check your config", $COLOR_ERROR)
 			EndIf
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameAB, $tempindex)
 			cmbScriptNameAB()
@@ -2096,7 +2100,7 @@ Func ApplyConfig_641_1($TypeReadSave)
 				GUICtrlSetState($g_hCmbMinimumTimeClose, $GUI_ENABLE)
 				GUICtrlSetState($g_hLblSymbolWaiting, $GUI_ENABLE)
 				GUICtrlSetState($g_hLblWaitingInMinutes, $GUI_ENABLE)
-				; Max logout time - Team AiO MOD++ (#-21)
+				; Max logout time - Persian MOD (#-21)
 				GUICtrlSetState($g_hChkTrainLogoutMaxTime, $GUI_ENABLE)
 				chkTrainLogoutMaxTime()
 			Else
@@ -2106,7 +2110,7 @@ Func ApplyConfig_641_1($TypeReadSave)
 				GUICtrlSetState($g_hCmbMinimumTimeClose, $GUI_DISABLE)
 				GUICtrlSetState($g_hLblSymbolWaiting, $GUI_DISABLE)
 				GUICtrlSetState($g_hLblWaitingInMinutes, $GUI_DISABLE)
-				; Max logout time - Team AiO MOD++ (#-21)
+				; Max logout time - Persian MOD (#-21)
 				GUICtrlSetState($g_hChkTrainLogoutMaxTime, $GUI_DISABLE)
 			EndIf
 			GUICtrlSetState($g_hChkCloseWithoutShield, $g_bCloseWithoutShield ? $GUI_CHECKED : $GUI_UNCHECKED)

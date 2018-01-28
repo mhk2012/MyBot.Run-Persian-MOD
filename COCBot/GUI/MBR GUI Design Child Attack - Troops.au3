@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: GKevinOD (2014)
 ; Modified ......: DkEd, Hervidero (2015), Boju (11-2016), CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -100,10 +100,10 @@ Global $g_hChkCloseWhileTraining = 0, $g_hChkCloseWithoutShield = 0, $g_hChkClos
 Global $g_hLblCloseWaitRdmPercent = 0, $g_hLblCloseWaitingTroops = 0, $g_hLblSymbolWaiting = 0, $g_hLblWaitingInMinutes = 0, $g_hLblTrainITDelay = 0, $g_hLblTrainITDelayTime = 0, _
 		$g_hLblAddDelayIdlePhaseBetween = 0, $g_hLblAddDelayIdlePhaseSec = 0, $g_hPicCloseWaitTrain = 0, $g_hPicCloseWaitStop = 0, $g_hPicCloseWaitExact = 0
 
-; Max logout time - Team AiO MOD++ (#-21)
+; Max logout time - Persian MOD (#-21)
 Global $g_hChkTrainLogoutMaxTime = 0, $g_hTxtTrainLogoutMaxTime = 0, $g_hLblTrainLogoutMaxTime = 0
 
-; Check Grand Warden Mode - Team AiO MOD++ (#-26)
+; Check Grand Warden Mode - Persian MOD (#-26)
 Global $g_hChkCheckWardenMode = 0, $g_hCmbCheckWardenMode = 0
 
 Func CreateAttackTroops()
@@ -676,7 +676,7 @@ Func CreateTroopsSpellsSubTab()
 		_GUICtrlCreateIcon($g_sLibIconPath, $eIcnDark, $x + 146, $y + 14, 16, 16)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	; Smart Train - Team AiO MOD++ (#-13)
+	; Smart Train - Persian MOD (#-13)
 	$x = 10
 	$y = 363
 	GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Attack - Troops", "Group_03", "Smart Train (do not empty barracks)"), $x - 5, $y, $g_iSizeWGrpTab3, 38)
@@ -705,7 +705,7 @@ Func CreateTroopsSpellsSubTab()
 				GUICtrlSetState(-1, $GUI_DISABLE)
 				_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Attack - Troops", "chkFillEQ_Info_01", "Brew 1 EarthQuake Spell to top-up the spell camp or queue"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
-	; Smart Train - Team AiO MOD++ (#-13)
+	; Smart Train - Persian MOD (#-13)
 
 EndFunc   ;==>CreateTroopsSpellsSubTab
 
@@ -876,8 +876,8 @@ Func CreateTrainOrderSubTab()
 			GUICtrlSetOnEvent(-1, "chkTroopOrder2")
 
 		If UBound($g_asTroopOrderList) - 1 <> $eTroopCount Then ; safety check in case troops are added
-			If $g_bDebugSetlogTrain Then Setlog("UBound($g_asTroopOrderList) - 1: " & UBound($g_asTroopOrderList) - 1 & " = " & "$eTroopCount: " & $eTroopCount, $COLOR_DEBUG) ;Debug
-			Setlog("Monkey ate bad banana, fix $g_asTroopOrderList & $eTroopCount arrays!", $COLOR_RED)
+			If $g_bDebugSetlogTrain Then SetLog("UBound($g_asTroopOrderList) - 1: " & UBound($g_asTroopOrderList) - 1 & " = " & "$eTroopCount: " & $eTroopCount, $COLOR_DEBUG) ;Debug
+			SetLog("Monkey ate bad banana, fix $g_asTroopOrderList & $eTroopCount arrays!", $COLOR_RED)
 		EndIf
 
 		; Create translated list of Troops for combo box
@@ -1068,7 +1068,7 @@ Func CreateOptionsSubTab()
 		$g_hLblWaitingInMinutes = GUICtrlCreateLabel(GetTranslatedFileIni("MBR Global GUI Design", "min.", "min."), $x + 84, $y + 3, -1, -1)
 			_GUICtrlSetTip(-1, $sTxtTip)
 
-	; Max logout time - Team AiO MOD++ (#-21)
+	; Max logout time - Persian MOD (#-21)
 	$y += 28
 		$g_hChkTrainLogoutMaxTime = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Child Attack - Troops_Options", "TrainLogoutMaxTime", "Max Logout Time") & ": ", $x - 14, $y, -1, -1)
 			$sTxtTip = GetTranslatedFileIni("MBR GUI Design Child Attack - Troops_Options", "TrainLogoutMaxTime_Info_01", "Only allow logout for a maximum amount of time")
@@ -1122,7 +1122,7 @@ Func CreateOptionsSubTab()
 		$g_hLblAddDelayIdlePhaseSec = GUICtrlCreateLabel(GetTranslatedFileIni("MBR Global GUI Design", "sec.", "sec."), $x + 110, $y, 20, 30)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	; Check Grand Warden Mode - Team AiO MOD++ (#-26)
+	; Check Grand Warden Mode - Persian MOD (#-26)
 	$x = 55 + 151 + 5
 	$y = 130
 	GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Attack - Troops_Options", "Group_04", "Check Grand Warden Mode"), $x - 20, $y - 20, 173, 50)

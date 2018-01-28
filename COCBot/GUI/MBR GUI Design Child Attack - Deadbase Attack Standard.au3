@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -20,13 +20,13 @@ Global $g_hCmbStandardDropOrderDB = 0, $g_hCmbStandardDropSidesDB = 0, $g_hCmbSt
 
 Global $g_hLblSmartDeployDB = 0, $g_hPicAttackNearDarkElixirDrillDB = 0
 
-; Unit/Wave Factor - Team AiO MOD++ (#-05)
+; Unit/Wave Factor - Persian MOD (#-05)
 Global $g_hGrpSettings = 0
 Global $g_hChkGiantSlot = 0, $g_hCmbGiantSlot = 0
 Global $g_hChkUnitFactor = 0, $g_hTxtUnitFactor = 0
 Global $g_hChkWaveFactor = 0, $g_hTxtWaveFactor = 0
 
-; Drop Order Troops - Team AiO MOD++ (#-06)
+; Drop Order Troops - Persian MOD (#-06)
 Global $g_hBtnCustomDropOrderDB = 0
 
 Func CreateAttackSearchDeadBaseStandard()
@@ -142,7 +142,7 @@ Func CreateAttackSearchDeadBaseStandard()
 			GUICtrlSetOnEvent(-1, "cmbDBMultiFinger")
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-				   ; Unit/Wave Factor - Team AiO MOD++ (#-05)
+		   ; Unit/Wave Factor - Persian MOD (#-05)
 		   $x = 23
 		   $y = 110
 		   $g_hGrpSettings = GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack Standard", "Group_02", "Settings"), $x, $y, 180, 105)
@@ -182,7 +182,7 @@ Func CreateAttackSearchDeadBaseStandard()
 			   GUICtrlSetState($i, $GUI_HIDE)
 		   Next
 
-		   ; Drop Order Troops - Team AiO MOD++ (#-06)
+		   ; Drop Order Troops - Persian MOD (#-06)
 		$y += 40
 		$x = 98
 			$g_hBtnCustomDropOrderDB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack", "BtnCustomDropOrder", "Drop Order"), $x, $y, 85, 25)

@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: Sardo (2016)
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -33,13 +33,13 @@ Func chkRequestCCHours()
 
 	If GUICtrlRead($g_hChkRequestTroopsEnable) = $GUI_CHECKED Then
 		GUICtrlSetState($g_hTxtRequestCC, $GUI_SHOW + $GUI_ENABLE)
-		For $i = $chkReqCCFirst To $g_hLblRequestCCHoursPM ; CheckCC Troops - Team AiO MOD++ (#-24)
+		For $i = $chkReqCCFirst To $g_hLblRequestCCHoursPM ; CheckCC Troops - Persian MOD (#-24)
 			GUICtrlSetState($i, $GUI_ENABLE)
 		Next
 	Else
 		GUICtrlSetState($g_hTxtRequestCC, $GUI_SHOW + $GUI_DISABLE)
-		GUICtrlSetState($g_hChkTroopsCC, $GUI_UNCHECKED) ; CheckCC Troops - Team AiO MOD++ (#-24)
-		GUIControlCheckCC() ; CheckCC Troops - Team AiO MOD++ (#-24)
+		GUICtrlSetState($g_hChkTroopsCC, $GUI_UNCHECKED) ; CheckCC Troops - Persian MOD (#-24)
+		GUIControlCheckCC() ; CheckCC Troops - Persian MOD (#-24)
 		For $i = $chkReqCCFirst To $g_hLblRequestCCHoursPM
 			GUICtrlSetState($i, $GUI_DISABLE)
 		Next

@@ -7,8 +7,8 @@
 ;                  $iSleep           - [optional] delay value after click. Default is 400.
 ; Return values .: None
 ; Author ........:
-; Modified ......: KnowJack(07-2015), MonkeyHunter (05-2016), ProMac (01-2017), CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Modified ......: KnowJack(07-2015), MonkeyHunter (05-2016), ProMac (01-2018), CodeSlinger69 (01-2018)
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......: GetTrainPos, GetFullName, GetGemName
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -29,20 +29,20 @@ Func TrainIt($iIndex, $howMuch = 1, $iSleep = 400)
 				TrainClickP($pos, $howMuch, $g_iTrainClickDelay, $FullName, "#0266", $RNDName)
 				If _Sleep($iSleep) Then Return False
 				If $g_bOutOfElixir Then
-					Setlog("Not enough " & ($bDark ? "Dark " : "") & "Elixir to train position " & GetTroopName($iIndex) & " troops!", $COLOR_ERROR)
-					Setlog("Switching to Halt Attack, Stay Online Mode...", $COLOR_ERROR)
+					SetLog("Not enough " & ($bDark ? "Dark " : "") & "Elixir to train position " & GetTroopName($iIndex) & " troops!", $COLOR_ERROR)
+					SetLog("Switching to Halt Attack, Stay Online Mode...", $COLOR_ERROR)
 					If Not $g_bFullArmy Then $g_bRestart = True ;If the army camp is full, If yes then use it to refill storages
 					Return ; We are out of Elixir stop training.
 				EndIf
 				Return True
 			Else
-				Setlog("TrainIt position " & GetTroopName($iIndex) & " - RNDName did not return array?", $COLOR_ERROR)
+				SetLog("TrainIt position " & GetTroopName($iIndex) & " - RNDName did not return array?", $COLOR_ERROR)
 			EndIf
 		Else
-			Setlog("TrainIt " & GetTroopName($iIndex) & " - FullName did not return array?", $COLOR_ERROR)
+			SetLog("TrainIt " & GetTroopName($iIndex) & " - FullName did not return array?", $COLOR_ERROR)
 		EndIf
 	Else
-		Setlog("Impossible happened? TrainIt troop position " & GetTroopName($iIndex) & " did not return array", $COLOR_ERROR)
+		SetLog("Impossible happened? TrainIt troop position " & GetTroopName($iIndex) & " did not return array", $COLOR_ERROR)
 	EndIf
 EndFunc   ;==>TrainIt
 
@@ -185,7 +185,7 @@ Func GetVariable(Const $ImageToUse, Const $iIndex)
 
 	Local $res = DllCallMyBot("FindTile", "handle", $g_hHBitmap2, "str", $ImageToUse, "str", "FV", "int", 1)
 
-	If @error Then _logErrorDLLCall($g_sLibImgLocPath, @error)
+	If @error Then _logErrorDLLCall($g_sLibMyBotPath, @error)
 	If IsArray($res) Then
 		If $g_bDebugSetlog Then SetLog("DLL Call succeeded " & $res[0], $COLOR_ERROR)
 		If $res[0] = "0" Then
@@ -196,7 +196,7 @@ Func GetVariable(Const $ImageToUse, Const $iIndex)
 		ElseIf $res[0] = "-2" Then
 			SetLog("Invalid Resolution", $COLOR_ERROR)
 		Else
-			If $g_bDebugSetlogTrain Then Setlog("String: " & $res[0])
+			If $g_bDebugSetlogTrain Then SetLog("String: " & $res[0])
 			Local $expRet = StringSplit($res[0], "|", $STR_NOCOUNT)
 			If UBound($expRet) > 1 Then
 				Local $posPoint = StringSplit($expRet[1], ",", $STR_NOCOUNT)
@@ -228,12 +228,12 @@ EndFunc   ;==>GetVariable
 Func GetFullNameSlot(Const $iTrainPos, Const $sTroopType)
 
 	Local $SlotH, $SlotV
-	If $g_bDebugSetlogTrain Then Setlog("$iTrainPos[0]: " & $iTrainPos[0])
-	If $g_bDebugSetlogTrain Then Setlog("$iTrainPos[1]: " & $iTrainPos[1])
-	If $g_bDebugSetlogTrain Then Setlog("$sTroopType" & $sTroopType)
+	If $g_bDebugSetlogTrain Then SetLog("$iTrainPos[0]: " & $iTrainPos[0])
+	If $g_bDebugSetlogTrain Then SetLog("$iTrainPos[1]: " & $iTrainPos[1])
+	If $g_bDebugSetlogTrain Then SetLog("$sTroopType" & $sTroopType)
 
 	If $sTroopType = "Spell" Then
-		If UBound($iTrainPos) < 2 Then Setlog("Issue on $iTrainPos!!!")
+		If UBound($iTrainPos) < 2 Then SetLog("Issue on $iTrainPos!!!")
 		Switch $iTrainPos[0]
 			Case $iTrainPos[0] < 101 ; 1 Column
 				$SlotH = 101
@@ -249,7 +249,7 @@ Func GetFullNameSlot(Const $iTrainPos, Const $sTroopType)
 				$SlotH = 597
 			Case Else
 				If _ColorCheck(_GetPixelColor($iTrainPos[0], $iTrainPos[1], True), Hex(0xd3d3cb, 6), 5) Then
-					Setlog(" »» This slot is empty!! | Spells", $COLOR_ERROR)
+					SetLog(" »» This slot is empty!! | Spells", $COLOR_ERROR)
 				EndIf
 		EndSwitch
 		Switch $iTrainPos[1]
@@ -265,7 +265,7 @@ Func GetFullNameSlot(Const $iTrainPos, Const $sTroopType)
 	EndIf
 
 	If $sTroopType = "Normal" Then
-		If UBound($iTrainPos) < 2 Then Setlog("Issue on $iTrainPos!!!")
+		If UBound($iTrainPos) < 2 Then SetLog("Issue on $iTrainPos!!!")
 		Switch $iTrainPos[0]
 			Case $iTrainPos[0] < 101 ; 1 Column
 				$SlotH = 101
@@ -283,7 +283,7 @@ Func GetFullNameSlot(Const $iTrainPos, Const $sTroopType)
 				$SlotH = 690
 			Case Else
 				If _ColorCheck(_GetPixelColor($iTrainPos[0], $iTrainPos[1], True), Hex(0xd3d3cb, 6), 5) Then
-					Setlog(" »» This slot is empty!! | Normal Troop", $COLOR_ERROR)
+					SetLog(" »» This slot is empty!! | Normal Troop", $COLOR_ERROR)
 				EndIf
 		EndSwitch
 		Switch $iTrainPos[1]
@@ -299,7 +299,7 @@ Func GetFullNameSlot(Const $iTrainPos, Const $sTroopType)
 	EndIf
 
 	If $sTroopType = "Dark" Then
-		If UBound($iTrainPos) < 2 Then Setlog("Issue on $iTrainPos!!!")
+		If UBound($iTrainPos) < 2 Then SetLog("Issue on $iTrainPos!!!")
 		Switch $iTrainPos[0]
 			Case $iTrainPos[0] > 440 And $iTrainPos[0] < 517
 				$SlotH = 517
@@ -311,7 +311,7 @@ Func GetFullNameSlot(Const $iTrainPos, Const $sTroopType)
 				$SlotH = 812
 			Case Else
 				If _ColorCheck(_GetPixelColor($iTrainPos[0], $iTrainPos[1], True), Hex(0xd3d3cb, 6), 5) Then
-					Setlog(" »» This slot is empty!! | Dark Troop", $COLOR_ERROR)
+					SetLog(" »» This slot is empty!! | Dark Troop", $COLOR_ERROR)
 				EndIf
 		EndSwitch
 		Switch $iTrainPos[1]

@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: cosote (2016)
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -118,7 +118,7 @@ Func BotStart($bAutostartDelay = 0)
 		If Not $g_bRunState Then Return
 		If $hWndActive = $g_hAndroidWindow And ($g_bAndroidBackgroundLaunched = True Or AndroidControlAvailable())  Then ; Really?
 
-			; Auto Dock, Hide Emulator & Bot - Team AiO MOD++ (#-07)
+			; Auto Dock, Hide Emulator & Bot - Persian MOD (#-07)
 			If $g_iChkAutoDock Then
 				If Not $g_bAndroidEmbedded Then
 					SetLog("Bot Auto Dock to Emulator", $COLOR_ERROR)
@@ -155,6 +155,9 @@ Func BotStop()
 	; release bot slot
 	LockBotSlot(False)
 
+	; release other switch accounts
+	releaseProfilesMutex()
+	
 	ResumeAndroid()
 
 	$g_bRunState = False
@@ -168,7 +171,7 @@ Func BotStop()
 
 	EnableGuiControls()
 
-	DistributorsBotStopEvent()
+	DistributorsUpdateGUI()
 	AndroidBotStopEvent() ; signal android that bot is now stopping
 	AndroidShield("btnStop", Default)
 
@@ -184,7 +187,7 @@ Func BotStop()
 	GUICtrlSetState($g_hBtnSearchMode, $GUI_SHOW)
 	;GUICtrlSetState($g_hBtnMakeScreenshot, $GUI_ENABLE)
 
-	; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
+	; Enable/Disable GUI while botting - Persian MOD (#-01)
 	GUICtrlSetState($g_hBtnEnableGUI, $GUI_HIDE)
 	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE)
 
@@ -244,7 +247,7 @@ Func BotSearchMode()
 		VillageSearch()
 		If _Sleep(100) Then Return
 	Else
-		Setlog("Your Army is not prepared, check the Attack/train options")
+		SetLog("Your Army is not prepared, check the Attack/train options")
 	EndIf
 	btnStop()
 EndFunc   ;==>BotSearchMode

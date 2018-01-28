@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: GkevinOD (2014)
 ; Modified ......: Hervidero (2015), kaganus (08-2015), CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -49,8 +49,8 @@ Global $iSldTransLevel = 0 ; mhk2012 Persian MOD
 #include "GUI\MBR GUI Control Child Misc.au3"
 #include "GUI\MBR GUI Control Android.au3"
 #include "MBR GUI Action.au3"
-; Team AiO MOD++ (2017)
-#include "Team__AiO__MOD++\GUI\MOD GUI Control.au3"
+; Persian MOD (2018)
+#include "Persian_MOD\GUI\MOD GUI Control.au3"
 
 ; GTFO - Persian MOD (-#31)
 Global $DonationWindowY, $bDonate, $GTFOcheck, $hGUI_GTFOMode
@@ -94,6 +94,9 @@ Func InitializeMainGUI($bGuiModeUpdate = False)
 		saveConfig()
 		;applyConfig()
 		setupProfileComboBox()
+	ElseIf $g_iGuiMode <> 1 Then
+		; not in normal GUI mode, initialize profiles (even though profile combobox doesn't exist)
+		setupProfileComboBox()
 	EndIf
 
 	selectProfile() ; Choose the profile
@@ -106,7 +109,7 @@ Func InitializeMainGUI($bGuiModeUpdate = False)
 
 	; Developer mode controls
 	If $g_bDevMode Then
-		GUICtrlSetState($g_hChkDebugSetlog, $GUI_SHOW + $GUI_ENABLE)
+		GUICtrlSetState($g_hChkDebugFunc, $GUI_SHOW + $GUI_ENABLE)
 		GUICtrlSetState($g_hChkDebugDisableZoomout, $GUI_SHOW + $GUI_ENABLE)
 		GUICtrlSetState($g_hChkDebugDisableVillageCentering, $GUI_SHOW + $GUI_ENABLE)
 		GUICtrlSetState($g_hChkDebugDeadbaseImage, $GUI_SHOW + $GUI_ENABLE)
@@ -228,12 +231,12 @@ Func GUIControl_WM_SHELLHOOK($hWin, $iMsg, $wParam, $lParam)
 				;BotToFront($lParam)
 				BotMinimizeRestore(False, "GUIControl_WM_SHELLHOOK", False, 0, $g_hAndroidWindow)
 				;If Not $g_bIsHidden Then HideAndroidWindow(False, False, Default, "GUIControl_WM_SHELLHOOK") ; Android can be hidden
-			#cs moved to GUIControl_WM_ACTIVATEAPP as it enters here without activating the bot
-			Case Not $g_bIsHidden And $lParam = $g_hFrmBot ;And WinActive($g_hFrmBot)
-				; show Android without activating
-				HideAndroidWindow(False, False)
-				;AndroidToFront()
-			#ce
+				#cs moved to GUIControl_WM_ACTIVATEAPP as it enters here without activating the bot
+					Case Not $g_bIsHidden And $lParam = $g_hFrmBot ;And WinActive($g_hFrmBot)
+					; show Android without activating
+					HideAndroidWindow(False, False)
+					;AndroidToFront()
+				#ce
 		EndSelect
 	EndIf
 EndFunc   ;==>GUIControl_WM_SHELLHOOK
@@ -539,10 +542,14 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnVillageStat()
 
 			; debug checkboxes and buttons
-		Case $g_hChkDebugClick
-			chkDebugClick()
 		Case $g_hChkDebugSetlog
 			chkDebugSetlog()
+		Case $g_hChkDebugAndroid
+			chkDebugAndroid()
+		Case $g_hChkDebugClick
+			chkDebugClick()
+		Case $g_hChkDebugFunc
+			chkDebugFunc()
 		Case $g_hChkDebugDisableZoomout
 			chkDebugDisableZoomout()
 		Case $g_hChkDebugDisableVillageCentering
@@ -628,6 +635,10 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			AutoUpgrade(True)
 		Case $g_hBtnTestUpgradeWindow
 			btnTestUpgradeWindow()
+		Case $g_hBtnTestSmartWait
+			btnTestSmartWait()
+		Case $g_hBtnConsoleWindow
+			btnConsoleWindow()
 	EndSwitch
 
 	If $lParam = $g_hCmbGUILanguage Then
@@ -735,7 +746,7 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 		Case $g_hTabMain
 			; Handle RichText controls
 			tabMain()
-			; Forecast - Team AiO MOD++ (#-17)
+			; Forecast - Persian MOD (#-17)
 			If GUICtrlRead($g_hTabMain, 1) = $g_hGUI_MOD And GUICtrlRead($g_hGUI_MOD_TAB, 1) = $g_hGUI_MOD_TAB_ITEM5 Then
 				Local $tTag  = DllStructCreate("hwnd;int;int;int;int;int;int;ptr;int;int;int;int;int;int;int;int;int;int;int;int", $lParam)
 				Local $hFrom = DllStructGetData($tTag, 1)
@@ -769,7 +780,7 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 		Case $g_hGUI_BOT_TAB
 			tabBot()
 		Case $g_hGUI_MOD_TAB
-			; Forecast - Team AiO MOD++ (#-17)
+			; Forecast - Persian MOD (#-17)
 			If GUICtrlRead($g_hGUI_MOD_TAB, 1) = $g_hGUI_MOD_TAB_ITEM6 Then
 				Local $tTag  = DllStructCreate("hwnd;int;int;int;int;int;int;ptr;int;int;int;int;int;int;int;int;int;int;int;int", $lParam)
 				Local $hFrom = DllStructGetData($tTag, 1)
@@ -1137,18 +1148,19 @@ Func BotShrinkExpandToggleExecute()
 EndFunc   ;==>BotShrinkExpandToggleExecute
 
 Func BotGuiModeToggleRequest()
-	If Not $g_bRunState Then
+	If Not $g_bRunState And Not IsConfigActive() And Not DllCallMyBotIsActive() Then
 		BotGuiModeToggle()
 		Return False
 	EndIf
 	$g_bBotGuiModeToggleRequested = True
 	Return True
-EndFunc
+EndFunc   ;==>BotGuiModeToggleRequest
 
 Func BotGuiModeToggle()
+	Static $bIsActive = False
+	If $g_iBotAction = $eBotClose Or $g_iGuiMode = 0 Or $bIsActive Or IsConfigActive() Or DllCallMyBotIsActive() Then Return False
+	$bIsActive = True
 	$g_bBotGuiModeToggleRequested = False
-	If $g_iGuiMode = 0 Then Return False
-	If $g_iBotAction = $eBotClose Then Return False
 
 	If $g_bAndroidEmbedded Then AndroidEmbed(False)
 
@@ -1253,6 +1265,9 @@ Func BotGuiModeToggle()
 
 			; update stats
 			UpdateStats(True)
+			UpdateMultiStats()
+
+			DistributorsUpdateGUI() ; Now loading Distributors (during GUI switch it must be called outside CreateMainGUIControls()!)
 
 			DestroySplashScreen()
 
@@ -1293,6 +1308,7 @@ Func BotGuiModeToggle()
 	SetRedrawBotWindow(True, Default, Default, Default, "BotGuiModeToggle")
 
 	ShowMainGUI()
+	$bIsActive = False
 
 	Return True
 EndFunc   ;==>BotGuiModeToggle
@@ -1342,7 +1358,7 @@ Func BotCloseRequestProcessed()
 EndFunc   ;==>BotCloseRequestProcessed
 
 Func BotClose($SaveConfig = Default, $bExit = True)
-	If $SaveConfig = Default Then $SaveConfig = $g_iBotLaunchTime > 0
+	If $SaveConfig = Default Then $SaveConfig = IsBotLaunched()
 	$g_bRunState = False
 	$g_bBotPaused = False
 	ResumeAndroid()
@@ -1373,7 +1389,7 @@ Func BotClose($SaveConfig = Default, $bExit = True)
 
 	; Close Mutexes
 	If $g_hMutex_BotTitle <> 0 Then ReleaseMutex($g_hMutex_BotTitle)
-	If $g_hMutex_Profile <> 0 Then ReleaseMutex($g_hMutex_Profile)
+	ReleaseProfilesMutex(True)
 	If $g_hMutex_MyBot <> 0 Then ReleaseMutex($g_hMutex_MyBot)
 	; Clean up resources
 	__GDIPlus_Shutdown()
@@ -1550,7 +1566,7 @@ EndFunc   ;==>tiExit
 ; Return values .: Boolean of former redraw state
 ; Author ........: Cosote (2015)
 ; Modified ......:
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -1582,7 +1598,7 @@ Func SetRedrawBotWindow($bEnableRedraw, $bCheckRedrawBotWindow = Default, $bForc
 		; set dirty redraw flag
 		$g_bRedrawBotWindow[1] = True
 	EndIf
-	; Forecast - Team AiO MOD++ (#-17)
+	; Forecast - Persian MOD (#-17)
 	redrawForecast()
 	Return $bWasRedraw
 EndFunc   ;==>SetRedrawBotWindow
@@ -1690,21 +1706,22 @@ Func SetTime($bForceUpdate = False)
 		GUICtrlSetData($g_hLblResultRuntimeNow, StringFormat("%02i:%02i:%02i", $hour, $min, $sec))
 	EndIf
 
-; Showing troops time in MultiStats - Switch Accounts - Team AiO MOD++ (#-12)
+; Showing troops time in MultiStats - Switch Accounts - Persian MOD (#-12)
 	Local Static $DisplayLoop = 0
 	If $DisplayLoop >= 3 Then ; Conserve Clock Cycles on Updating times
 		$DisplayLoop = 0
-		If $g_bChkSwitchAcc Then
+		If ProfileSwitchAccountEnabled() Then
 			If GUICtrlRead($g_hGUI_MOD_TAB, 1) = $g_hGUI_MOD_TAB_ITEM5 Then
+				Local $abAccountNo = AccountNoActive()
 				For $i = 0 To $g_iTotalAcc;  Update time for all Accounts
 					; Troop Time (include spell and hero if needed)
-					If $g_abAccountNo[$i] And Not $g_abDonateOnly[$i] And $g_aiTimerStart[$i] <> 0 Then
+					If $abAccountNo[$i] And Not $g_abDonateOnly[$i] And $g_aiTimerStart[$i] <> 0 Then
 						Local $UpdateTrainTime = $g_aiRemainTrainTime[$i] - TimerDiff($g_aiTimerStart[$i]) / 60 / 1000 ; in minutes
 						Local $sReadyTime = ""
 						If Abs($UpdateTrainTime) >= 60 Then
-						   $sReadyTime &= Int($UpdateTrainTime/60) & "h " & Abs(Round(Mod($UpdateTrainTime,60),0)) & "m"
+							$sReadyTime &= Int($UpdateTrainTime / 60) & "h " & Abs(Round(Mod($UpdateTrainTime, 60), 0)) & "m"
 						Else
-						   $sReadyTime &= Int($UpdateTrainTime) & "m " & Abs(Round(Mod($UpdateTrainTime,1) * 60, 0)) & "s"
+							$sReadyTime &= Int($UpdateTrainTime) & "m " & Abs(Round(Mod($UpdateTrainTime, 1) * 60, 0)) & "s"
 						EndIf
 
 						If $i = $g_iCurAccount Then
@@ -1742,7 +1759,7 @@ Func SetTime($bForceUpdate = False)
 		EndIf
 	EndIf
 	$DisplayLoop += 1
-; Showing troops time in MultiStats - Switch Accounts - Team AiO MOD++ (#-12)
+; Showing troops time in MultiStats - Switch Accounts - Persian MOD (#-12)
 
 EndFunc   ;==>SetTime
 
@@ -2047,7 +2064,7 @@ Func tabBot()
 	EndSelect
 EndFunc   ;==>tabBot
 
-; Team AiO MOD++ (2017)
+; Persian MOD (2018)
 Func tabMod()
 	Local $tabidx = GUICtrlRead($g_hGUI_MOD_TAB)
 	Select
@@ -2079,7 +2096,7 @@ Func tabModProfiles()
 			GUISetState(@SW_HIDE, $g_hGUI_LOG_SA)
 	EndSelect
 EndFunc   ;==>tabModSwitch
-; Team AiO MOD++ (2017)
+; Persian MOD (2018)
 
 Func tabDeadbase()
 	Local $tabidx = GUICtrlRead($g_hGUI_DEADBASE_TAB)
@@ -2204,7 +2221,7 @@ Func Bind_ImageList($nCtrl, ByRef $hImageList)
 			Local $aIconIndex = [$eIcnOptions, $eIcnAndroid, $eIcnDebug, $eIcnGold]
 			; The Android Robot is a Google Trademark and follows Creative Common Attribution 3.0
 
-		; Team AiO MOD++ (2017)
+		; Persian MOD (2018)
 		Case $g_hGUI_MOD_TAB
 			; the icons for Mods tab
 			Local $aIconIndex = [$eIcnSwitchOptions, $eIcnHumanization, $eIcnGoblinXP, $eIcnChatbot, $eIcnStats, $eIcnForecast]
@@ -2414,4 +2431,27 @@ Func GTFOcheck()
 ;~ 	_GUICtrlRichEdit_SetFont($g_hTxtLog, 6, "Lucida Console")
 ;~ 	_GUICtrlRichEdit_AppendTextColor($g_hTxtLog, "" & @CRLF, _ColorConvert($Color_Black))
 	tabDONATE()
+EndFunc
+
+Func IsConfigActive()
+	Return $g_bReadConfigIsActive Or $g_bSaveConfigIsActive Or $g_bApplyConfigIsActive
+EndFunc   ;==>IsConfigActive
+
+Func IsBotLaunched()
+	Return $g_iBotLaunchTime > 0
+EndFunc   ;==>IsBotLaunched
+
+Func ConsoleWindow($bShow = Default)
+	Static $bConsoleAllocated = False
+	If $bShow = Default Then $bShow = Not $bConsoleAllocated
+	If $bShow Then
+		_WinAPI_AllocConsole()
+		_WinAPI_SetConsoleIcon($g_sLibIconPath, $eIcnGUI)
+		$bConsoleAllocated = True
+		SetDebugLog("Allocate Console Window")
+	Else
+		SetDebugLog("Free Console Window")
+		_WinAPI_FreeConsole()
+		$bConsoleAllocated = False
+	EndIf
 EndFunc

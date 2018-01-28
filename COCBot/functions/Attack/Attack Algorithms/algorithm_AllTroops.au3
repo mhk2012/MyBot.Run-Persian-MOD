@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: Didipe (05-2015), ProMac(2016), MonkeyHunter(03-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -14,7 +14,7 @@
 ; ===============================================================================================================================
 
 Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
-	If $g_bDebugSetlog Then Setlog("algorithm_AllTroops()", $COLOR_DEBUG)
+	If $g_bDebugSetlog Then SetDebugLog("algorithm_AllTroops()", $COLOR_DEBUG)
 	SetSlotSpecialTroops()
 
 	If _Sleep($DELAYALGORITHM_ALLTROOPS1) Then Return
@@ -42,7 +42,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 			SetLog("King and/or Queen dropped, close attack")
 			If $g_bSmartZapEnable = True Then SetLog("Skipping SmartZap to protect your royals!", $COLOR_FUCHSIA)
 		ElseIf IsAttackPage() And Not SmartZap() And $g_bTHSnipeUsedKing = False And $g_bTHSnipeUsedQueen = False Then
-			Setlog("Wait few sec before close attack")
+			SetLog("Wait few sec before close attack")
 			If _Sleep(Random(0, 2, 1) * 1000) Then Return ;wait 0-2 second before exit if king and queen are not dropped
 		EndIf
 
@@ -164,7 +164,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 						]
 		EndSwitch
 	Else
-		If $g_bDebugSetlog Then SetLog("listdeploy standard for attack", $COLOR_DEBUG)
+		If $g_bDebugSetlog Then SetDebugLog("listdeploy standard for attack", $COLOR_DEBUG)
 		Switch $g_aiAttackStdDropOrder[$g_iMatchMode]
 			Case 0
 				If $g_bCustomDropOrderEnable Then
@@ -262,26 +262,28 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	$g_aiDeployHeroesPosition[0] = -1
 	$g_aiDeployHeroesPosition[1] = -1
 
-	; samm0d
-	Local $iListInfoDeployCount = UBound($listInfoDeploy) + 2
-	ReDim $listInfoDeploy[$iListInfoDeployCount][5]
-	For $i = UBound($listInfoDeploy) - 2 To 1 Step -1
-		$listInfoDeploy[$i][0] = $listInfoDeploy[$i-1][0]
-		$listInfoDeploy[$i][1] = $listInfoDeploy[$i-1][1]
-		$listInfoDeploy[$i][2] = $listInfoDeploy[$i-1][2]
-		$listInfoDeploy[$i][3] = $listInfoDeploy[$i-1][3]
-		$listInfoDeploy[$i][4] = $listInfoDeploy[$i-1][4]
-	Next
-	$listInfoDeploy[0][0] = 51
-	$listInfoDeploy[0][1] = $nbSides
-	$listInfoDeploy[0][2] = 1
-	$listInfoDeploy[0][3] = 1
-	$listInfoDeploy[0][4] = 2
-	$listInfoDeploy[$iListInfoDeployCount-1][0] = 52
-	$listInfoDeploy[$iListInfoDeployCount-1][1] = $nbSides
-	$listInfoDeploy[$iListInfoDeployCount-1][2] = 1
-	$listInfoDeploy[$iListInfoDeployCount-1][3] = 1
-	$listInfoDeploy[$iListInfoDeployCount-1][4] = 0
+	; Use Event Troop - Persian MOD (#-35)
+	If $ichkEnableUseEventTroop Then
+		Local $iListInfoDeployCount = UBound($listInfoDeploy) + 2
+		ReDim $listInfoDeploy[$iListInfoDeployCount][5]
+		For $i = UBound($listInfoDeploy) - 2 To 1 Step -1
+			$listInfoDeploy[$i][0] = $listInfoDeploy[$i-1][0]
+			$listInfoDeploy[$i][1] = $listInfoDeploy[$i-1][1]
+			$listInfoDeploy[$i][2] = $listInfoDeploy[$i-1][2]
+			$listInfoDeploy[$i][3] = $listInfoDeploy[$i-1][3]
+			$listInfoDeploy[$i][4] = $listInfoDeploy[$i-1][4]
+		Next
+		$listInfoDeploy[0][0] = 51
+		$listInfoDeploy[0][1] = $nbSides
+		$listInfoDeploy[0][2] = 1
+		$listInfoDeploy[0][3] = 1
+		$listInfoDeploy[0][4] = 2
+		$listInfoDeploy[$iListInfoDeployCount-1][0] = 52
+		$listInfoDeploy[$iListInfoDeployCount-1][1] = $nbSides
+		$listInfoDeploy[$iListInfoDeployCount-1][2] = 1
+		$listInfoDeploy[$iListInfoDeployCount-1][3] = 1
+		$listInfoDeploy[$iListInfoDeployCount-1][4] = 0
+	EndIf
 
 	; Multi Finger - Persian MOD (#-04)
 	If $g_aiAttackStdDropSides[$g_iMatchMode] = 4 And  $g_iMatchMode = $DB Then
@@ -298,7 +300,7 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 	SetLog("Dropping left over troops", $COLOR_INFO)
 	For $x = 0 To 1
 		If PrepareAttack($g_iMatchMode, True) = 0 Then
-			If $g_bDebugSetlog Then Setlog("No Wast time... exit, no troops usable left", $COLOR_DEBUG)
+			If $g_bDebugSetlog Then SetDebugLog("No Wast time... exit, no troops usable left", $COLOR_DEBUG)
 			ExitLoop ;Check remaining quantities
 		EndIf
 		For $i = $eBarb To $eBowl ; launch all remaining troops
@@ -333,10 +335,10 @@ Func SetSlotSpecialTroops()
 	Next
 
 	If $g_bDebugSetlog Then
-		SetLog("SetSlotSpecialTroops() King Slot: " & $g_iKingSlot, $COLOR_DEBUG)
-		SetLog("SetSlotSpecialTroops() Queen Slot: " & $g_iQueenSlot, $COLOR_DEBUG)
-		SetLog("SetSlotSpecialTroops() Warden Slot: " & $g_iWardenSlot, $COLOR_DEBUG)
-		SetLog("SetSlotSpecialTroops() Clan Castle Slot: " & $g_iClanCastleSlot, $COLOR_DEBUG)
+		SetDebugLog("SetSlotSpecialTroops() King Slot: " & $g_iKingSlot, $COLOR_DEBUG)
+		SetDebugLog("SetSlotSpecialTroops() Queen Slot: " & $g_iQueenSlot, $COLOR_DEBUG)
+		SetDebugLog("SetSlotSpecialTroops() Warden Slot: " & $g_iWardenSlot, $COLOR_DEBUG)
+		SetDebugLog("SetSlotSpecialTroops() Clan Castle Slot: " & $g_iClanCastleSlot, $COLOR_DEBUG)
 	EndIf
 
 EndFunc   ;==>SetSlotSpecialTroops

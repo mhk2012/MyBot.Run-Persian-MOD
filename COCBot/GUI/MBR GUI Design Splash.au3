@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: mikemikemikecoc (2016)
 ; Modified ......: cosote (2016-Aug), CodeSlinger69 (2017), MonkeyHunter (05-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -42,8 +42,8 @@ Func CreateSplashScreen($iSteps = Default)
 
 	Local $sSplashImg = $g_sLogoPath
 	Local $hImage, $iX, $iY
-	Local $iT = 4 ; Top of logo (additional space)
-	Local $iB = 0 ; Bottom of logo (additional space)
+	Local $iT = 20 ; Top of logo (additional space)
+	Local $iB = 10 ; Bottom of logo (additional space)
 
 	Switch $g_iGuiMode ; in Mini GIU or GUI less mode we have less steps
 		Case 0 ; No GUI

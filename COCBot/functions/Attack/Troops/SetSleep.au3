@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: KnowJack (06-2015)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -22,7 +22,7 @@ Func SetSleep($type)
 		$factor1 = 100
 	EndIf
 
-	; Unit/Wave Factor - Team AiO MOD++ (#-05)
+	; Unit/Wave Factor - Persian MOD (#-05)
 	If (_GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesDB) = 4 Or _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesDB) = 5) And $g_iChkUnitFactor = 1 Then $factor0 = $g_iTxtUnitFactor
 	If (_GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesDB) = 4 Or _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesDB) = 5) And $g_iChkWaveFactor = 1 Then $factor1 = $g_iTxtWaveFactor
 
@@ -50,7 +50,7 @@ EndFunc   ;==>SetSleep
 ; Return values .: see _Sleep
 ; Author ........: cosote (2016)
 ; Modified ......:
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki

@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: GKevinOD (2014)
 ; Modified ......: DkEd, Hervidero (2015), CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -25,13 +25,13 @@ Global $g_hLblResultTrophyNow = 0, $g_hPicResultTrophyNow = 0, $g_hLblResultRunt
 Global $g_hLblResultAttackedHourNow = 0, $g_hPicResultAttackedHourNow = 0, $g_hLblResultGemNow = 0, $g_hPicResultGemNow = 0, $g_hLblResultSkippedHourNow = 0, $g_hPicResultSkippedHourNow = 0
 Global $g_hLblVillageReportTemp = 0
 
-; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
+; Enable/Disable GUI while botting - Persian MOD (#-01)
 Global $g_hBtnEnableGUI = 0, $g_hBtnDisableGUI = 0
 
-; Hero and Lab Status - Team AiO MOD++ (#-14)
+; Hero and Lab Status - Persian MOD (#-14)
 Global $g_ahLblHero[3], $g_hLblLab, $g_hLblLabTime
 
-; Stop on Low battery - Team AiO MOD++ (#-30)
+; Stop on Low battery - Persian MOD (#-30)
 Global $g_hLblBatteryAC = 0, $g_hLblBatteryStatus = 0
 
 Func CreateBottomPanel()
@@ -93,7 +93,7 @@ Func CreateBottomPanel()
 		$g_hBtnAttackNowTS = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Bottom", "BtnAttackNowTS", "TH Snipe!"), $x + 190, $y + 50, 60, -1)
 			GUICtrlSetState(-1, $GUI_HIDE)
 
-		; Stop on Low battery - Team AiO MOD++ (#-27)
+		; Stop on Low battery - Persian MOD (#-27)
 	    $g_hLblBatteryAC = GUICtrlCreateLabel("", $x + 102, $y + 75, 50, 15)
 	    $g_hLblBatteryStatus = GUICtrlCreateLabel("", $x + 154, $y + 75, 30, 15)
 
@@ -102,7 +102,7 @@ Func CreateBottomPanel()
 			GUICtrlSetFont(-1, 8.5, $FW_BOLD) ;, $GUI_FONTITALIC + $GUI_FONTUNDER)
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "LblDonate_Info_01", "Paypal Donate?"))
 
-		; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
+		; Enable/Disable GUI while botting - Persian MOD (#-01)
 	    $g_hBtnEnableGUI = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Bottom", "BtnEnableGUI", "Enable GUI"), $x + 90, $y + 72, 90, 22)
 		    _GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Bottom", "BtnEnableGUI_Info_01", "Enable GUI control while botting") & @CRLF & _
 			 				  GetTranslatedFileIni("MBR GUI Design Bottom", "BtnEnableGUI_Info_02", "Warning: USE THIS WITH CAUTION!") & @CRLF & _
@@ -124,7 +124,7 @@ Func CreateBottomPanel()
 	$g_hLblVersion = GUICtrlCreateLabel($g_sBotVersion, 200, $y + 66, 60, 17, $SS_CENTER)
 		GUICtrlSetColor(-1, 0X008080)
 		GUICtrlSetFont(-1, 8)
-    GUICtrlCreateLabel($g_sMODName, 195, $y + 82, 70, 17, $SS_CENTER)
+    GUICtrlCreateLabel("Persian MOD", 195, $y + 82, 70, 17, $SS_CENTER)
         GUICtrlSetColor(-1, 0x008080)
         GUICtrlSetFont(-1, 8.5)
 
@@ -135,9 +135,9 @@ Func CreateBottomPanel()
 		_GUICtrlSetTip(-1, $sTxtTip)
 
 	;~ Village
-	Local $x = 295, $y = $y_bottom + 20 ; y was +20 - Team AiO MOD++ (2017)
-	$g_hGrpVillage = GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Bottom", "GrpVillage", "Village") & ": " & $g_sProfileCurrentName, $x - 20, $y - 20, 180, 85)
-		$y = $y_bottom + 17	; Move up a little bit - Team AiO MOD++ (2017)
+	Local $x = 295, $y = $y_bottom + 20 ; y was +20 - Persian MOD (2017)
+	$g_hGrpVillage = GUICtrlCreateGroup(GetTranslatedFileIni("MBR GUI Design Bottom", "GrpVillage", "Village") & ": " & $g_sProfileCurrentName, $x - 20, $y - 20, 180, 95)
+		$y = $y_bottom + 17	; Move up a little bit - Persian MOD (2017)
 		$g_hLblResultGoldNow = GUICtrlCreateLabel("", $x - 5, $y + 2, 60, 15, $SS_RIGHT)
 		$g_hLblResultGoldHourNow = GUICtrlCreateLabel("", $x, $y + 2, 60, 15, $SS_RIGHT)
 			GUICtrlSetState(-1, $GUI_HIDE)
@@ -157,7 +157,7 @@ Func CreateBottomPanel()
 			GUICtrlSetState(-1, $GUI_HIDE)
 		$g_hPicResultDETemp = _GUICtrlCreateIcon ($g_sLibIconPath, $eIcnDark, $x - 5, $y + 40, 16, 16)
 
-		; Hero and Lab Status - Team AiO MOD++ (#-14)
+		; Hero and Lab Status - Persian MOD (#-14)
 	    $g_ahLblHero[0] = GUICtrlCreateLabel("K", $x - 5, $y + 60, 12, 14, $SS_CENTER)
 	    GUICtrlSetFont(-1, 8.5)
 	    GUICtrlSetColor(-1, $COLOR_MEDGRAY)

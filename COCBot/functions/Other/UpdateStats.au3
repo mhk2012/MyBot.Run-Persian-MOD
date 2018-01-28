@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: kaganus (06-2015)
 ; Modified ......: CodeSlinger69 (01-2017), Fliegerfaust (02-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -335,8 +335,8 @@ Func UpdateStats($bForceUpdate = False)
 	If $iOldSkippedVillageCount <> $g_iSkippedVillageCount Then
 		$bStatsUpdated = True
 		GUICtrlSetData($g_hLblResultVillagesSkipped, _NumberFormat($g_iSkippedVillageCount, True))
-		; MultiStats Switch Accounts - Team AiO MOD++ (#-12)
-		If Not $g_bChkSwitchAcc Then GUICtrlSetData($g_hLblResultSkippedHourNow, _NumberFormat($g_iSkippedVillageCount, True))
+		; MultiStats Switch Accounts - Persian MOD (#-12)
+		If Not ProfileSwitchAccountEnabled() Then GUICtrlSetData($g_hLblResultSkippedHourNow, _NumberFormat($g_iSkippedVillageCount, True))
 		$iOldSkippedVillageCount = $g_iSkippedVillageCount
 	EndIf
 
@@ -526,8 +526,8 @@ Func UpdateStats($bForceUpdate = False)
 	If $iOldAttackedCount <> $g_aiAttackedCount Then
 		$bStatsUpdated = True
 		GUICtrlSetData($g_hLblResultVillagesAttacked, _NumberFormat($g_aiAttackedCount, True))
-		; MultiStats Switch Accounts - Team AiO MOD++ (#-12)
-		If Not $g_bChkSwitchAcc Then GUICtrlSetData($g_hLblResultAttackedHourNow, _NumberFormat($g_aiAttackedCount, True))
+		; MultiStats Switch Accounts - Persian MOD (#-12)
+		If Not ProfileSwitchAccountEnabled() Then GUICtrlSetData($g_hLblResultAttackedHourNow, _NumberFormat($g_aiAttackedCount, True))
 		$iOldAttackedCount = $g_aiAttackedCount
 	EndIf
 
@@ -564,8 +564,8 @@ Func UpdateStats($bForceUpdate = False)
 		EndIf
 		GUICtrlSetData($g_ahLblStatsGainPerHour[$eLootTrophy], _NumberFormat(Round($g_iStatsTotalGain[$eLootTrophy] / (Int(__TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600 * 1000)) & " / h")
 
-		; MultiStats Switch Accounts - Team AiO MOD++ (#-12)
-		If Not $g_bChkSwitchAcc Then
+		; MultiStats Switch Accounts - Persian MOD (#-12)
+		If Not ProfileSwitchAccountEnabled() Then
 			GUICtrlSetData($g_hLblResultGoldHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootGold] / (Int(__TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600)) & "k / h") ;GUI BOTTOM
 			GUICtrlSetData($g_hLblResultElixirHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootElixir] / (Int(__TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600)) & "k / h") ;GUI BOTTOM
 			If $g_iStatsStartedWith[$eLootDarkElixir] <> "" Then
@@ -598,8 +598,8 @@ Func UpdateStats($bForceUpdate = False)
 		GUICtrlSetData($g_ahLblStatsTop[$eLootTrophy], _NumberFormat($topTrophyloot))
 	EndIf
 
-	; MultiStats Switch Accounts - Team AiO MOD++ (#-12)
-	If $g_bChkSwitchAcc Then UpdateStatsForSwitchAcc()
+	; MultiStats Switch Accounts - Persian MOD (#-12)
+	If ProfileSwitchAccountEnabled() Then UpdateStatsForSwitchAcc()
 	; update Builder Base stats
 	For $i = 0 To UBound($g_aiCurrentLootBB) - 1
 		If $iOldCurrentLootBB[$i] <> $g_aiCurrentLootBB[$i] Then
@@ -692,10 +692,10 @@ Func ResetStats()
 	$g_iTotalDonateStatsSpells = 0
 	$g_iTotalDonateStatsSpellsXP = 0
 
-	If $g_bChkSwitchAcc Then ResetStatsForSwitchAcc()		; MultiStats Switch Accounts - Team AiO MOD++ (#-12)
-	ResetHeroLabStatus()	; Hero and Lab Status - Team AiO MOD++ (#-14)
+	If ProfileSwitchAccountEnabled() Then ResetStatsForSwitchAcc()		; MultiStats Switch Accounts - Persian MOD (#-12)
+	ResetHeroLabStatus()	; Hero and Lab Status - Persian MOD (#-14)
 
-	; Goblin XP - Team AiO MOD++ (#-19)
+	; Goblin XP - Persian MOD (#-19)
 	ResetGoblinsXP()
 
 	UpdateStats()

@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: GkevinOD (2014)
 ; Modified ......: Hervidero (2015), KnowJack(July 2015), CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -44,7 +44,7 @@ Func Initiate()
 		EndIf
 
 		$g_bFirstStart = True
-		$g_bInitiateSwitchAcc = True ; Switch Accounts - Team AiO MOD++ (#-12)
+		$g_bInitiateSwitchAcc = True ; Switch Accounts - Persian MOD (#-12)
 
 		If $g_bNotifyDeleteAllPushesOnStart Then _DeletePush()
 
@@ -195,9 +195,9 @@ EndFunc   ;==>btnSearchMode
 
 Func btnPause($bRunNow = True)
 	TogglePause()
-	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
-	GUICtrlSetState($g_hBtnEnableGUI, $GUI_SHOW) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
-	; Stop on Low battery - Team AiO MOD++ (#-30)
+	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Persian MOD (#-01)
+	GUICtrlSetState($g_hBtnEnableGUI, $GUI_SHOW) ; Enable/Disable GUI while botting - Persian MOD (#-01)
+	; Stop on Low battery - Persian MOD (#-30)
 	GUICtrlSetState($g_hLblBatteryAC, $GUI_HIDE)
 
 	GUICtrlSetState($g_hLblBatteryStatus, $GUI_HIDE)
@@ -205,14 +205,14 @@ EndFunc   ;==>btnPause
 
 Func btnResume()
 	TogglePause()
-	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
-	GUICtrlSetState($g_hBtnEnableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
-	; Stop on Low battery - Team AiO MOD++ (#-30)
+	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Persian MOD (#-01)
+	GUICtrlSetState($g_hBtnEnableGUI, $GUI_HIDE) ; Enable/Disable GUI while botting - Persian MOD (#-01)
+	; Stop on Low battery - Persian MOD (#-30)
 	GUICtrlSetState($g_hLblBatteryAC, $GUI_SHOW)
 	GUICtrlSetState($g_hLblBatteryStatus, $GUI_SHOW)
 EndFunc   ;==>btnResume
 
-; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
+; Enable/Disable GUI while botting - Persian MOD (#-01)
 Func btnEnableGUI()
 	GUICtrlSetState($g_hBtnEnableGUI, $GUI_HIDE)
 	GUICtrlSetState($g_hBtnDisableGUI, $GUI_SHOW)
@@ -233,7 +233,7 @@ Func btnDisableGUI()
 	applyConfig()
 	DisableGuiControls()
 EndFunc   ;==>btnDisableGUI
-; Enable/Disable GUI while botting - Team AiO MOD++ (#-01)
+; Enable/Disable GUI while botting - Persian MOD (#-01)
 
 Func btnAttackNowDB()
 	If $g_bRunState Then
@@ -343,7 +343,7 @@ Func GetFont()
 	For $i = 0 To UBound($DefaultFont) - 1
 		$sText &= " $DefaultFont[" & $i & "]= " & $DefaultFont[$i] & ", "
 	Next
-	Setlog($sText, $COLOR_DEBUG)
+	SetLog($sText, $COLOR_DEBUG)
 EndFunc   ;==>GetFont
 
 Func btnVillageStat($source = "")

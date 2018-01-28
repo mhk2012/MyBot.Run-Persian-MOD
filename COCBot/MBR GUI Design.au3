@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: GKevinOD (2014)
 ; Modified ......: DkEd, Hervidero (2015), CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -121,8 +121,8 @@ Global $g_oGuiNotInMini = ObjCreate("Scripting.Dictionary")
 #include "GUI\MBR GUI Design Attack.au3"
 #include "GUI\MBR GUI Design Bot.au3"
 #include "GUI\MBR GUI Design About.au3"
-; Team AiO MOD++ (2017)
-#include "Team__AiO__MOD++\GUI\MOD GUI Design.au3"
+; Persian MOD (2018)
+#include "Persian_MOD\GUI\MOD GUI Design.au3"
 
 Func CreateMainGUI()
 
@@ -376,6 +376,7 @@ Func CreateMainGUIControls($bGuiModeUpdate = False)
 
 	SplashStep(GetTranslatedFileIni("MBR GUI Design - Loading", "SplashStep_06", "Loading Bot tab..."))
 	CreateBotTab() ; also creates  $g_hLastControlToHide
+	If Not $bGuiModeUpdate Then DistributorsUpdateGUI() ; Now loading Distributors (during GUI switch it must be called outside CreateMainGUIControls()!)
 
 	SplashStep(GetTranslatedFileIni("MBR GUI Design - Loading", "SplashStep_10", "Loading Mods tab..."))
 	CreateMODTab()
@@ -530,7 +531,7 @@ Func CheckDpiAwareness($bCheckOnlyIfAlreadyAware = False, $bForceDpiAware = Fals
 	Local $bDpiAware = False
 	Local $bChanged = False
 
-	If $sbDpiAlreadyChecked = True Or ($g_iBotLaunchTime = 0 And $bForceDpiAware2 = False) Then Return $bChanged
+	If $sbDpiAlreadyChecked = True Or (Not IsBotLaunched() And $bForceDpiAware2 = False) Then Return $bChanged
 
 	If $g_iDpiAwarenessMode <> 0 And RegRead("HKCU\Control Panel\Desktop\WindowMetrics", "AppliedDPI") <> 96 Then
 		; DPI is different, check if awareness needs to be set

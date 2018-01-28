@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -24,10 +24,10 @@ Global $g_hChkBotCustomTitleBarClick = 0, $g_hChkBotAutoSlideClick = 0, $g_hChkH
 	   $g_hChkScreenshotHideName = 0, $g_hTxtTimeAnotherDevice = 0
 Global $g_hChkSinglePBTForced = 0, $g_hTxtSinglePBTimeForced = 0, $g_hTxtPBTimeForcedExit = 0, $g_hChkFixClanCastle = 0, $g_hChkAutoResume = 0, $g_hTxtAutoResumeTime = 0, $g_hChkDisableNotifications = 0
 
-; Auto Dock, Hide Emulator & Bot - Team AiO MOD++ (#-07)
+; Auto Dock, Hide Emulator & Bot - Persian MOD (#-07)
 Global $g_hChkEnableAuto = 0, $g_hChkAutoDock = 0, $g_hChkAutoHideEmulator = 0, $g_hChkAutoMinimizeBot = 0
 
-; Stop on Low battery - Team AiO MOD++ (#-30)
+; Stop on Low battery - Persian MOD (#-30)
 Global $g_hChkStopOnBatt = 0, $g_hTxtStopOnBatt = 0, $g_hLblStopOnBatt = 0
 
 Func CreateBotOptions()
@@ -219,7 +219,7 @@ Func CreateBotOptions()
 		$g_hChkUseRandomClick = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Child Bot - Options", "ChkUseRandomClick", "Random Click"), $x - 10, $y, -1, -1)
 			GUICtrlSetOnEvent(-1, "chkUseRandomClick")
 
-	; Stop on Low battery - Team AiO MOD++ (#-30)
+	; Stop on Low battery - Persian MOD (#-30)
 	$y += 19
 		$g_hChkStopOnBatt = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Child Bot - Options", "ChkStopOnBatt", "Stop IF Battery below"), $x-10, $y, -1, -1)
 			_GUICtrlSetTip(-1,GetTranslatedFileIni("MBR GUI Design Child Bot - Options", "ChkStopOnBatt_Info_01", "Will stop bot and emulator if battery status below % value"))

@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: MyBot.run team
 ; Modified ......: MonkeyHunter (07-2016), CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -48,7 +48,7 @@ Func btnDonateBlacklist()
 	EndIf
 EndFunc   ;==>btnDonateBlacklist
 
-; ClanHop - Team AiO MOD++ (#-20)
+; ClanHop - Persian MOD (#-20)
 Func btnDonateOptions()
 	If GUICtrlGetState($g_hGrpDonateOptions) = BitOR($GUI_HIDE, $GUI_ENABLE) Then
 		_DonateBtn($g_hGrpDonateOptions, $g_hChkClanHop)
@@ -124,7 +124,7 @@ Func cmbDonateCustomB()
 	_GUICtrlSetImage($g_ahPicDonateCustomB[2], $g_sLibIconPath, $g_aiDonIcons[$combo3])
 EndFunc   ;==>cmbDonateCustomB
 
-; Additional Custom Donate - Team AiO MOD++ (#-28)
+; Additional Custom Donate - Persian MOD (#-28)
 Func cmbDonateCustomC()
 	Local $combo1 = _GUICtrlComboBox_GetCurSel($g_ahCmbDonateCustomC[0])
 	Local $combo2 = _GUICtrlComboBox_GetCurSel($g_ahCmbDonateCustomC[1])
@@ -1304,7 +1304,7 @@ Func SetTroopIdle()
 	EndIf
 
 EndFunc   ;==>SetTroopIdle
-; GTFO - Persian MOD (#-31)
+
 Func GtfoCheckTrainingTab($sText = "troop")
 	Local $Tab
 

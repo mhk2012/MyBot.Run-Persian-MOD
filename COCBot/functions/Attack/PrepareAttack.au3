@@ -7,7 +7,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......:
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -32,13 +32,13 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 		If $g_iActivateKing = 1 Or $g_iActivateKing = 2 Then $g_aHeroesTimerActivation[$eHeroBarbarianKing] = 0
 		If $g_iActivateQueen = 1 Or $g_iActivateQueen = 2 Then $g_aHeroesTimerActivation[$eHeroArcherQueen] = 0
 		If $g_iActivateWarden = 1 Or $g_iActivateWarden = 2 Then $g_aHeroesTimerActivation[$eHeroGrandWarden] = 0
-		; ExtendedAttackBar - Team AiO MOD++ (#-22)
+		; ExtendedAttackBar - Persian MOD (#-22)
 		$g_iTotalAttackSlot = 10 ; reset all flag
 		$g_bDraggedAttackBar = False
 	EndIf
 
 	Local $troopsnumber = 0
-	If $g_bDebugSetlog Then SetLog("PrepareAttack for " & $pMatchMode & " " & $g_asModeText[$pMatchMode], $COLOR_DEBUG)
+	If $g_bDebugSetlog Then SetDebugLog("PrepareAttack for " & $pMatchMode & " " & $g_asModeText[$pMatchMode], $COLOR_DEBUG)
 	If $Remaining Then
 		SetLog("Checking remaining unused troops for: " & $g_asModeText[$pMatchMode], $COLOR_INFO)
 	Else
@@ -55,11 +55,11 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 
 	Local $Plural = 0
 	Local $result = AttackBarCheck($Remaining)
-	If $g_bDebugSetlog Then SetLog("DLL Troopsbar list: " & $result, $COLOR_DEBUG)
+	If $g_bDebugSetlog Then SetDebugLog("DLL Troopsbar list: " & $result, $COLOR_DEBUG)
 	Local $aTroopDataList = StringSplit($result, "|")
 	Local $aTemp[12][4]
 
-	; ExtendedAttackBar - Team AiO MOD++ (#-22)
+	; ExtendedAttackBar - Persian MOD (#-22)
 	If $pMatchMode <= $LB Then
 		If $g_abChkExtendedAttackBar[$pMatchMode] And $SWIPE = "" Then
 			ReDim $aTemp[22][4]
@@ -89,7 +89,7 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 			If $troopKind < $eKing Then
 				;normal troop
 				If Not IsTroopToBeUsed($pMatchMode, $troopKind) Then
-					If $g_bDebugSetlog Then Setlog("Discard use of troop " & $troopKind & " " & NameOfTroop($troopKind), $COLOR_ERROR)
+					If $g_bDebugSetlog Then SetDebugLog("Discard use of troop " & $troopKind & " " & NameOfTroop($troopKind), $COLOR_ERROR)
 					$g_avAttackTroops[$i][0] = -1
 					$g_avAttackTroops[$i][1] = 0
 					$troopKind = -1
@@ -118,7 +118,7 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 ;~ 					$troopKind = $g_avAttackTroops[$i][1]
 
 				Else
-					If $g_bDebugSetlog Then Setlog($aTemp[$i][2] & " » Discard use hero/poison " & $troopKind & " " & NameOfTroop($troopKind), $COLOR_ERROR)
+					If $g_bDebugSetlog Then SetDebugLog($aTemp[$i][2] & " » Discard use hero/poison " & $troopKind & " " & NameOfTroop($troopKind), $COLOR_ERROR)
 					$troopKind = -1
 				EndIf
 			EndIf
@@ -134,7 +134,7 @@ Func PrepareAttack($pMatchMode, $Remaining = False) ;Assigns troops
 
 	;ResumeAndroid()
 
-	If $g_bDebugSetlog Then Setlog("troopsnumber  = " & $troopsnumber)
+	If $g_bDebugSetlog Then SetDebugLog("troopsnumber  = " & $troopsnumber)
 	Return $troopsnumber
 EndFunc   ;==>PrepareAttack
 
@@ -192,10 +192,11 @@ Func IsSpecialTroopToBeUsed($pMatchMode, $pTroopType)
 				If $g_abAttackUseCloneSpell[$iTempMode] Then Return True
 			Case $eSkSpell
 				If $g_abAttackUseSkeletonSpell[$iTempMode] Then Return True
+			; Use Event Troop - Persian MOD (#-35)
 			Case 51 To 52
-				Return True
+				If $ichkEnableUseEventTroop Then Return True
 			Case 61 To 62
-				Return True
+				If $ichkEnableUseEventTroop Then Return True
 			Case Else
 				Return False
 		EndSwitch

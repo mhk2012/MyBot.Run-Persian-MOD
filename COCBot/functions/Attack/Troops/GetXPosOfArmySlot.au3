@@ -7,7 +7,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: Promac(12-2016)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -29,7 +29,7 @@ Func GetXPosOfArmySlot($slotNumber, $xOffsetFor11Slot, $bNeedNewCapture = Defaul
 
 	If $slotNumber = $g_iKingSlot Or $slotNumber = $g_iQueenSlot Or $slotNumber = $g_iWardenSlot Then $xOffsetFor11Slot += 8
 
-	; ExtendedAttackBar - Team AiO MOD++ (#-22)
+	; ExtendedAttackBar - Persian MOD (#-22)
 	If $g_bDraggedAttackBar Then Return $xOffsetFor11Slot + $SlotComp + ($slotNumber * 72) + 14
 
 	Local $oldBitmap = _GDIPlus_BitmapCreateFromHBITMAP($g_hHBitmap2)
@@ -44,13 +44,13 @@ Func GetXPosOfArmySlot($slotNumber, $xOffsetFor11Slot, $bNeedNewCapture = Defaul
 	EndIf
 
 	If $g_bDebugSetlog Then
-		Setlog(" Slot 0  _ColorCheck 0x478AC6 at (17," & 643 & "): " & $CheckSlot12, $COLOR_DEBUG) ;Debug
+		SetDebugLog(" Slot 0  _ColorCheck 0x478AC6 at (17," & 643 & "): " & $CheckSlot12, $COLOR_DEBUG) ;Debug
 		If $bNeedNewCapture = True Then
 			$SlotPixelColorTemp = _GetPixelColor(17, 643, $g_bCapturePixel)
 		Else
 			$SlotPixelColorTemp = Hex(_GDIPlus_BitmapGetPixel($oldBitmap, 17, 643), 6) ; Get pixel color
 		EndIf
-		Setlog(" Slot 0  _GetPixelColo(17," & 643 & "): " & $SlotPixelColorTemp, $COLOR_DEBUG) ;Debug
+		SetDebugLog(" Slot 0  _GetPixelColo(17," & 643 & "): " & $SlotPixelColorTemp, $COLOR_DEBUG) ;Debug
 	EndIf
 
 	_GDIPlus_BitmapDispose($oldBitmap)

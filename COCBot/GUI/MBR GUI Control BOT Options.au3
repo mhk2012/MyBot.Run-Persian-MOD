@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........: MyBot.run Team
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -210,15 +210,27 @@ EndFunc   ;==>txtThreads
 
 ; #DEBUG FUNCTION# ==============================================================================================================
 
+Func chkDebugSetLog()
+	$g_bDebugSetlog = (GUICtrlRead($g_hChkDebugSetlog) = $GUI_CHECKED) ;
+	SetDebugLog("DebugSetlog " & ($g_bDebugSetlog ? "enabled" : "disabled"))
+EndFunc   ;==>chkDebugSetLog
+
+Func chkDebugAndroid()
+	$g_bDebugAndroid = (GUICtrlRead($g_hChkDebugAndroid) = $GUI_CHECKED)
+	SetDebugLog("DebugAndroid " & ($g_bDebugAndroid ? "enabled" : "disabled"))
+EndFunc   ;==>chkDebugAndroid
+
 Func chkDebugClick()
 	$g_bDebugClick = (GUICtrlRead($g_hChkDebugClick) = $GUI_CHECKED)
 	SetDebugLog("DebugClick " & ($g_bDebugClick ? "enabled" : "disabled"))
 EndFunc   ;==>chkDebugClick
 
-Func chkDebugSetlog()
-	$g_bDebugSetlog = (GUICtrlRead($g_hChkDebugSetlog) = $GUI_CHECKED)
-	SetDebugLog("DebugSetlog " & ($g_bDebugSetlog ? "enabled" : "disabled"))
-EndFunc   ;==>chkDebugSetlog
+Func chkDebugFunc()
+	Local $bDebugFunc = (GUICtrlRead($g_hChkDebugFunc) = $GUI_CHECKED)
+	$g_bDebugFuncTime = $bDebugFunc
+	$g_bDebugFuncCall = $bDebugFunc
+	SetDebugLog("DebugFunc " & ($bDebugFunc ? "enabled" : "disabled"))
+EndFunc   ;==>chkDebugFunc
 
 Func chkDebugDisableZoomout()
 	$g_bDebugDisableZoomout = (GUICtrlRead($g_hChkDebugDisableZoomout) = $GUI_CHECKED)
@@ -287,7 +299,7 @@ Func btnTestTrain()
 	If @error Then $result = "Error " & @error & ", " & @extended & ", " & ((IsArray($result)) ? (_ArrayToString($result, ",")) : ($result))
 	SetLog("Result getArmyHeroTime() = " & ((IsArray($result)) ? ("Array: " & _ArrayToString($result, ",")) : ($result)), $COLOR_INFO)
 
-	$result = "";
+	$result = "" ;
 	SetLog("Testing ArmyHeroStatus()", $COLOR_INFO)
 	For $i = 0 To 2
 		$result &= " " & ArmyHeroStatus($i)
@@ -329,14 +341,14 @@ Func btnTestDonateCC()
 	If IsArray($aDonationWindow) Then
 		$g_iDonationWindowY = $aDonationWindow[1]
 		_Sleep(250)
-		Setlog("$DonationWindowY: " & $g_iDonationWindowY, $COLOR_DEBUG)
+		SetLog("$DonationWindowY: " & $g_iDonationWindowY, $COLOR_DEBUG)
 	Else
 		SetLog("Could not find the Donate Window :(", $COLOR_ERROR)
 		Return False
 	EndIf
-	Setlog("Detecting Troops...")
+	SetLog("Detecting Troops...")
 	DetectSlotTroop($eBowl)
-	Setlog("Detecting Spells...")
+	SetLog("Detecting Spells...")
 	DetectSlotTroop($eSkSpell)
 	SetLog(_PadStringCenter(" Test DonateCC end ", 54, "="), $COLOR_INFO)
 	ShellExecute($g_sProfileTempDebugPath & "donateCC_")
@@ -379,7 +391,7 @@ Func btnTestAttackBar()
 
 	_CaptureRegion2(0, 571 + $g_iBottomOffsetY, 859, 671 + $g_iBottomOffsetY)
 	Local $result = DllCallMyBot("searchIdentifyTroop", "ptr", $g_hHBitmap2)
-	Setlog("DLL Troopsbar list: " & $result[0], $COLOR_DEBUG)
+	SetLog("DLL Troopsbar list: " & $result[0], $COLOR_DEBUG)
 	If $g_bForceClanCastleDetection Then $result[0] = FixClanCastle($result[0])
 	Local $aTroopDataList = StringSplit($result[0], "|")
 	Local $aTemp[12][3]
@@ -388,9 +400,9 @@ Func btnTestAttackBar()
 			Local $troopData = StringSplit($aTroopDataList[$i], "#", $STR_NOCOUNT)
 ;~ 				$aTemp[Number($troopData[1])][0] = $troopData[0]
 ;~ 				$aTemp[Number($troopData[1])][1] = Number($troopData[2])
-;~ 				Setlog("-" & NameOfTroop( $aTemp[$i][0]) & " pos  " & $aTemp[$i][0] & " qty " & $aTemp[$i][2])
+;~ 				SetLog("-" & NameOfTroop( $aTemp[$i][0]) & " pos  " & $aTemp[$i][0] & " qty " & $aTemp[$i][2])
 			If $troopData[0] = 17 Or $troopData[0] = 18 Or $troopData[0] = 19 Or $troopData[0] = 20 Then $troopData[2] = 1
-			Setlog("position: " & $troopData[1] & " | troop code: " & $troopData[0] & " troop name:" & NameOfTroop($troopData[0]) & " | qty: " & $troopData[2])
+			SetLog("position: " & $troopData[1] & " | troop code: " & $troopData[0] & " troop name:" & NameOfTroop($troopData[0]) & " | qty: " & $troopData[2])
 		Next
 	EndIf
 
@@ -468,14 +480,14 @@ Func btnTestImage()
 		SetLog("Testing WaitForClouds DONE", $COLOR_SUCCESS)
 
 		#cs
-		SetLog("Testing checkAttackDisable...", $COLOR_SUCCESS)
-		SetLog("Testing checkAttackDisable($g_iTaBChkAttack)...", $COLOR_SUCCESS)
-		SetLog("checkAttackDisable($g_iTaBChkAttack) = " & checkAttackDisable($g_iTaBChkAttack))
-		SetLog("Testing checkAttackDisable($g_iTaBChkIdle)...", $COLOR_SUCCESS)
-		SetLog("checkAttackDisable($g_iTaBChkIdle) = " & checkAttackDisable($g_iTaBChkIdle))
-		SetLog("Testing checkAttackDisable($g_iTaBChkTime)...", $COLOR_SUCCESS)
-		SetLog("checkAttackDisable($g_iTaBChkTime) = " & checkAttackDisable($g_iTaBChkTime))
-		SetLog("Testing checkAttackDisable DONE", $COLOR_SUCCESS)
+			SetLog("Testing checkAttackDisable...", $COLOR_SUCCESS)
+			SetLog("Testing checkAttackDisable($g_iTaBChkAttack)...", $COLOR_SUCCESS)
+			SetLog("checkAttackDisable($g_iTaBChkAttack) = " & checkAttackDisable($g_iTaBChkAttack))
+			SetLog("Testing checkAttackDisable($g_iTaBChkIdle)...", $COLOR_SUCCESS)
+			SetLog("checkAttackDisable($g_iTaBChkIdle) = " & checkAttackDisable($g_iTaBChkIdle))
+			SetLog("Testing checkAttackDisable($g_iTaBChkTime)...", $COLOR_SUCCESS)
+			SetLog("checkAttackDisable($g_iTaBChkTime) = " & checkAttackDisable($g_iTaBChkTime))
+			SetLog("Testing checkAttackDisable DONE", $COLOR_SUCCESS)
 		#ce
 	Next
 
@@ -643,7 +655,7 @@ Func btnTestGetLocationBuilding()
 	For $b = $eBldgGoldS To $eBldgAirDefense
 		If $b = $eBldgDarkS Then ContinueLoop ; skip dark elixir as images not available
 		$aResult = GetLocationBuilding($b, $g_iSearchTH, False)
-		If $aResult = -1 Then Setlog("Monkey ate bad banana: " & "GetLocationBuilding " & $g_sBldgNames[$b], $COLOR_ERROR)
+		If $aResult = -1 Then SetLog("Monkey ate bad banana: " & "GetLocationBuilding " & $g_sBldgNames[$b], $COLOR_ERROR)
 	Next
 
 	_LogObjList($g_oBldgAttackInfo) ; log dictionary contents
@@ -654,7 +666,7 @@ Func btnTestGetLocationBuilding()
 	For $string In $iKeys
 		If StringInStr($string, "_FINDTIME", $STR_NOCASESENSEBASIC) > 0 Then $iFindBldgTotalTestTime += $g_oBldgAttackInfo.item($string)
 	Next
-	Setlog("GetLocationBuilding() Total Image search time= " & $iFindBldgTotalTestTime, $COLOR_SUCCESS)
+	SetLog("GetLocationBuilding() Total Image search time= " & $iFindBldgTotalTestTime, $COLOR_SUCCESS)
 
 	$g_oBldgAttackInfo.RemoveAll ; remove all data
 
@@ -889,7 +901,7 @@ Func FixClanCastle($inputString)
 			If $counter <> Number($troopData[1]) Then
 				$OutputFinal &= $eCastle & "#" & $counter & "#" & "1" & "|"
 				$counter = $troopData[1]
-				Setlog("Clan castle Forced in slot " & $counter, $COLOR_INFO)
+				SetLog("Clan castle Forced in slot " & $counter, $COLOR_INFO)
 			EndIf
 			$counter += 1
 			$OutputFinal &= $troopData[0] & "#" & $troopData[1] & "#" & $troopData[2]
@@ -940,4 +952,21 @@ Func btnTestUpgradeWindow()
 	$g_iTestFreeBuilderCount = -1
 	$g_iFreeBuilderCount = $iCurrFreeBuilderCount
 	$g_bRunState = $currentRunState
-EndFunc
+EndFunc   ;==>btnTestUpgradeWindow
+
+Func btnTestSmartWait()
+	Local $currentRunState = $g_bRunState
+	Local $bCloseWhileTrainingEnable = $g_bCloseWhileTrainingEnable
+
+	$g_bRunState = True
+	$g_bCloseWhileTrainingEnable = True
+
+	SmartWait4Train(20)
+
+	$g_bRunState = $currentRunState
+	$g_bCloseWhileTrainingEnable = $bCloseWhileTrainingEnable
+EndFunc   ;==>btnTestSmartWait
+
+Func btnConsoleWindow()
+	ConsoleWindow()
+EndFunc   ;==>btnConsoleWindow

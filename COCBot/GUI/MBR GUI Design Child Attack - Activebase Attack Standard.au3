@@ -6,7 +6,7 @@
 ; Return values .: None
 ; Author ........:
 ; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -20,7 +20,7 @@ Global $g_hCmbStandardDropOrderAB = 0, $g_hCmbStandardDropSidesAB = 0, $g_hCmbSt
 
 Global $g_hLblSmartDeployAB = 0, $g_hPicAttackNearDarkElixirDrillAB = 0
 
-; Drop Order Troops - Team AiO MOD++ (#-06)
+; Drop Order Troops - Persian MOD (#-06)
 Global $g_hBtnCustomDropOrderAB = 0
 
 Func CreateAttackSearchActiveBaseStandard()
@@ -118,7 +118,7 @@ Func CreateAttackSearchActiveBaseStandard()
 			$g_hPicAttackNearDarkElixirDrillAB = _GUICtrlCreateIcon($g_sLibIconPath, $eIcnDrill, $x + 20 , $y - 3, 24, 24)
 				_GUICtrlSetTip(-1, $sTxtTip)
 
-		; Drop Order Troops - Team AiO MOD++ (#-06)
+		; Drop Order Troops - Persian MOD (#-06)
 		$y += 40
 		$x = 98
 			$g_hBtnCustomDropOrderAB = GUICtrlCreateButton(GetTranslatedFileIni("MBR GUI Design Child Attack - Attack", "BtnCustomDropOrder", -1), $x, $y, 85, 25)

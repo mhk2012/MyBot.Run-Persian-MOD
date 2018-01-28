@@ -5,8 +5,8 @@
 ; Parameters ....: NA
 ; Return values .: NA
 ; Author ........:
-; Modified ......: CodeSlinger69 (01-2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Modified ......: CodeSlinger69 (01-2018)
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2018
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -16,6 +16,12 @@
 Func saveConfig()
 
 	If $g_iGuiMode = 0 Then Return
+
+	If $g_bSaveConfigIsActive Then
+		SetDebugLog("saveConfig(), already running, exit")
+		Return
+	EndIf
+	$g_bSaveConfigIsActive = True
 
 	Local $t = __TimerInit()
 
@@ -36,6 +42,8 @@ Func saveConfig()
 
 	SetDebugLog("SaveConfig(), time = " & Round(__TimerDiff($t) / 1000, 2) & " sec")
 	GtfoSaveSettings() ; GTFO - Persian MOD (-#31)
+
+	$g_bSaveConfigIsActive = False
 EndFunc   ;==>saveConfig
 
 Func SaveProfileConfig($sIniFile = Default, $bForceWrite = False)
@@ -100,6 +108,9 @@ Func SaveBuildingConfig()
 
 	_Ini_Add("other", "xWardenAltarPos", $g_aiWardenAltarPos[0])
 	_Ini_Add("other", "yWardenAltarPos", $g_aiWardenAltarPos[1])
+
+	_Ini_Add("upgrade", "xLastGoodWallPos", $g_aiLastGoodWallPos[0])
+	_Ini_Add("upgrade", "yLastGoodWallPos", $g_aiLastGoodWallPos[1])
 
 	; <><><><> Village / Upgrade - Lab <><><><>
 	ApplyConfig_600_14(GetApplyConfigSaveAction())
@@ -225,7 +236,7 @@ Func SaveRegularConfig()
 	; <><><><> Bot / Debug <><><><>
 	SaveConfig_Debug()
 
-	;  <><><> Team AiO MOD++ (2017) <><><>
+	;  <><><> Persian MOD (2018) <><><>
 	SaveConfig_MOD()
 
 	; <><><><> Attack Plan / Strategies <><><><>
@@ -273,6 +284,7 @@ Func SaveConfig_Android()
 	_Ini_Add("android", "instance", $g_sAndroidInstance)
 	_Ini_Add("android", "reboot.hours", $g_iAndroidRebootHours)
 	_Ini_Add("android", "close", ($g_bAndroidCloseWithBot ? "1" : "0"))
+	_Ini_Add("android", "process.affinity.mask", $g_iAndroidProcessAffinityMask)
 
 EndFunc   ;==>SaveConfig_Android
 
@@ -282,7 +294,9 @@ Func SaveConfig_Debug()
 	; <><><><> Bot / Debug <><><><>
 	; If $g_bDevMode = True Then
 	_Ini_Add("debug", "debugsetlog", $g_bDebugSetlog ? 1 : 0)
+	_Ini_Add("debug", "debugAndroid", $g_bDebugAndroid ? 1 : 0)
 	_Ini_Add("debug", "debugsetclick", $g_bDebugClick ? 1 : 0)
+	_Ini_Add("debug", "debugFunc", ($g_bDebugFuncTime And $g_bDebugFuncCall)? 1 : 0)
 	_Ini_Add("debug", "disablezoomout", $g_bDebugDisableZoomout ? 1 : 0)
 	_Ini_Add("debug", "disablevillagecentering", $g_bDebugDisableVillageCentering ? 1 : 0)
 	_Ini_Add("debug", "debugdeadbaseimage", $g_bDebugDeadBaseImage ? 1 : 0)
@@ -381,7 +395,7 @@ Func SaveConfig_600_12()
 			$sIniName = "CustomA"
 		ElseIf $i = $eCustomB Then
 			$sIniName = "CustomB"
-		; Additional Custom Donate - Team AiO MOD++ (#-28)
+		; Additional Custom Donate - Persian MOD (#-28)
 		ElseIf $i = $eCustomC Then
 			$sIniName = "CustomC"
 		ElseIf $i = $eCustomD Then
@@ -410,7 +424,7 @@ Func SaveConfig_600_12()
 		_Ini_Add("donate", "cmbDonateCustomB" & $i + 1, $g_aiDonateCustomTrpNumB[$i][0])
 		_Ini_Add("donate", "txtDonateCustomB" & $i + 1, $g_aiDonateCustomTrpNumB[$i][1])
 
-		; Additional Custom Donate - Team AiO MOD++ (#-28)
+		; Additional Custom Donate - Persian MOD (#-28)
 		_Ini_Add("donate", "cmbDonateCustomC" & $i + 1, $g_aiDonateCustomTrpNumC[$i][0])
 		_Ini_Add("donate", "txtDonateCustomC" & $i + 1, $g_aiDonateCustomTrpNumC[$i][1])
 		_Ini_Add("donate", "cmbDonateCustomD" & $i + 1, $g_aiDonateCustomTrpNumD[$i][0])
