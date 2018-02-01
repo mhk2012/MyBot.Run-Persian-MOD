@@ -247,6 +247,8 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 							Else
 								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
 							EndIf
+							; assume spells get always dropped: adjust count so CC spells can be used without recalc
+							If UBound($g_avAttackTroops) > $troopPosition And $g_avAttackTroops[$troopPosition][1] > 0 Then $g_avAttackTroops[$troopPosition][1] -= 1
 						; Use Event Troop - Persian MOD (#-35)
 						Case 51 To 52
 							If $debug Then

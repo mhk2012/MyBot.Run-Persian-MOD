@@ -24,7 +24,7 @@ Func ReadTroopQuantity($Troop, $CheckSelectedSlot = False, $bNeedNewCapture = Tr
 		Case Else
 			Local $rGetXPosOfArmySlot = GetXPosOfArmySlot($Troop, 40, $bNeedNewCapture)
 			Local $isTheSlotSelected = IsSlotSelected($Troop, $bNeedNewCapture)
-			If $isTheSlotSelected = False Then
+			If Not $isTheSlotSelected Then
 				$iAmount = Number(getTroopCountSmall($rGetXPosOfArmySlot, 641, $bNeedNewCapture))
 			Else
 				$iAmount = Number(getTroopCountBig($rGetXPosOfArmySlot, 636, $bNeedNewCapture))
