@@ -1184,7 +1184,7 @@ Func GTFOStart()
 			If _Sleep(100) Then ExitLoop
 			ForceCaptureRegion()
 
-			$g_aiDonatePixel = _MultiPixelSearch(202, $yPos, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 15)
+			$g_aiDonatePixel = _MultiPixelSearch(200, $yPos, 230, 660 + $g_iBottomOffsetY, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 20)
 			If IsArray($g_aiDonatePixel) Then
 ;~ 				If $g_bDebugSetlog Then SetLog("$g_aiDonatePixel : (" & $g_aiDonatePixel [0] & "," & $g_aiDonatePixel [1] & ") $yPos: " & $yPos, $COLOR_DEBUG)
 				$g_iActiveDonate = False
@@ -1237,7 +1237,7 @@ Func GTFOStart()
 			GtfoIdle()
 
 			ForceCaptureRegion()
-			$g_aiDonatePixel = _MultiPixelSearch(202, $yPos, 224, 660 + $g_iBottomOffsetY, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 15)
+			$g_aiDonatePixel = _MultiPixelSearch(200, $yPos, 230, 660 + $g_iBottomOffsetY, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 20)
 			If IsArray($g_aiDonatePixel) Then
 ;~ 				If $g_bDebugSetlog Then SetLog("More Donate buttons found, new $g_aiDonatePixel : (" & $g_aiDonatePixel [0] & "," & $g_aiDonatePixel [1] & ")", $COLOR_DEBUG)
 				ContinueLoop
@@ -1950,7 +1950,7 @@ Func iDonateWindow($Open = True)
 	$iRight += $g_aiDonatePixel[0] + 1
 	$iBottom += $g_aiDonatePixel[1] + 1
 	ForceCaptureRegion()
-	Local $DonatePixelCheck = _MultiPixelSearch($iLeft, $iTop, $iRight, $iBottom, 50, 1, Hex(0x98D057, 6), $aChatDonateBtnColors, 15)
+	Local $DonatePixelCheck = _MultiPixelSearch($iLeft, $iTop, $iRight, $iBottom, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 15)
 	If IsArray($DonatePixelCheck) Then
 		Click($g_aiDonatePixel[0] + 50, $g_aiDonatePixel[1] + 10, 1, 0, "#0174")
 	Else
