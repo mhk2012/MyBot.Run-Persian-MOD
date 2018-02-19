@@ -169,10 +169,10 @@ EndFunc
 ; Example .......: None
 ; ===============================================================================================================================
 
-Func isOutsideEllipse($coordX, $coordY, $ellipseWidth = 200, $ellipseHeigth = 150, $centerX = $centerX, $centerY = $centerY)
+Func isOutsideEllipse($coordX, $coordY, $ellipseWidth = 200, $ellipseHeigth = 150, $centerXX = $centerX, $centerYY = $centerY)
 
-	Global $normalizedX = $coordX - $centerX
-	Global $normalizedY = $coordY - $centerY
+	Global $normalizedX = $coordX - $centerXX
+	Global $normalizedY = $coordY - $centerYY
 	Local $result = ($normalizedX * $normalizedX) / ($ellipseWidth * $ellipseWidth) + ($normalizedY * $normalizedY) / ($ellipseHeigth * $ellipseHeigth) > 1
 
 	If $g_bDebugSetlog Then

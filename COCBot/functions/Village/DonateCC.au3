@@ -247,7 +247,6 @@ Func DonateCC($bCheckForNewMsg = False, $Train = True)
 					If $g_bDebugSetlog Then SetDebugLog("This CC cannot accept spells, skip spell donation...", $COLOR_DEBUG)
 					$g_bSkipDonSpells = True
 				ElseIf $g_iCurrentSpells = 0 Then
-					If $g_bDebugSetlog Then SetDebugLog("No spells available, skip spell donation...", $COLOR_DEBUG) ;Debug
 					SetLog("No spells available, skip spell donation...", $COLOR_ORANGE)
 					$g_bSkipDonSpells = True
 				EndIf
@@ -519,12 +518,12 @@ Func DonateCC($bCheckForNewMsg = False, $Train = True)
 			EndIf
 
 			;close Donate Window
-			DonateWindow($bClose)
+			;DonateWindow($bClose) ; not really required and cause sometimes donation buttons to miss
 
 			$bDonate = True
 			$y = $g_aiDonatePixel[1] + 50
 			ClickP($aAway, 1, 0, "#0171")
-			If _Sleep($DELAYDONATECC2) Then ExitLoop
+			If _Sleep($DELAYDONATEWINDOW1) Then ExitLoop
 		EndIf
 		;ck for more donate buttons
 		ForceCaptureRegion()
@@ -687,7 +686,7 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 
 	; figure out row/position
 	If $Slot < 0 Or $Slot > 11 Then
-		setlog("Invalid slot # found = " & $Slot & " for " & $g_asTroopNames[$iTroopIndex], $COLOR_ERROR)
+		SetLog("Invalid slot # found = " & $Slot & " for " & $g_asTroopNames[$iTroopIndex], $COLOR_ERROR)
 		Return
 	EndIf
 	If $g_bDebugSetlog Then SetDebugLog("slot found = " & $Slot & ", " & $g_asTroopNames[$Slot], $COLOR_DEBUG)
@@ -714,7 +713,7 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 				SetLog("donate", $COLOR_ERROR)
 				SetLog("row: " & $donaterow, $COLOR_ERROR)
 				SetLog("pos in row: " & $donateposinrow, $COLOR_ERROR)
-				setlog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
+				SetLog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
 				debugimagesave("LiveDonateCC-r" & $donaterow & "-c" & $donateposinrow & "-" & $g_asTroopNames[$iTroopIndex] & "_")
 			EndIf
 				; Use slow click when the Train system is Quicktrain
@@ -762,10 +761,10 @@ Func DonateTroopType(Const $iTroopIndex, $Quant = 0, Const $Custom = False, Cons
 
 		Else
 			If $g_bDebugOCRdonate Then
-				SetLog("donate", $color_RED)
-				SetLog("row: " & $donaterow, $color_RED)
-				SetLog("pos in row: " & $donateposinrow, $color_red)
-				setlog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $color_red)
+				SetLog("donate", $COLOR_ERROR)
+				SetLog("row: " & $donaterow, $COLOR_ERROR)
+				SetLog("pos in row: " & $donateposinrow, $COLOR_ERROR)
+				SetLog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
 				debugimagesave("LiveDonateCC-r" & $donaterow & "-c" & $donateposinrow & "-" & $g_asTroopNames[$iTroopIndex] & "_")
 			EndIf
 			; Use slow click when the Train system is Quicktrain
@@ -870,7 +869,7 @@ Func DonateSpellType(Const $iSpellIndex, $Quant = 0, Const $Custom = False, Cons
 
 	; figure out row/position
 	If $Slot < 12 Or $Slot > 17 Then
-		setlog("Invalid slot # found = " & $Slot & " for " & $g_asSpellNames[$iSpellIndex], $COLOR_ERROR)
+		SetLog("Invalid slot # found = " & $Slot & " for " & $g_asSpellNames[$iSpellIndex], $COLOR_ERROR)
 		Return
 	EndIf
 	$donaterow = 3 ;row of spells
@@ -891,7 +890,7 @@ Func DonateSpellType(Const $iSpellIndex, $Quant = 0, Const $Custom = False, Cons
 			SetLog("donate", $COLOR_ERROR)
 			SetLog("row: " & $donaterow, $COLOR_ERROR)
 			SetLog("pos in row: " & $donateposinrow, $COLOR_ERROR)
-			setlog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
+			SetLog("coordinate: " & 365 + ($Slot * 68) & "," & $g_iDonationWindowY + 100 + $YComp, $COLOR_ERROR)
 			debugimagesave("LiveDonateCC-r" & $donaterow & "-c" & $donateposinrow & "-" & $g_asSpellNames[$iSpellIndex] & "_")
 		EndIf
 		If Not $g_bDebugOCRdonate Then
@@ -944,7 +943,7 @@ Func DonateWindow($bOpen = True)
 	$iRight += $g_aiDonatePixel[0] + 1
 	$iBottom += $g_aiDonatePixel[1] + 1
 	ForceCaptureRegion()
-	Local $g_aiDonatePixelCheck = _MultiPixelSearch($iLeft, $iTop, $iRight, $iBottom, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 15)
+	Local $g_aiDonatePixelCheck = _MultiPixelSearch($iLeft, $iTop, $iRight, $iBottom, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 20)
 	If IsArray($g_aiDonatePixelCheck) Then
 		Click($g_aiDonatePixel[0] + 50, $g_aiDonatePixel[1] + 10, 1, 0, "#0174")
 	Else

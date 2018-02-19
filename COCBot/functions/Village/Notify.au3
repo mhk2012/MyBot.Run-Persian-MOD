@@ -166,7 +166,7 @@ Func NotifylPushBulletMessage($pMessage = "")
 		$oHTTP.WaitForResponse
 		Local $Result = $oHTTP.ResponseText
 		If $oHTTP.Status <> 200 Then
-			Setlog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
+			SetLog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
 			Return
 		EndIf
 		Local $g_sAnotherDevice_iden = _StringBetween($Result, 'iden":"', '"')
@@ -196,7 +196,7 @@ Func NotifylPushBulletMessage($pMessage = "")
 		$oHTTP.WaitForResponse
 		Local $Result = $oHTTP.ResponseText
 		If $oHTTP.Status <> 200 Then
-			Setlog("Telegram status is: " & $oHTTP.Status, $COLOR_ERROR)
+			SetLog("Telegram status is: " & $oHTTP.Status, $COLOR_ERROR)
 			Return
 		EndIf
 		Local $chat_id = _StringBetween($Result, 'm":{"id":', ',"f')
@@ -293,7 +293,7 @@ Func NotifyDeleteOldPushesFromPushBullet()
 	$oHTTP.WaitForResponse
 	Local $Result = $oHTTP.ResponseText
 	If $oHTTP.Status <> 200 Then
-		Setlog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
+		SetLog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
 		Return
 	EndIf
 	Local $findstr = StringRegExp($Result, ',"created":')
@@ -342,7 +342,7 @@ Func NotifyPushFileToPushBullet($File, $Folder, $FileType, $body)
 			$oHTTP.WaitForResponse
 			Local $Result = $oHTTP.ResponseText
 			If $oHTTP.Status <> 200 Then
-				Setlog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
+				SetLog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
 				Return
 			EndIf
 			Local $upload_url = _StringBetween($Result, 'upload_url":"', '"')
@@ -454,13 +454,13 @@ Func NotifyGetLastMessageFromTelegram()
 	$oHTTP.WaitForResponse
 	Local $Result = $oHTTP.ResponseText
 	If $oHTTP.Status <> 200 Then
-		Setlog("Telegram status is: " & $oHTTP.Status, $COLOR_ERROR)
+		SetLog("Telegram status is: " & $oHTTP.Status, $COLOR_ERROR)
 		Return
 	EndIf
 
 	Local $chat_id = _StringBetween($Result, 'm":{"id":', ',"f')
 	$g_sTGChatID = _ArrayPop($chat_id)
-	If $g_bDebugSetlog Then Setlog("Telegram $g_sTGChatID:" & $g_sTGChatID)
+	If $g_bDebugSetlog Then SetDebugLog("Telegram $g_sTGChatID:" & $g_sTGChatID)
 
 	Local $uid = _StringBetween($Result, 'update_id":', '"message"') ;take update id
 	$g_sTGLast_UID = StringTrimRight(_ArrayPop($uid), 2)
@@ -469,19 +469,19 @@ Func NotifyGetLastMessageFromTelegram()
 	If $findstr2 = 1 Then
 		Local $rmessage = _StringBetween($Result, 'text":"', '"}}') ;take message
 		$TGLastMessage = _ArrayPop($rmessage) ;take last message
-		If $g_bDebugSetlog Then Setlog("Telegram $TGLastMessage:" & $TGLastMessage)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram $TGLastMessage:" & $TGLastMessage)
 	EndIf
 
 	;If $g_bFirstStart then $g_iTGLastRemote = $g_sTGLast_UID
 
-	If $g_bDebugSetlog Then Setlog("Telegram $g_sTGLast_UID:" & $g_sTGLast_UID)
+	If $g_bDebugSetlog Then SetDebugLog("Telegram $g_sTGLast_UID:" & $g_sTGLast_UID)
 
 	$oHTTP.Open("Get", "https://api.telegram.org/bot" & $g_sNotifyTGToken & "/getupdates?offset=" & $g_sTGLast_UID, False)
 	$oHTTP.Send()
 	$oHTTP.WaitForResponse
 	Local $Result2 = $oHTTP.ResponseText
 	If $oHTTP.Status <> 200 Then
-		Setlog("Telegram status is: " & $oHTTP.Status, $COLOR_ERROR)
+		SetLog("Telegram status is: " & $oHTTP.Status, $COLOR_ERROR)
 		Return
 	EndIf
 	Local $findstr2 = StringRegExp(StringUpper($Result2), '"TEXT":"')
@@ -492,7 +492,7 @@ Func NotifyGetLastMessageFromTelegram()
 			Local $rmessage = _StringBetween($Result2, 'text":"', '","entities"') ;take message
 			$TGLastMessage = _ArrayPop($rmessage) ;take last message
 		EndIf
-		If $g_bDebugSetlog Then Setlog("Telegram - $TGLastMessage:" & $TGLastMessage)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram - $TGLastMessage:" & $TGLastMessage)
 		Return $TGLastMessage
 	EndIf
 
@@ -525,7 +525,7 @@ Func NotifyGetLastMessageFromTelegramBtnStart()
 	Local $Result = Execute('$oHTTP.ResponseText')
 	Local $chat_id = _StringBetween($Result, 'm":{"id":', ',"f')
 	$g_sTGChatID = _ArrayPop($chat_id)
-	If $g_bDebugSetlog Then Setlog("Telegram $g_sTGChatID:" & $g_sTGChatID)
+	If $g_bDebugSetlog Then SetDebugLog("Telegram $g_sTGChatID:" & $g_sTGChatID)
 
 	Local $uid = _StringBetween($Result, 'update_id":', '"message"') ;take update id
 	$g_sTGLast_UID = StringTrimRight(_ArrayPop($uid), 2)
@@ -534,12 +534,10 @@ Func NotifyGetLastMessageFromTelegramBtnStart()
 	If $findstr2 = 1 Then
 		Local $rmessage = _StringBetween($Result, 'text":"', '"}}') ;take message
 		$TGLastMessage = _ArrayPop($rmessage) ;take last message
-		If $g_bDebugSetlog Then Setlog("Telegram $TGLastMessage:" & $TGLastMessage)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram $TGLastMessage:" & $TGLastMessage)
 	EndIf
 
-	;If $g_bFirstStart then $g_iTGLastRemote = $g_sTGLast_UID
-
-	If $g_bDebugSetlog Then Setlog("Telegram $g_sTGLast_UID:" & $g_sTGLast_UID)
+	If $g_bDebugSetlog Then SetDebugLog("Telegram $g_sTGLast_UID:" & $g_sTGLast_UID)
 
 	$oHTTP.Open("Get", "https://api.telegram.org/bot" & $g_sNotifyTGToken & "/getupdates?offset=" & $g_sTGLast_UID, False)
 	Execute('$oHTTP.Send()')
@@ -547,7 +545,7 @@ Func NotifyGetLastMessageFromTelegramBtnStart()
 	Local $Result2 = Execute('$oHTTP.ResponseText')
 
 	If _IsInternet() < 1 Then
-	     Setlog("Telegram: Check your internet connection! No Connection..", $COLOR_ERROR)
+	     SetLog("Telegram: Check your internet connection! No Connection..", $COLOR_ERROR)
 		 Return
 	EndIf
 
@@ -559,7 +557,7 @@ Func NotifyGetLastMessageFromTelegramBtnStart()
 			Local $rmessage = _StringBetween($Result2, 'text":"', '","entities"') ;take message
 			$TGLastMessage = _ArrayPop($rmessage) ;take last message
 		EndIf
-		If $g_bDebugSetlog Then Setlog("Telegram - $TGLastMessage:" & $TGLastMessage)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram - $TGLastMessage:" & $TGLastMessage)
 		Return $TGLastMessage
 	EndIf
 
@@ -602,15 +600,15 @@ Func NotifyActivateKeyboardOnTelegram($TGMsg)
 	$g_iTGLastRemote = $g_sTGLast_UID
 
 EndFunc   ;==>NotifyActivateKeyboardOnTelegram
-; Telegram ---------------------------------
 
 Func NotifyRemoteControlProcBtnStart()
+	Local $bWasSilent = SetDebugLogSilent()
 	If $g_bNotifyTGEnable And $g_sNotifyTGToken <> "" Then
 		$g_sTGLastMessage = NotifyGetLastMessageFromTelegramBtnStart()
 		Local $TGActionMSG = StringUpper(StringStripWS($g_sTGLastMessage, $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES)) ;upercase & remove space laset message
-		If $g_bDebugSetlog Then Setlog("Telegram | NotifyRemoteControlProcBtnStart $TGActionMSG : " & $TGActionMSG)
-		If $g_bDebugSetlog Then Setlog("Telegram | NotifyRemoteControlProcBtnStart $g_iTGLastRemote : " & $g_iTGLastRemote)
-		If $g_bDebugSetlog Then Setlog("Telegram | NotifyRemoteControlProcBtnStart $g_sTGLast_UID : " & $g_sTGLast_UID)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram | NotifyRemoteControlProcBtnStart $TGActionMSG : " & $TGActionMSG)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram | NotifyRemoteControlProcBtnStart $g_iTGLastRemote : " & $g_iTGLastRemote)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram | NotifyRemoteControlProcBtnStart $g_sTGLast_UID : " & $g_sTGLast_UID)
 		If $g_iTGLastRemote <> $g_sTGLast_UID Then
 			$g_iTGLastRemote = $g_sTGLast_UID
 
@@ -621,7 +619,10 @@ Func NotifyRemoteControlProcBtnStart()
 				EndSwitch
 		EndIf
     EndIf
-EndFunc
+	SetDebugLogSilent($bWasSilent)
+EndFunc   ;==>NotifyRemoteControlProcBtnStart
+; Telegram ---------------------------------
+
 
 ; Both ---------------------------------
 Func NotifyRemoteControlProc()
@@ -651,7 +652,7 @@ Func NotifyRemoteControlProc()
 		$oHTTP.WaitForResponse
 		Local $Result = $oHTTP.ResponseText
 		If $oHTTP.Status <> 200 Then
-			Setlog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
+			SetLog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
 			Return
 		EndIf
 
@@ -901,9 +902,9 @@ Func NotifyRemoteControlProc()
 	If $g_bNotifyTGEnable And $g_sNotifyTGToken <> "" And $g_bRunState Then
 		$g_sTGLastMessage = NotifyGetLastMessageFromTelegram()
 		Local $TGActionMSG = StringUpper(StringStripWS($g_sTGLastMessage, $STR_STRIPLEADING + $STR_STRIPTRAILING + $STR_STRIPSPACES)) ;upercase & remove space laset message
-		If $g_bDebugSetlog Then Setlog("Telegram | NotifyRemoteControlProc $TGActionMSG : " & $TGActionMSG)
-		If $g_bDebugSetlog Then Setlog("Telegram | NotifyRemoteControlProc $g_iTGLastRemote : " & $g_iTGLastRemote)
-		If $g_bDebugSetlog Then Setlog("Telegram | NotifyRemoteControlProc $g_sTGLast_UID : " & $g_sTGLast_UID)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram | NotifyRemoteControlProc $TGActionMSG : " & $TGActionMSG)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram | NotifyRemoteControlProc $g_iTGLastRemote : " & $g_iTGLastRemote)
+		If $g_bDebugSetlog Then SetDebugLog("Telegram | NotifyRemoteControlProc $g_sTGLast_UID : " & $g_sTGLast_UID)
 		If ($TGActionMSG = "/START" Or $TGActionMSG = "KEYB") And $g_iTGLastRemote <> $g_sTGLast_UID Then
 			$g_iTGLastRemote = $g_sTGLast_UID
 			NotifyActivateKeyboardOnTelegram($g_sBotTitle & " | Notify " & $g_sNotifyVersion)
@@ -1424,7 +1425,7 @@ Func NotifyPushFileToBoth($File, $Folder, $FileType, $body)
 			$oHTTP.WaitForResponse
 			Local $Result = $oHTTP.ResponseText
 			If $oHTTP.Status <> 200 Then
-				Setlog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
+				SetLog("PushBullet status is: " & $oHTTP.Status, $COLOR_ERROR)
 				Return
 			EndIf
 			Local $upload_url = _StringBetween($Result, 'upload_url":"', '"')

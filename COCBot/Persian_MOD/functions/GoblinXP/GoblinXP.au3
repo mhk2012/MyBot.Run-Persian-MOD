@@ -271,7 +271,7 @@ Func CheckForFullArmy()
 		TrainRevamp()
 	EndIf
 
-	ClickP($aAway, 2, 0, "#0346") ;Click Away
+;~ 	ClickP($aAway, 2, 0, "#0346") ;Click Away
 	If $g_bDebugSX Then SetLog("SX|CheckForFullArmy Finished", $COLOR_PURPLE)
 EndFunc   ;==>CheckForFullArmy
 
@@ -967,12 +967,12 @@ Func GetPositionInSinglePlayer()
 		EndIf
 	WEnd
 
-	Local $rColCheckEnd = _ColorCheck(_GetPixelColor(670, 695, True), Hex(0x393224, 6), 20)
+	Local $rColCheckEnd = _ColorCheck(_GetPixelColor(830, 724, True), Hex(0x383123, 6), 20)
 	If $rColCheckEnd Then
 		If $g_bDebugSX Then SetLog("SX|GPISP|Return END")
 		Return "END"
 	Else
-		Local $rColCheckFirst = _ColorCheck(_GetPixelColor(585, 4, True), Hex(0x2E281D, 6), 20)
+		Local $rColCheckFirst = _ColorCheck(_GetPixelColor(585, 4, True), Hex(0x372D22, 6), 20)
 		If $rColCheckFirst Then
 			If $g_bDebugSX Then SetLog("SX|GPISP|Return FIRST")
 			Return "FIRST"

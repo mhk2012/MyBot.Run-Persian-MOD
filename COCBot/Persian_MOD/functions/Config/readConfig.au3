@@ -174,7 +174,7 @@ Func ReadConfig_MOD()
 
 	; Check Grand Warden Mode - Persian MOD (#-26)
 	IniReadS($g_bCheckWardenMode, $g_sProfileConfigPath, "other", "chkCheckWardenMode", False, "Bool")
-	IniReadS($g_iCheckWardenMode, $g_sProfileConfigPath, "other", "cmbCheckWardenMode", 0, "int")
+	IniReadS($g_iCheckWardenMode, $g_sProfileConfigPath, "other", "cmbCheckWardenMode", 0, "Int")
 
 	; Switch Accounts - Persian MOD (#-12)
 	ReadConfig_SwitchAcc()
@@ -206,10 +206,8 @@ Func ReadConfig_MOD()
 	GUICtrlSetData($SldTransLevel, IniRead($g_sProfileConfigPath, "other", "Decor", 0))
 	Slider()
 
-	Global $iMultiFingerStyle = 0
-
 	; Multi Finger - Persian MOD(#-04)
-	IniReadS($iMultiFingerStyle, $g_sProfileConfigPath, "MultiFinger", "Select", "1")
+	IniReadS($iMultiFingerStyle, $g_sProfileConfigPath, "MultiFinger", "Select", 1, "Int")
 
 EndFunc   ;==>ReadConfig_MOD
 
@@ -249,8 +247,10 @@ EndFunc   ;==>ReadConfig_SwitchAcc
 Func ReadConfig_SwitchAccounts()
 	If $g_iCmbSwitchAcc Then
 		Local $sSwitchAccFile = $g_sProfilePath & "\SwitchAccount.0" & $g_iCmbSwitchAcc & ".ini"
-		$g_bChkSwitchAcc = IniRead($sSwitchAccFile, "SwitchAccount", "Enable", "") = "1"
+		$g_bChkSwitchAcc = IniRead($sSwitchAccFile, "SwitchAccount", "Enable", "0") = "1"
+		$g_bChkSharedPrefs = IniRead($sSwitchAccFile, "SwitchAccount", "SharedPrefs", $g_bChkSharedPrefs ? "1" : "0") = "1"
 		$g_bChkSmartSwitch = IniRead($sSwitchAccFile, "SwitchAccount", "SmartSwitch", "0") = "1"
+		$g_bDonateLikeCrazy = IniRead($sSwitchAccFile, "SwitchAccount", "DonateLikeCrazy", "0") = "1"
 		$g_iTotalAcc = Int(IniRead($sSwitchAccFile, "SwitchAccount", "TotalCocAccount", "-1"))
 		$g_iTrainTimeToSkip = Int(IniRead($sSwitchAccFile, "SwitchAccount", "TrainTimeToSkip", "1"))
 		For $i = 1 To 8

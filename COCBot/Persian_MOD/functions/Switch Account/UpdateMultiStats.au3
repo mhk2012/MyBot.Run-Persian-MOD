@@ -19,7 +19,7 @@ Func UpdateStatsForSwitchAcc()
 		;village report
 		GUICtrlSetData($g_ahLblResultGoldNowAcc[$i], _NumberFormat($g_aiGoldCurrentAcc[$i], True))
 		GUICtrlSetData($g_ahLblResultElixirNowAcc[$i], _NumberFormat($g_aiElixirCurrentAcc[$i], True))
-		GUICtrlSetData($g_ahLblResultDENowAcc[$i], _NumberFormat($g_aiDarkCurrentAcc[$i], True))
+		GUICtrlSetData($g_ahLblResultDENowAcc[$i], _NumberFormat($g_aiDarkCurrentAcc[$i], False)) ; set $NullToZero = False for not displaying DE = 0 for accounts don't have DE.
 		GUICtrlSetData($g_ahLblResultTrophyNowAcc[$i], _NumberFormat($g_aiTrophyCurrentAcc[$i], True))
 
 		If $g_aiGemAmountAcc[$i] < 10000 Then

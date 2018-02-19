@@ -16,7 +16,7 @@
 
 ; Profiles
 Global $g_hCmbProfile = 0, $g_hTxtVillageName = 0, $g_hBtnAddProfile = 0, $g_hBtnConfirmAddProfile = 0, $g_hBtnConfirmRenameProfile = 0, _
-	   $g_hBtnDeleteProfile = 0, $g_hBtnCancelProfileChange = 0, $g_hBtnRenameProfile = 0, $g_hBtnRecycle = 0
+	   $g_hBtnDeleteProfile = 0, $g_hBtnCancelProfileChange = 0, $g_hBtnRenameProfile = 0, $g_hBtnRecycle = 0, $g_hBtnPullSharedPrefs = 0, $g_hBtnPushSharedPrefs = 0
 
 ; Switch Profiles
 Global $g_ahChk_SwitchMax[4], $g_ahChk_SwitchMin[4], $g_ahCmb_SwitchMax[4], $g_ahCmb_SwitchMin[4]
@@ -73,6 +73,16 @@ Func CreateBotProfiles()
 			_GUIImageList_AddBitmap($bIconRecycle, @ScriptDir & "\images\Button\iconRecycle.bmp")
 		EndIf
 		; IceCube (Misc v1.0)
+		Static $bIconPush = 0
+		If $bIconPush = 0 Then
+			$bIconPush = _GUIImageList_Create(24, 24, 4)
+			_GUIImageList_AddBitmap($bIconPush, @ScriptDir & "\images\Button\iconPush.bmp")
+		EndIf
+		Static $bIconPull = 0
+		If $bIconPull = 0 Then
+			$bIconPull = _GUIImageList_Create(24, 24, 4)
+			_GUIImageList_AddBitmap($bIconPull, @ScriptDir & "\images\Button\iconPull.bmp")
+		EndIf
 
 		$g_hBtnAddProfile = GUICtrlCreateButton("", $x + 135, $y, 24, 24)
 			_GUICtrlButton_SetImageList($g_hBtnAddProfile, $bIconAdd, 4)
@@ -116,6 +126,14 @@ Func CreateBotProfiles()
 				GUICtrlSetState(-1, $GUI_ENABLE)
 			EndIf
 		; IceCube (Misc v1.0)
+		$g_hBtnPullSharedPrefs = GUICtrlCreateButton("", $x + 254, $y, 24, 24)
+			_GUICtrlButton_SetImageList($g_hBtnPullSharedPrefs, $bIconPull, 4)
+			GUICtrlSetOnEvent(-1, "btnPullSharedPrefs")
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "BtnPullSharedPrefs_Info_01", "Pull CoC shared_prefs folder"))
+		$g_hBtnPushSharedPrefs = GUICtrlCreateButton("", $x + 284, $y, 24, 24)
+			_GUICtrlButton_SetImageList($g_hBtnPushSharedPrefs, $bIconPush, 4)
+			GUICtrlSetOnEvent(-1, "btnPushSharedPrefs")
+			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Bot - Profiles", "BtnPushSharedPrefs_Info_01", "Push CoC shared_prefs folder"))
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 

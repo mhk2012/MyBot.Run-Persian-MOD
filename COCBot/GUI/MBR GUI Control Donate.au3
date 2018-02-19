@@ -1950,7 +1950,7 @@ Func iDonateWindow($Open = True)
 	$iRight += $g_aiDonatePixel[0] + 1
 	$iBottom += $g_aiDonatePixel[1] + 1
 	ForceCaptureRegion()
-	Local $DonatePixelCheck = _MultiPixelSearch($iLeft, $iTop, $iRight, $iBottom, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 15)
+	Local $DonatePixelCheck = _MultiPixelSearch($iLeft, $iTop, $iRight, $iBottom, -2, 1, Hex(0x6da725, 6), $aChatDonateBtnColors, 20)
 	If IsArray($DonatePixelCheck) Then
 		Click($g_aiDonatePixel[0] + 50, $g_aiDonatePixel[1] + 10, 1, 0, "#0174")
 	Else

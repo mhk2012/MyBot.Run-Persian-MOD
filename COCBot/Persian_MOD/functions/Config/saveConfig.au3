@@ -178,7 +178,7 @@ Func SaveConfig_MOD()
 	_Ini_Add("other", "Decor", $iSldTransLevel)
 
 	; Multi Finger - Persian MOD (#-04)
-	_Ini_Add("MultiFinger", "Select", _GUICtrlComboBox_GetCurSel($cmbDBMultiFinger))
+	_Ini_Add("MultiFinger", "Select", $iMultiFingerStyle)
 
 EndFunc   ;==>SaveConfig_MOD
 
@@ -214,7 +214,9 @@ Func SaveConfig_SwitchAcc()
 	If $iCmbSwitchAcc Then
 		$sSwitchAccFile = $g_sProfilePath & "\SwitchAccount.0" & $iCmbSwitchAcc & ".ini"
 		IniWrite($sSwitchAccFile, "SwitchAccount", "Enable", $g_bChkSwitchAcc ? 1 : 0)
+		IniWrite($sSwitchAccFile, "SwitchAccount", "SharedPrefs", $g_bChkSharedPrefs ? 1 : 0)
 		IniWrite($sSwitchAccFile, "SwitchAccount", "SmartSwitch", $g_bChkSmartSwitch ? 1 : 0)
+		IniWrite($sSwitchAccFile, "SwitchAccount", "DonateLikeCrazy", $g_bDonateLikeCrazy ? 1 : 0)
 		IniWrite($sSwitchAccFile, "SwitchAccount", "TotalCocAccount", $g_iTotalAcc)
 		IniWrite($sSwitchAccFile, "SwitchAccount", "TrainTimeToSkip", $g_iTrainTimeToSkip)
 		For $i = 1 To 8

@@ -1760,8 +1760,8 @@ Func TrainArmyNumber($Army, $iMultiClick = 1) ; QuickTrain Combo - Persian MOD (
 				If $iClick > 2 Then $sLog = ", multi-click x" & $iClick & " times"
 
 				If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
-					Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
-					SetLog(" - Making the Army " & $Num + 1, $COLOR_INFO)
+					Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], $iClick)
+					SetLog(" - Making the Army " & $Num + 1 & $sLog, $COLOR_INFO)
 					If _Sleep(500) Then Return
 				Else
 					SetLog(" - Error Clicking On Army: " & $Num + 1 & "| Pixel was :" & _GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), $COLOR_ACTION)

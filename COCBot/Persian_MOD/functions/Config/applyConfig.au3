@@ -18,10 +18,6 @@ Func ApplyConfig_MOD($TypeReadSave)
 	Switch $TypeReadSave
 		Case "Read"
 
-			; Classic Four Finger - Persian MOD (#-04)
-			cmbStandardDropSidesAB()
-			Bridge()
-
 			; Unit/Wave Factor - Persian MOD (#-05)
 			GUICtrlSetState($g_hChkGiantSlot, $g_iChkGiantSlot = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			_GUICtrlComboBox_SetCurSel($g_hCmbGiantSlot, $g_iCmbGiantSlot)
@@ -229,6 +225,11 @@ Func ApplyConfig_MOD($TypeReadSave)
 			; Robot Transparency - Persian MOD (#-34)
 			GUICtrlSetData($SldTransLevel, $iSldTransLevel)
 
+			; Multi Finger - Persian MOD(#-04)
+			_GUICtrlComboBox_SetCurSel($cmbDBMultiFinger, $iMultiFingerStyle)
+			cmbDBMultiFinger()
+			Bridge()
+
 		Case "Save"
 
 			; Unit/Wave Factor - Persian MOD (#-05)
@@ -391,6 +392,9 @@ Func ApplyConfig_MOD($TypeReadSave)
 			$g_bStopOnBatt = (GUICtrlRead($g_hChkStopOnBatt) = $GUI_CHECKED)
 			$g_iStopOnBatt = GUICtrlRead($g_hTxtStopOnBatt)
 
+			; Multi Finger - Persian MOD(#-04)
+			$iMultiFingerStyle = _GUICtrlComboBox_GetCurSel($cmbDBMultiFinger)
+
 	EndSwitch
 EndFunc   ;==>ApplyConfig_MOD
 
@@ -400,7 +404,9 @@ Func ApplyConfig_SwitchAcc($TypeReadSave)
 		Case "Read"
 			_GUICtrlComboBox_SetCurSel($g_hCmbSwitchAcc, $g_iCmbSwitchAcc)
 			GUICtrlSetState($g_hChkSwitchAcc, $g_bChkSwitchAcc ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_hChkSharedPrefs, $g_bChkSharedPrefs ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkSmartSwitch, $g_bChkSmartSwitch ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_hChkDonateLikeCrazy, $g_bDonateLikeCrazy ? $GUI_CHECKED : $GUI_UNCHECKED)
 			_GUICtrlComboBox_SetCurSel($g_hCmbTotalAccount, $g_iTotalAcc - 1)
 			For $i = 0 To 7
 				GUICtrlSetState($g_ahChkAccount[$i], $g_abAccountNo[$i] ? $GUI_CHECKED : $GUI_UNCHECKED)
@@ -411,8 +417,10 @@ Func ApplyConfig_SwitchAcc($TypeReadSave)
 			_cmbSwitchAcc(False)
 		Case "Save"
 			$g_iCmbSwitchAcc = _GUICtrlComboBox_GetCurSel($g_hCmbSwitchAcc)
+			$g_bChkSharedPrefs = GUICtrlRead($g_hChkSharedPrefs) = $GUI_CHECKED
 			$g_bChkSwitchAcc = GUICtrlRead($g_hChkSwitchAcc) = $GUI_CHECKED
 			$g_bChkSmartSwitch = GUICtrlRead($g_hChkSmartSwitch) = $GUI_CHECKED
+			$g_bDonateLikeCrazy = GUICtrlRead($g_hChkDonateLikeCrazy) = $GUI_CHECKED
 			$g_iTotalAcc = _GUICtrlComboBox_GetCurSel($g_hCmbTotalAccount) + 1 ; at least 2 accounts needed
 			For $i = 0 To 7
 				$g_abAccountNo[$i] = GUICtrlRead($g_ahChkAccount[$i]) = $GUI_CHECKED

@@ -20,17 +20,6 @@
 ; GTFO - Persian MOD (-#31)
 #include <ListboxConstants.au3>
 
-; Classic Four Finger - Persian MOD (#-04)
-Func cmbStandardDropSidesAB() ; avoid conflict between FourFinger and SmartAttack
-	If _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesAB) = 4 Then
-		GUICtrlSetState($g_hChkSmartAttackRedAreaAB, $GUI_UNCHECKED)
-		GUICtrlSetState($g_hChkSmartAttackRedAreaAB, $GUI_DISABLE)
-	Else
-		GUICtrlSetState($g_hChkSmartAttackRedAreaAB, $GUI_ENABLE)
-	EndIf
-	chkSmartAttackRedAreaAB()
-EndFunc   ;==>g_hCmbStandardDropSidesAB
-
 Func Bridge()
     If _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesDB) = 4 Then
             GUICtrlSetState($g_hChkSmartAttackRedAreaDB, $GUI_UNCHECKED)
@@ -148,6 +137,7 @@ Func chkSwitchAcc()
 			GUICtrlSetState($g_ahChkSetFarm[$i], $GUI_ENABLE)
 		Next
 		chkSwitchBotType()
+		chkSmartSwitch()
 	Else
 		releaseSwitchAccountMutex()
 		For $i = $g_hCmbTotalAccount To $g_ahChkDonate[7]
@@ -226,6 +216,7 @@ Func _cmbSwitchAcc($bReadSaveConfig = True)
 		GUICtrlSetState($i, (($bEnable) ? $GUI_ENABLE : $GUI_DISABLE))
 	Next
 	cmbTotalAcc()
+	chkSmartSwitch()
 	$s_bActive = False
 EndFunc   ;==>_cmbSwitchAcc
 
@@ -248,6 +239,15 @@ Func cmbTotalAcc()
 	Next
 	cmbChkSetFarm()
 EndFunc   ;==>cmbTotalAcc
+
+Func chkSmartSwitch()
+	If GUICtrlRead($g_hChkSmartSwitch) = $GUI_CHECKED Then
+		GUICtrlSetState($g_hChkDonateLikeCrazy, $GUI_ENABLE)
+	Else
+		GUICtrlSetState($g_hChkDonateLikeCrazy, $GUI_UNCHECKED)
+		GUICtrlSetState($g_hChkDonateLikeCrazy, $GUI_DISABLE)
+	EndIf
+EndFunc   ;==>chkSmartSwitch
 
 Func chkAccount($i)
 	If GUICtrlRead($g_ahChkAccount[$i]) = $GUI_CHECKED Then
@@ -303,6 +303,10 @@ Func cmbSwitchAccProfileX()
 		EndIf
 	Next
 EndFunc   ;==>cmbSwitchAccProfileX
+
+Func chkSharedPrefs()
+	$g_bChkSharedPrefs = GUICtrlRead($g_hChkSharedPrefs) = $GUI_CHECKED
+EndFunc   ;==>chkSharedPrefs
 
 ; Smart Train - Persian MOD (#-13)
 Func chkSmartTrain()

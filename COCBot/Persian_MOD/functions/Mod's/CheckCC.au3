@@ -107,12 +107,12 @@ Func CheckCC($close = True)
 		For $i = 0 To UBound($asLogText)-2
 			SetLog($asLogText[$i])
 		Next
-		If _ColorCheck(_GetPixelColor(806, 472, True), Hex(0xD0E878, 6), 25) = False Then ; If no 'Edit Army' Button found in army tab to edit troops
+		If Not _ColorCheck(_GetPixelColor(806, 516, True), Hex(0xCEEF76, 6), 25) Then ; If no 'Edit Army' Button found in army tab to edit troops
 			SetLog("Cannot find/verify 'Edit Army' Button in Army tab", $COLOR_ORANGE)
 			If $close Then ClickP($aAway, 2, 0)
 			Return ; Exit function
 		EndIf
-		Click(Random(723, 812, 1), Random(469, 513, 1)) ; Click on Edit Army Button
+		Click(Random(715, 825, 1), Random(507, 545, 1)) ; Click on Edit Army Button
 		If _Sleep(500) Then Return
 
 		For $i = 0 To 7
@@ -124,7 +124,7 @@ Func CheckCC($close = True)
 		Next
 
 		For $i = 0 To 6
-			If _ColorCheck(_GetPixelColor(806, 561, True), Hex(0xD0E878, 6), 25) Then
+			If _ColorCheck(_GetPixelColor(806, 567, True), Hex(0xCEEF76, 6), 25) Then
 				Click(Random(720, 815, 1), Random(558, 589, 1)) ; Click on 'Okay' button to save changes
 				ExitLoop
 			Else
@@ -139,7 +139,7 @@ Func CheckCC($close = True)
 
 		For $i = 0 To 6
 			If _ColorCheck(_GetPixelColor(508, 428, True), Hex(0xFFFFFF, 6), 30) Then
-				Click(Random(445, 585, 1), Random(400, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
+				Click(Random(445, 583, 1), Random(402, 455, 1)) ; Click on 'Okay' button to Save changes... Last button
 				ExitLoop
 			Else
 				If $i = 6 Then
